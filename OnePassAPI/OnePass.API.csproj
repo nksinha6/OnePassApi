@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnePass.Domain.Services\OnePass.Domain.Services.csproj" />
+    <ProjectReference Include="..\OnePass.Domain\OnePass.Domain.csproj" />
+    <ProjectReference Include="..\OnePass.Dto\OnePass.Dto.csproj" />
+    <ProjectReference Include="..\OnePass.Infrastructure\OnePass.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

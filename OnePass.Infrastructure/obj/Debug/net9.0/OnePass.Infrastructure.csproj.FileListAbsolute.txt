@@ -1,0 +1,16 @@
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\bin\Debug\net9.0\OnePass.Infrastructure.deps.json
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\bin\Debug\net9.0\OnePass.Infrastructure.dll
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\bin\Debug\net9.0\OnePass.Infrastructure.pdb
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\bin\Debug\net9.0\OnePass.Domain.dll
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\bin\Debug\net9.0\OnePass.Domain.pdb
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\obj\Debug\net9.0\OnePass.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\obj\Debug\net9.0\OnePass.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\obj\Debug\net9.0\OnePass.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\obj\Debug\net9.0\OnePass.Infrastructure.AssemblyInfo.cs
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\obj\Debug\net9.0\OnePass.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\obj\Debug\net9.0\OnePass.Infrastructure.sourcelink.json
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\obj\Debug\net9.0\OnePass..82D33845.Up2Date
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\obj\Debug\net9.0\OnePass.Infrastructure.dll
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\obj\Debug\net9.0\refint\OnePass.Infrastructure.dll
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\obj\Debug\net9.0\OnePass.Infrastructure.pdb
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Infrastructure\obj\Debug\net9.0\ref\OnePass.Infrastructure.dll

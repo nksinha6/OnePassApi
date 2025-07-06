@@ -1,0 +1,12 @@
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\bin\Debug\net9.0\OnePass.Domain.deps.json
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\bin\Debug\net9.0\OnePass.Domain.dll
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\bin\Debug\net9.0\OnePass.Domain.pdb
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\obj\Debug\net9.0\OnePass.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\obj\Debug\net9.0\OnePass.Domain.AssemblyInfoInputs.cache
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\obj\Debug\net9.0\OnePass.Domain.AssemblyInfo.cs
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\obj\Debug\net9.0\OnePass.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\obj\Debug\net9.0\OnePass.Domain.sourcelink.json
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\obj\Debug\net9.0\OnePass.Domain.dll
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\obj\Debug\net9.0\refint\OnePass.Domain.dll
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\obj\Debug\net9.0\OnePass.Domain.pdb
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain\obj\Debug\net9.0\ref\OnePass.Domain.dll

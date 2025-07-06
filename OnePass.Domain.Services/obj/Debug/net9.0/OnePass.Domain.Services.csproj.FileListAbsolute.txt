@@ -1,0 +1,16 @@
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\bin\Debug\net9.0\OnePass.Domain.Services.deps.json
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\bin\Debug\net9.0\OnePass.Domain.Services.dll
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\bin\Debug\net9.0\OnePass.Domain.Services.pdb
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\bin\Debug\net9.0\OnePass.Domain.dll
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\bin\Debug\net9.0\OnePass.Domain.pdb
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\obj\Debug\net9.0\OnePass.Domain.Services.csproj.AssemblyReference.cache
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\obj\Debug\net9.0\OnePass.Domain.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\obj\Debug\net9.0\OnePass.Domain.Services.AssemblyInfoInputs.cache
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\obj\Debug\net9.0\OnePass.Domain.Services.AssemblyInfo.cs
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\obj\Debug\net9.0\OnePass.Domain.Services.csproj.CoreCompileInputs.cache
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\obj\Debug\net9.0\OnePass.Domain.Services.sourcelink.json
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\obj\Debug\net9.0\OnePass..E2161769.Up2Date
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\obj\Debug\net9.0\OnePass.Domain.Services.dll
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\obj\Debug\net9.0\refint\OnePass.Domain.Services.dll
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\obj\Debug\net9.0\OnePass.Domain.Services.pdb
+C:\Users\Sinha\source\repos\OnePassAPI\OnePass.Domain.Services\obj\Debug\net9.0\ref\OnePass.Domain.Services.dll
