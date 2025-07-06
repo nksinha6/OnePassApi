@@ -20,11 +20,12 @@ namespace OnePass.Infrastructure.Persistence
         private readonly ILogger<PersistRepository<T>> _logger;
         private readonly Tracer _tracer;
 
-        public PersistRepository(OnePassDbContext context, ILogger<PersistRepository<T>> logger)
+        public PersistRepository(OnePassDbContext context, ILogger<PersistRepository<T>> logger, Tracer tracer)
         {
             _context = context;
             _dbSet = context.Set<T>();
             _logger = logger;
+            _tracer = tracer;
         }
 
         public async Task AddAsync(T entity)

@@ -18,8 +18,39 @@ namespace OnePass.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            // Automatically register all IEntityTypeConfiguration<T> implementations
+            // Apply all IEntityTypeConfiguration<T> classes from this assembly
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            // Apply lowercase naming convention globally (for PostgreSQL)
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                // Table name
+                entity.SetTableName(entity.GetTableName()!.ToLower());
+
+                // Columns
+                foreach (var property in entity.GetProperties())
+                {
+                    property.SetColumnName(property.Name.ToLower());
+                }
+
+                // Keys (primary)
+                foreach (var key in entity.GetKeys())
+                {
+                    key.SetName(key.GetName()!.ToLower());
+                }
+
+                // Foreign keys
+                foreach (var foreignKey in entity.GetForeignKeys())
+                {
+                    foreignKey.SetConstraintName(foreignKey.GetConstraintName()!.ToLower());
+                }
+
+                // Indexes
+                foreach (var index in entity.GetIndexes())
+                {
+                    index.SetDatabaseName(index.GetDatabaseName()!.ToLower());
+                }
+            }
         }
     }
 }

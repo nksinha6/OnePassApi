@@ -13,9 +13,6 @@ namespace OnePass.Infrastructure.Persistence
     {
         public void Configure(EntityTypeBuilder<Campus> builder)
         {
-            // Table name
-            builder.ToTable("Campuses");
-
             // Primary Key
             builder.HasKey(c => c.Id);
 
