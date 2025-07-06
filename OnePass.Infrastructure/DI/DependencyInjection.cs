@@ -23,6 +23,10 @@ namespace OnePass.Infrastructure
             services.AddScoped<IReadRepositoryFactory, ReadRepositoryFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+
+            //Add query handler
+            services.AddScoped<IReadQueryHandler<GetCampusByIdQuery, Campus>, GetCampusByIdQueryHandler>();
+
             // Add other infrastructure services here (e.g., DbContext, caching, etc.)
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
