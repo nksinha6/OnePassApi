@@ -9,7 +9,7 @@ namespace OnePass.Domain
 {
     public interface ICampusPersistService
     {
-        Task PersistCampus(Campus campus);
+        Task<Campus> PersistCampus(Campus campus);
         Task UpdateCampus(Campus campus);
         Task DeleteCampus(Campus campus);
         Task UpdateCampusPartial(Campus campus, params Expression<Func<Campus, object>>[] properties);

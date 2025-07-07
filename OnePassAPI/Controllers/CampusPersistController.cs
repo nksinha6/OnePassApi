@@ -32,9 +32,17 @@ namespace OnePass.API
             try
             {
                 var campus = request.Adapt<Campus>();
-                await _campusPersistService.PersistCampus(campus);
+                var persistedCampus = await _campusPersistService.PersistCampus(campus);
 
-                return CreatedAtAction(nameof(CreateCampus), new { id = campus.Id }, null);
+                var locationUrl = Url.Action(
+           action: nameof(CampusReadController.GetCampusById),
+           controller: "CampusRead",
+           values: new { id = persistedCampus.Id },
+           protocol: Request.Scheme);
+
+                _logger.LogInformation("Campus created with Id {Id}.", persistedCampus.Id);
+
+                return Created(locationUrl!, persistedCampus);
             }
             catch (Exception ex)
             {

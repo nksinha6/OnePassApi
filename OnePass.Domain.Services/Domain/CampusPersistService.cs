@@ -16,9 +16,9 @@ namespace OnePass.Domain.Services
             _campusRepository = campusRepository;
         }
 
-        public async Task PersistCampus(Campus campus)
+        public async Task<Campus> PersistCampus(Campus campus)
         {
-            await _campusRepository.AddOrUpdateAllAsync(new List<Campus>() { campus });
+            return (await _campusRepository.AddOrUpdateAllAsync(new List<Campus>() { campus })).FirstOrDefault();
         }
 
         public async Task UpdateCampus(Campus campus)

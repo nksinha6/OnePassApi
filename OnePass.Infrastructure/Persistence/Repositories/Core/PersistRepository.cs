@@ -28,13 +28,15 @@ namespace OnePass.Infrastructure.Persistence
             _tracer = tracer;
         }
 
-        public async Task AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
             await ExecuteDbOperation(entity, async () =>
             {
                 await _dbSet.AddAsync(entity);
                 await _context.SaveChangesAsync();
             });
+
+            return entity;
         }
 
         public async Task UpdateAsync(T entity)
@@ -55,7 +57,7 @@ namespace OnePass.Infrastructure.Persistence
             });
         }
 
-        public async Task AddAllAsync(IEnumerable<T> entities)
+        public async Task<IEnumerable<T>> AddAllAsync(IEnumerable<T> entities)
         {
             await ExecuteDbOperation(entities, async () =>
             {
@@ -68,6 +70,8 @@ namespace OnePass.Infrastructure.Persistence
                 await _dbSet.AddRangeAsync(entities);
                 await _context.SaveChangesAsync();
             });
+
+            return entities;
         }
 
         public async Task UpdateAllAsync(IEnumerable<T> entities)
@@ -100,7 +104,7 @@ namespace OnePass.Infrastructure.Persistence
             });
         }
 
-        public async Task AddOrUpdateAllAsync(IEnumerable<T> entities)
+        public async Task<IEnumerable<T>> AddOrUpdateAllAsync(IEnumerable<T> entities)
         {
             await ExecuteDbOperation(entities, async () =>
             {
@@ -149,6 +153,8 @@ namespace OnePass.Infrastructure.Persistence
 
                 await _context.SaveChangesAsync();
             });
+
+            return entities;
         }
 
         public async Task UpdatePartialAsync(T entity, params Expression<Func<T, object>>[] updatedProperties)

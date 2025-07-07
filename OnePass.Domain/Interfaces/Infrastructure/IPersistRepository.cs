@@ -9,15 +9,15 @@ namespace OnePass.Domain
 {
     public interface IPersistRepository<T> where T : class
     {
-        Task AddAsync(T entity);
+        Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
 
-        Task AddAllAsync(IEnumerable<T> entities);
+        Task<IEnumerable<T>> AddAllAsync(IEnumerable<T> entities);
         Task UpdateAllAsync(IEnumerable<T> entities);
         Task DeleteAllAsync(IEnumerable<T> entities);
 
-        Task AddOrUpdateAllAsync(IEnumerable<T> entities);
+        Task<IEnumerable<T>> AddOrUpdateAllAsync(IEnumerable<T> entities);
 
         Task UpdatePartialAsync(T entity, params Expression<Func<T, object>>[] updatedProperties);
     }
