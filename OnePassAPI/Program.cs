@@ -26,6 +26,8 @@ builder.Services.AddSingleton<Tracer>(sp =>
     return tracerProvider.GetTracer("OnePass.API");
 });
 builder.Services.AddControllers();
+builder.Services.AddMemoryCache();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 MapsterConfig.RegisterMappings();

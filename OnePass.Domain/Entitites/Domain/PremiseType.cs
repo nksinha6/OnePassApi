@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class GetCampusByIdQuery : IReadQuery
+    public class PremiseType
     {
-        public Guid Id { get; set; }
+        public short Id { get; set; }   // SMALLINT in DB
+        public string Name { get; set; } = null!;
     }
 }

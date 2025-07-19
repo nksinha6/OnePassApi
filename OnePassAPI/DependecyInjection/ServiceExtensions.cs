@@ -7,8 +7,8 @@ namespace OnePass.API
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<ICampusPersistService, CampusPersistService>();
-            services.AddScoped<ICampusReadService, CampusReadService>();
+            services.AddScoped<IPremisePersistService, PremisePersistService>();
+            services.AddScoped<IPremiseReadService, PremiseReadService>();
             return services;
         }
     }

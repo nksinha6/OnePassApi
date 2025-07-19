@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public interface ICampusReadService
+    public class GetPremiseByIdQuery : IReadQuery
     {
-        public Task<Campus> GetCampusAsync(GetCampusByIdQuery query);
+        public Guid Id { get; set; }
     }
 }
