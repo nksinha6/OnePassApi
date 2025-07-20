@@ -26,5 +26,30 @@ namespace OnePass.Domain
             HandleQueryAsync<GetPremisesByParentIdQuery, PremiseResponse>(
                 query,
                 useStoredProcedure: false);
+
+        public Task<IEnumerable<PropertyResponse>> GetPropertyAsync(GetPropertiesByCompanyIdQuery query) =>
+            HandleQueryAsync<GetPropertiesByCompanyIdQuery, PropertyResponse>(
+                query,
+                useStoredProcedure: false);
+
+        public Task<IEnumerable<UnitResponse>> GetUnitsAsync(GetUnitsByCompanyIdQuery query) =>
+            HandleQueryAsync<GetUnitsByCompanyIdQuery, UnitResponse>(
+                query,
+                useStoredProcedure: false);
+
+        public Task<IEnumerable<UnitResponse>> GetUnitsAsync(GetUnitsByPropertyIdQuery query) =>
+            HandleQueryAsync<GetUnitsByPropertyIdQuery, UnitResponse>(
+                query,
+                useStoredProcedure: false);
+
+        public Task<IEnumerable<DeskResponse>> GetDesksAsync(GetDesksByCompanyIdQuery query) =>
+            HandleQueryAsync<GetDesksByCompanyIdQuery, DeskResponse>(
+                query,
+                useStoredProcedure: false);
+
+        public Task<IEnumerable<DeskResponse>> GetDesksAsync(GetDesksByUnitIdQuery query) =>
+            HandleQueryAsync<GetDesksByUnitIdQuery, DeskResponse>(
+                query,
+                useStoredProcedure: false);
     }
 }

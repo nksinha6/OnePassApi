@@ -12,5 +12,10 @@ namespace OnePass.Domain
         Task<PremiseResponse> GetPremiseAsync(GetPremiseByIdQuery query);
         Task<IEnumerable<PremiseResponse>> GetPremisesAsync(GetPremisesByTenantIdQuery query);
         Task<IEnumerable<PremiseResponse>> GetPremisesAsync(GetPremisesByParentIdQuery query);
+        Task<IEnumerable<PropertyResponse>> GetPropertyAsync(GetPropertiesByCompanyIdQuery query);
+        Task<IEnumerable<UnitResponse>> GetUnitsAsync(GetUnitsByCompanyIdQuery query);
+        Task<IEnumerable<UnitResponse>> GetUnitsAsync(GetUnitsByPropertyIdQuery query);
+        Task<IEnumerable<DeskResponse>> GetDesksAsync(GetDesksByCompanyIdQuery query);
+        Task<IEnumerable<DeskResponse>> GetDesksAsync(GetDesksByUnitIdQuery query);
     }
 }
