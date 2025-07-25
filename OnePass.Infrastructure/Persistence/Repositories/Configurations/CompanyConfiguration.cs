@@ -9,24 +9,39 @@ using OnePass.Domain;
 
 namespace OnePass.Infrastructure.Persistence
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
     public class CompanyConfiguration : IEntityTypeConfiguration<Company>
     {
         public void Configure(EntityTypeBuilder<Company> builder)
         {
-            builder.ToTable("company");
+            builder.ToTable("companies");
 
-            builder.HasKey(c => c.Id);
+            builder.HasKey(c => c.CompanyId);
+
+            builder.Property(c => c.CompanyId)
+                   .HasColumnName("company_id")
+                   .HasDefaultValueSql("gen_random_uuid()");
 
             builder.Property(c => c.Name)
-                .IsRequired();
+                   .HasColumnName("name")
+                   .HasMaxLength(100)
+                   .IsRequired();
+
+            builder.Property(c => c.Address)
+                   .HasColumnName("address");
+
+            builder.Property(c => c.Zip)
+                   .HasColumnName("zip");
+
+            builder.Property(c => c.City)
+                   .HasColumnName("city");
 
             builder.Property(c => c.CreatedAt)
-                .HasDefaultValueSql("now()")
-                .IsRequired();
-
-            builder.Property(c => c.UpdatedAt)
-                .HasDefaultValueSql("now()")
-                .IsRequired();
+                   .HasColumnName("created_at")
+                   .HasDefaultValueSql("CURRENT_TIMESTAMP");
         }
     }
+
 }

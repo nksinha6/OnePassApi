@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class Company
+    public class User
     {
-        public Guid CompanyId { get; set; }
+        public Guid UserId { get; set; }
 
         public string Name { get; set; } = null!;
 
-        public string? Address { get; set; }
+        public string Email { get; set; } = null!;
 
-        public string? Zip { get; set; }
+        public string Phone { get; set; } = null!;
 
-        public string? City { get; set; }
+        public string Status { get; set; } = "unverified";
+
+        public bool IsEmailVerified { get; set; } = false;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
