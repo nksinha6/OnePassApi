@@ -8,17 +8,18 @@ namespace OnePass.Domain
 {
     public class Company
     {
-        public Guid CompanyId { get; set; }
-
+        public Guid Id { get; set; }         // maps to id (UUID)
         public string Name { get; set; } = null!;
-
         public string? Address { get; set; }
-
-        public string? Zip { get; set; }
-
         public string? City { get; set; }
-
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string? State { get; set; }
+        public string? Zip { get; set; }
+        public string? Country { get; set; }
+        public string? Website { get; set; }
+        public string? Email { get; set; }
+        public string? Phone { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 
 }

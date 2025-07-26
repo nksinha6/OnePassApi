@@ -16,32 +16,37 @@ namespace OnePass.Infrastructure.Persistence
     {
         public void Configure(EntityTypeBuilder<Company> builder)
         {
+            // Map to table
             builder.ToTable("companies");
 
-            builder.HasKey(c => c.CompanyId);
+            // Primary key
+            builder.HasKey(c => c.Id);
 
-            builder.Property(c => c.CompanyId)
-                   .HasColumnName("company_id")
-                   .HasDefaultValueSql("gen_random_uuid()");
+            // Column mappings
+            builder.Property(c => c.Id)
+                .HasColumnName("id")
+                .IsRequired();
 
             builder.Property(c => c.Name)
-                   .HasColumnName("name")
-                   .HasMaxLength(100)
-                   .IsRequired();
+                .HasColumnName("name")
+                .IsRequired();
 
-            builder.Property(c => c.Address)
-                   .HasColumnName("address");
-
-            builder.Property(c => c.Zip)
-                   .HasColumnName("zip");
-
-            builder.Property(c => c.City)
-                   .HasColumnName("city");
+            builder.Property(c => c.Address).HasColumnName("address");
+            builder.Property(c => c.City).HasColumnName("city");
+            builder.Property(c => c.State).HasColumnName("state");
+            builder.Property(c => c.Zip).HasColumnName("zip");
+            builder.Property(c => c.Country).HasColumnName("country");
+            builder.Property(c => c.Website).HasColumnName("website");
+            builder.Property(c => c.Email).HasColumnName("email");
+            builder.Property(c => c.Phone).HasColumnName("phone");
 
             builder.Property(c => c.CreatedAt)
-                   .HasColumnName("created_at")
-                   .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                .HasColumnName("created_at")
+                .HasDefaultValueSql("now()");
+
+            builder.Property(c => c.UpdatedAt)
+                .HasColumnName("updated_at")
+                .HasDefaultValueSql("now()");
         }
     }
-
 }

@@ -9,15 +9,10 @@ namespace OnePass.Domain
     public class Unit
     {
         public Guid Id { get; set; }
-
-        public string Name { get; set; }
-
+        public string Name { get; set; } = null!;
         public Guid CompanyId { get; set; }
-
         public Guid? PropertyId { get; set; }
-
         public int? Floor { get; set; }
-
         public string? AdminPhone { get; set; }
     }
 

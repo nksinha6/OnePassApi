@@ -16,7 +16,7 @@ namespace OnePass.API
         }
 
         protected async Task<ActionResult<TResult>> ExecuteAsync<TResult>(
-            Guid id,
+            Guid? id,
             Func<string> cacheKeyFactory,
             Func<Task<TResult>> fetchFunc,
             string notFoundMessage)

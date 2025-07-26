@@ -10,7 +10,7 @@ namespace OnePass.Domain
     {
         public Guid Id { get; set; }
 
-        public Guid UserId { get; set; }
+        public string UserPhone { get; set; } = null!;   // FK to users(phone)
 
         public Guid CompanyId { get; set; }
 

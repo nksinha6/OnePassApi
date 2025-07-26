@@ -19,35 +19,30 @@ namespace OnePass.Infrastructure.Persistence
             builder.HasKey(ucr => ucr.Id);
 
             builder.Property(ucr => ucr.Id)
-                   .HasColumnName("id")
                    .HasDefaultValueSql("gen_random_uuid()");
 
-            // Foreign Key columns (no navigation properties)
-            builder.Property(ucr => ucr.UserId)
-                   .HasColumnName("user_id")
+            builder.Property(ucr => ucr.UserPhone)
+                   .HasMaxLength(20)
                    .IsRequired();
 
             builder.Property(ucr => ucr.CompanyId)
-                   .HasColumnName("company_id")
                    .IsRequired();
 
             builder.Property(ucr => ucr.UnitId)
-                   .HasColumnName("unit_id")
                    .IsRequired();
 
             builder.Property(ucr => ucr.RoleId)
-                   .HasColumnName("role_id")
                    .IsRequired();
 
-            // Active flag
             builder.Property(ucr => ucr.IsActive)
-                   .HasColumnName("is_active")
                    .HasDefaultValue(true);
 
-            // Timestamp
             builder.Property(ucr => ucr.CreatedAt)
-                   .HasColumnName("created_at")
                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            // Index on user_phone for fast queries
+            builder.HasIndex(ucr => ucr.UserPhone)
+                   .HasDatabaseName("idx_user_company_roles_user_phone");
         }
     }
 }

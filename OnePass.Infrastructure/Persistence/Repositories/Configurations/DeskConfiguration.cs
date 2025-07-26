@@ -17,20 +17,15 @@ namespace OnePass.Infrastructure.Persistence
 
             builder.HasKey(d => d.Id);
 
+            builder.Property(d => d.Id)
+                   .HasDefaultValueSql("gen_random_uuid()");
+
             builder.Property(d => d.Name)
-                .IsRequired();
+                   .IsRequired();
 
             builder.Property(d => d.UnitId)
-                .IsRequired();
+                   .IsRequired();
 
-            builder.Property(d => d.AdminPhone);
-
-            builder.Property(d => d.AccessMode);
-
-            builder.Property(d => d.AccessCategory);
-
-            builder.HasCheckConstraint("CK_desk_admin_phone",
-                @"admin_phone ~ '^(\+)?[0-9\s\-().]{7,25}$'");
         }
     }
 }

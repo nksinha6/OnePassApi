@@ -17,31 +17,17 @@ namespace OnePass.Infrastructure.Persistence
 
             builder.HasKey(p => p.Id);
 
+            builder.Property(p => p.Id)
+                   .HasDefaultValueSql("gen_random_uuid()");
+
+            builder.Property(p => p.CompanyId).IsRequired();
+
             builder.Property(p => p.Name)
-                .IsRequired();
+                   .IsRequired();
 
-            builder.Property(p => p.CompanyId)
-                .IsRequired();
-
-            builder.Property(p => p.Address);
-
-            builder.Property(p => p.City);
-
-            builder.Property(p => p.Pincode);
-
-            builder.Property(p => p.State);
-
-            builder.Property(p => p.Country);
-
-            builder.Property(p => p.GmapUrl);
-
-            builder.Property(p => p.AdminPhone);
-
-            builder.HasCheckConstraint(
-                "CK_Property_AdminPhone_Format",
-                @"admin_phone ~ '^(\+)?[0-9\s\-().]{7,25}$'"
-            );
-
+            builder.Property(p => p.AdminPhone)
+                   .HasMaxLength(20)
+                   .IsRequired();
         }
     }
 }
