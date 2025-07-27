@@ -9,7 +9,6 @@ namespace OnePass.Infrastructure.Persistence
         public OnePassDbContext(DbContextOptions<OnePassDbContext> options) : base(options) { }
 
         // Explicit DbSets for convenience
-        public DbSet<Premise> Premises => Set<Premise>();
         public DbSet<Property> Properties => Set<Property>();
         public DbSet<Unit> Units => Set<Unit>();
         public DbSet<Desk> Desks => Set<Desk>();
@@ -17,7 +16,6 @@ namespace OnePass.Infrastructure.Persistence
         public DbSet<AccessCategory> AccessCategories => Set<AccessCategory>();
         public DbSet<Company> Companies => Set<Company>();
         public DbSet<User> Users => Set<User>();
-        public DbSet<PremiseType> PremiseTypes => Set<PremiseType>();
         public DbSet<Tenant> Tenants => Set<Tenant>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

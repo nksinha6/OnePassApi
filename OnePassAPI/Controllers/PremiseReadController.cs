@@ -18,33 +18,6 @@ public class PremiseReadController(
 {
     private readonly IPremiseReadService _premiseReadService = premiseReadService;
 
-    [HttpGet]
-    public Task<ActionResult<PremiseResponse>> GetPremiseById([FromQuery] Guid id) =>
-        ExecuteAsync(
-            id,
-            () => $"premise_{id}",
-            () => _premiseReadService.GetPremiseAsync(new GetPremiseByIdQuery { Id = id }),
-            notFoundMessage: $"Premise with Id {id} not found."
-        );
-
-    [HttpGet("by-tenant")]
-    public Task<ActionResult<IEnumerable<PremiseResponse>>> GetPremisesByTenantId([FromQuery] Guid tenantId) =>
-        ExecuteAsync(
-            tenantId,
-            () => $"premises_tenant_{tenantId}",
-            () => _premiseReadService.GetPremisesAsync(new GetPremisesByTenantIdQuery { TenantId = tenantId }),
-            notFoundMessage: $"No premises found for TenantId {tenantId}."
-        );
-
-    [HttpGet("by-parent")]
-    public Task<ActionResult<IEnumerable<PremiseResponse>>> GetPremisesByParentId([FromQuery] Guid parentId) =>
-        ExecuteAsync(
-            parentId,
-            () => $"premises_parent_{parentId}",
-            () => _premiseReadService.GetPremisesAsync(new GetPremisesByParentIdQuery { ParentId = parentId }),
-            notFoundMessage: $"No premises found for ParentId {parentId}."
-        );
-
     [HttpGet("property-by-companyId")]
     public Task<ActionResult<PropertyResponseContainer>> GetPropertyByCompanyId([FromQuery] Guid companyId) =>
     ExecuteAsync(

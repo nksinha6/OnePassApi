@@ -11,23 +11,7 @@ namespace OnePass.Domain
     {
         public PremiseReadService(IReadRepositoryFactory repositoryFactory) : base(repositoryFactory) { }
         
-        public Task<PremiseResponse> GetPremiseAsync(GetPremiseByIdQuery query) =>
-            HandleSingleOrDefaultAsync<GetPremiseByIdQuery, PremiseResponse>(
-                query,
-                useStoredProcedure: false,
-                notFoundMessage: "No Premise found for given Id");
-
-        public Task<IEnumerable<PremiseResponse>> GetPremisesAsync(GetPremisesByTenantIdQuery query) =>
-            HandleQueryAsync<GetPremisesByTenantIdQuery, PremiseResponse>(
-                query,
-                useStoredProcedure: false);
-
-        public Task<IEnumerable<PremiseResponse>> GetPremisesAsync(GetPremisesByParentIdQuery query) =>
-            HandleQueryAsync<GetPremisesByParentIdQuery, PremiseResponse>(
-                query,
-                useStoredProcedure: false);
-
-        public Task<IEnumerable<PropertyResponse>> GetPropertyAsync(GetPropertiesByCompanyIdQuery query) =>
+            public Task<IEnumerable<PropertyResponse>> GetPropertyAsync(GetPropertiesByCompanyIdQuery query) =>
             HandleQueryAsync<GetPropertiesByCompanyIdQuery, PropertyResponse>(
                 query,
                 useStoredProcedure: false);

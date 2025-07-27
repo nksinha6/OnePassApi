@@ -25,13 +25,10 @@ namespace OnePass.Infrastructure
 
 
             //Add query handler
-            services.AddScoped<IReadQueryHandler<GetPremiseByIdQuery, PremiseResponse>, GetPremiseByIdQueryHandler>();
-
-            services.AddScoped<IReadQueryHandler<GetPremisesByTenantIdQuery, PremiseResponse>, GetPremisesByTenantIdQueryHandler>();
-            services.AddScoped<IReadQueryHandler<GetPremisesByParentIdQuery, PremiseResponse>, GetPremisesByParentIdQueryHandler>();
-            services.AddScoped<IReadQueryHandler<GetPropertiesByCompanyIdQuery,PropertyResponse>, GetPropertiesByCompanyIdQueryHandler>();
+            services.AddScoped<IReadQueryHandler<GetPropertiesByCompanyIdQuery, PropertyResponse>, GetPropertiesByCompanyIdQueryHandler>();
 
             services.AddScoped<IReadQueryHandler<GetUnitsByCompanyIdQuery, UnitResponse>, GetUnitsByCompanyIdQueryHandler>();
+
             services.AddScoped<IReadQueryHandler<GetUnitsByPropertyIdQuery, UnitResponse>, GetUnitsByPropertyIdQueryHandler>();
 
             services.AddScoped<IReadQueryHandler<GetDesksByCompanyIdQuery, DeskResponse>, GetDesksByCompanyIdQueryHandler>();

@@ -7,20 +7,15 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain.Services
 {
-    public class PremisePersistService(IPersistRepository<Premise> premiseRepository, IPersistRepository<Property> propertyRepository,
+    public class PremisePersistService(IPersistRepository<Property> propertyRepository,
         IPersistRepository<Unit> unitRepository,
         IPersistRepository<Desk> deskRepository) : IPremisePersistService
     {
-        private readonly IPersistRepository<Premise> _premiseRepository = premiseRepository;
-        private readonly IPersistRepository<Property> _propertyRepository = propertyRepository;
+       private readonly IPersistRepository<Property> _propertyRepository = propertyRepository;
         private readonly IPersistRepository<Unit> _unitRepository = unitRepository;
         private readonly IPersistRepository<Desk> _deskRepository = deskRepository;
 
-        public async Task<Premise> PersistPremise(Premise premise)
-        {
-            return (await _premiseRepository.AddOrUpdateAllAsync(new List<Premise>() { premise })).FirstOrDefault();
-        }
-
+        
         public async Task<Property> PersistProperty(Property property)
         {
             return (await _propertyRepository.AddOrUpdateAllAsync(new List<Property>() { property })).FirstOrDefault();
@@ -36,19 +31,9 @@ namespace OnePass.Domain.Services
             return (await _deskRepository.AddOrUpdateAllAsync(new List<Desk>() { desk })).FirstOrDefault();
         }
 
-        public async Task UpdatePremise(Premise premise)
+        public async Task UpdatePremisePartial(Property premise, params Expression<Func<Property, object>>[] properties)
         {
-            await _premiseRepository.UpdateAsync(premise);
-        }
-
-        public async Task DeletePremise(Premise premise)
-        {
-            await _premiseRepository.DeleteAsync(premise);
-        }
-
-        public async Task UpdatePremisePartial(Premise premise, params Expression<Func<Premise, object>>[] properties)
-        {
-            await _premiseRepository.UpdatePartialAsync(premise, properties);
+            await _propertyRepository.UpdatePartialAsync(premise, properties);
         }
     }
 }
