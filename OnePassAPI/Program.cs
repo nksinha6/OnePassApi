@@ -1,5 +1,6 @@
-using OnePass.API;
+﻿using OnePass.API;
 using OnePass.Infrastructure;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Scalar.AspNetCore;
@@ -27,6 +28,22 @@ builder.Services.AddSingleton<Tracer>(sp =>
 });
 builder.Services.AddControllers();
 builder.Services.AddMemoryCache();
+// ✅ Add OpenTelemetry Exporter (Prometheus, OTLP, etc.)
+builder.Services.AddOpenTelemetry()
+    .WithMetrics(metrics =>
+    {
+        metrics.AddAspNetCoreInstrumentation();
+        metrics.AddHttpClientInstrumentation();
+        metrics.AddMeter("OnePass.API.Requests");
+        // 👉 Choose where to export: Prometheus, OTLP, Console, etc.
+        metrics.AddPrometheusExporter();
+    })
+    .WithTracing(tracing =>
+    {
+        tracing.AddAspNetCoreInstrumentation();
+        tracing.AddHttpClientInstrumentation();
+        tracing.AddOtlpExporter(); // or Jaeger/Zipkin
+    });
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -39,6 +56,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
+app.UseRequestTracing();
 
 app.UseHttpsRedirection();
 
