@@ -13,6 +13,8 @@ namespace OnePass.Infrastructure.Persistence
         public DbSet<Property> Properties => Set<Property>();
         public DbSet<Unit> Units => Set<Unit>();
         public DbSet<Desk> Desks => Set<Desk>();
+        public DbSet<AccessMode> AccessModes => Set<AccessMode>();
+        public DbSet<AccessCategory> AccessCategories => Set<AccessCategory>();
         public DbSet<Company> Companies => Set<Company>();
         public DbSet<User> Users => Set<User>();
         public DbSet<PremiseType> PremiseTypes => Set<PremiseType>();

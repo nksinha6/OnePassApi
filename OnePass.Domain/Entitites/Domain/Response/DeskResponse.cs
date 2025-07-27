@@ -14,7 +14,9 @@ namespace OnePass.Domain
         public string UnitName { get; set; }
 
         public string? AdminPhone { get; set; }
+        public Guid? AccessModeId { get; set; }
         public string? AccessMode { get; set; }
+        public Guid? AccessCategoryId { get; set; }
         public string? AccessCategory { get; set; }
 
         public Guid CompanyId { get; set; }

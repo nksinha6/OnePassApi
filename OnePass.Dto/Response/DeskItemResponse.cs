@@ -11,7 +11,9 @@ namespace OnePass.Dto
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string? AdminPhone { get; set; }
+        public Guid? AccessModeId { get; set; }
         public string? AccessMode { get; set; }
+        public Guid? AccessCategoryId { get; set; }
         public string? AccessCategory { get; set; }
     }
 }

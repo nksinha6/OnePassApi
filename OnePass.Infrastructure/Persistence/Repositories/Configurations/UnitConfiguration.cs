@@ -14,18 +14,46 @@ namespace OnePass.Infrastructure.Persistence
     {
         public void Configure(EntityTypeBuilder<Unit> builder)
         {
-            builder.ToTable("unit");
+            // ✅ Table name
+            builder.ToTable("units");
 
+            // ✅ Primary key
             builder.HasKey(u => u.Id);
 
+            // ✅ Fields
             builder.Property(u => u.Id)
-                   .HasDefaultValueSql("gen_random_uuid()");
+                   .IsRequired();
 
             builder.Property(u => u.Name)
                    .IsRequired();
 
             builder.Property(u => u.CompanyId)
                    .IsRequired();
+
+            builder.Property(u => u.PropertyId)
+                   .IsRequired(false);
+
+            builder.Property(u => u.Floor)
+                   .IsRequired(false);
+
+            builder.Property(u => u.AdminPhone)
+                   .IsRequired(false);
+
+            // ✅ Foreign Keys (no navigation props)
+            builder.HasOne<Company>()
+                   .WithMany()
+                   .HasForeignKey(u => u.CompanyId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne<Property>()
+                   .WithMany()
+                   .HasForeignKey(u => u.PropertyId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne<User>()
+                   .WithMany()
+                   .HasForeignKey(u => u.AdminPhone)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

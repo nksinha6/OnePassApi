@@ -19,6 +19,8 @@ namespace OnePass.Infrastructure.Persistence
                 from d in ctx.Desks.AsNoTracking()
                 join u in ctx.Units.AsNoTracking() on d.UnitId equals u.Id
                 join c in ctx.Companies.AsNoTracking() on u.CompanyId equals c.Id
+                join am in ctx.AccessModes.AsNoTracking() on d.AccessModeId equals am.Id
+                join ac in ctx.AccessCategories.AsNoTracking() on d.AccessCategoryId equals ac.Id
                 where u.CompanyId == companyId
                 orderby d.Name
                 select new DeskResponse
@@ -28,11 +30,15 @@ namespace OnePass.Infrastructure.Persistence
                     UnitId = d.UnitId,
                     UnitName = u.Name,
                     AdminPhone = d.AdminPhone,
-                    AccessMode = d.AccessMode,
-                    AccessCategory = d.AccessCategory,
+
+                    // ✅ Get Access Mode & Category Names
+                    AccessModeId = d.AccessModeId,
+                    AccessMode = am.Name,
+                    AccessCategoryId = d.AccessCategoryId,
+                    AccessCategory = ac.Name,
+
                     CompanyId = c.Id,
-                    CompanyName = c.Name,
-                    
+                    CompanyName = c.Name
                 });
 
         public GetDesksByCompanyIdQueryHandler(

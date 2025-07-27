@@ -10,10 +10,13 @@ namespace OnePass.Domain
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
-        public Guid CompanyId { get; set; }
-        public Guid? PropertyId { get; set; }
-        public int? Floor { get; set; }
-        public string? AdminPhone { get; set; }
+
+        public Guid CompanyId { get; set; }    // FK → companies(id)
+        public Guid? PropertyId { get; set; }  // FK → properties(id) (nullable)
+
+        public int? Floor { get; set; }        // optional
+
+        public string? AdminPhone { get; set; } // FK → users(phone) (nullable)
     }
 
 }

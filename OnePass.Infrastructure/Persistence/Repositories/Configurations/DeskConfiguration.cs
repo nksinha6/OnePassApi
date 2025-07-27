@@ -13,12 +13,15 @@ namespace OnePass.Infrastructure.Persistence
     {
         public void Configure(EntityTypeBuilder<Desk> builder)
         {
-            builder.ToTable("desk");
+            // ✅ Table name
+            builder.ToTable("desks");
 
+            // ✅ Primary key
             builder.HasKey(d => d.Id);
 
+            // ✅ Fields
             builder.Property(d => d.Id)
-                   .HasDefaultValueSql("gen_random_uuid()");
+                   .IsRequired();
 
             builder.Property(d => d.Name)
                    .IsRequired();
@@ -26,6 +29,35 @@ namespace OnePass.Infrastructure.Persistence
             builder.Property(d => d.UnitId)
                    .IsRequired();
 
+            builder.Property(d => d.AdminPhone)
+                   .IsRequired(false);
+
+            builder.Property(d => d.AccessModeId)
+                   .IsRequired();
+
+            builder.Property(d => d.AccessCategoryId)
+                   .IsRequired();
+
+            // ✅ Foreign Keys (no navigation properties)
+            builder.HasOne<Unit>()
+                   .WithMany()
+                   .HasForeignKey(d => d.UnitId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne<User>()
+                   .WithMany()
+                   .HasForeignKey(d => d.AdminPhone)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne<AccessMode>()
+                   .WithMany()
+                   .HasForeignKey(d => d.AccessModeId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne<AccessCategory>()
+                   .WithMany()
+                   .HasForeignKey(d => d.AccessCategoryId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
