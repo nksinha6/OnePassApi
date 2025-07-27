@@ -10,6 +10,7 @@ namespace OnePass.API
             services.AddScoped<IPremisePersistService, PremisePersistService>();
             services.AddScoped<IPremiseReadService, PremiseReadService>();
             services.AddScoped<ICompanyReadService, CompanyReadService>();
+            services.AddScoped<IUserReadService, UserReadService>();
             return services;
         }
     }

@@ -8,8 +8,9 @@ namespace OnePass.Domain
 {
     public class Property
     {
-        public Guid Id { get; set; }
-        public Guid CompanyId { get; set; }
+        public Guid Id { get; set; }             // UUID (Primary Key)
+        public Guid CompanyId { get; set; }      // Foreign Key to companies(id)
+
         public string Name { get; set; } = null!;
         public string? Address { get; set; }
         public string? City { get; set; }
@@ -17,6 +18,7 @@ namespace OnePass.Domain
         public string? State { get; set; }
         public string? Country { get; set; }
         public string? GmapUrl { get; set; }
-        public string AdminPhone { get; set; } = null!;
+
+        public string AdminPhone { get; set; } = null!; // FK to users(phone)+----
     }
 }

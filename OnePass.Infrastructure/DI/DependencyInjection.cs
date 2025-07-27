@@ -37,6 +37,8 @@ namespace OnePass.Infrastructure
             services.AddScoped<IReadQueryHandler<GetDesksByCompanyIdQuery, DeskResponse>, GetDesksByCompanyIdQueryHandler>();
             services.AddScoped<IReadQueryHandler<GetDesksByUnitIdQuery, DeskResponse>, GetDesksByUnitIdQueryHandler>();
 
+            services.AddScoped<IReadQueryHandler<GetUserQuery, User>, GetUserByPhoneQueryHandler>();
+
             services.AddScoped<IReadQueryHandler<GetAllCompaniesQuery, Company>, GetAllCompaniesQueryHandler>();
             // Add other infrastructure services here (e.g., DbContext, caching, etc.)
             var connectionString = configuration.GetConnectionString("DefaultConnection");
