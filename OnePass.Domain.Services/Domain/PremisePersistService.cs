@@ -7,33 +7,39 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain.Services
 {
-    public class PremisePersistService(IPersistRepository<Property> propertyRepository,
-        IPersistRepository<Unit> unitRepository,
-        IPersistRepository<Desk> deskRepository) : IPremisePersistService
+    public class PremisePersistService : IPremisePersistService
     {
-       private readonly IPersistRepository<Property> _propertyRepository = propertyRepository;
-        private readonly IPersistRepository<Unit> _unitRepository = unitRepository;
-        private readonly IPersistRepository<Desk> _deskRepository = deskRepository;
+        private readonly IPersistRepository<Property> _propertyRepository;
+        private readonly IPersistRepository<Unit> _unitRepository;
+        private readonly IPersistRepository<Desk> _deskRepository;
 
-        
-        public async Task<Property> PersistProperty(Property property)
+        public PremisePersistService(
+            IPersistRepository<Property> propertyRepository,
+            IPersistRepository<Unit> unitRepository,
+            IPersistRepository<Desk> deskRepository)
         {
-            return (await _propertyRepository.AddOrUpdateAllAsync(new List<Property>() { property })).FirstOrDefault();
+            _propertyRepository = propertyRepository;
+            _unitRepository = unitRepository;
+            _deskRepository = deskRepository;
         }
 
-        public async Task<Unit> PersistUnit(Unit unit)
+        // ✅ DRY helper method
+        private static async Task<T> PersistSingleAsync<T>(IPersistRepository<T> repository, T entity) where T : class
         {
-            return (await _unitRepository.AddOrUpdateAllAsync(new List<Unit>() { unit })).FirstOrDefault();
+            var result = await repository.AddOrUpdateAllAsync(new List<T> { entity });
+            return result.First();
         }
 
-        public async Task<Desk> PersistDesk(Desk desk)
-        {
-            return (await _deskRepository.AddOrUpdateAllAsync(new List<Desk>() { desk })).FirstOrDefault();
-        }
+        public Task<Property> PersistProperty(Property property) =>
+            PersistSingleAsync(_propertyRepository, property);
 
-        public async Task UpdatePremisePartial(Property premise, params Expression<Func<Property, object>>[] properties)
-        {
-            await _propertyRepository.UpdatePartialAsync(premise, properties);
-        }
+        public Task<Unit> PersistUnit(Unit unit) =>
+            PersistSingleAsync(_unitRepository, unit);
+
+        public Task<Desk> PersistDesk(Desk desk) =>
+            PersistSingleAsync(_deskRepository, desk);
+
+        public Task UpdatePremisePartial(Property premise, params Expression<Func<Property, object>>[] properties) =>
+            _propertyRepository.UpdatePartialAsync(premise, properties);
     }
 }
