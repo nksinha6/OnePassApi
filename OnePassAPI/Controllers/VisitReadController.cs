@@ -19,7 +19,7 @@ public class VisitReadController(
     private readonly IVisitReadService _visitReadService = visitReadService;
 
     [HttpGet]
-    public Task<ActionResult<IEnumerable<VisitPurpose>>> GetUser() =>
+    public Task<ActionResult<IEnumerable<VisitPurpose>>> GetVisitPurposes() =>
         ExecuteAsync(
             null,
             () => "",
