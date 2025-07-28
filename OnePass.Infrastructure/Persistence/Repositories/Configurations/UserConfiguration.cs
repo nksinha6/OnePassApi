@@ -58,8 +58,8 @@ namespace OnePass.Infrastructure.Persistence
 
             builder.Property(u => u.CreatedAt)
                 .HasColumnName("created_at")
-                .HasColumnType("TIMESTAMP")
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                 .HasColumnType("timestamptz")
+                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // ✅ CHECK constraint for status
             builder.HasCheckConstraint("chk_users_status", "status IN ('unverified', 'created', 'registered', 'verified')");

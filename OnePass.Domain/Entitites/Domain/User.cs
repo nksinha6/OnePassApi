@@ -19,7 +19,7 @@ namespace OnePass.Domain
 
         public bool IsEmailVerified { get; set; } = false;
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
     }
 
 }

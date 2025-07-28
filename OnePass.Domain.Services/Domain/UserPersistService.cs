@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OnePass.Domain.Services
+{
+    public class UserPersistsService(IPersistRepository<User> userPersistsRepository) : IUserPersistsService
+    {
+        private readonly IPersistRepository<User> _userPersistsRepository = userPersistsRepository;
+       
+        public async Task<User> PersistsAsync(User user)
+        {
+            var result = await _userPersistsRepository.AddOrUpdateAllAsync(new List<User> { user });
+            return result.First();
+        }
+    }
+}
