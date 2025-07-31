@@ -35,6 +35,12 @@ namespace OnePass.API
                 .Map(dest => dest.Items, src => src.Select(x => x.Adapt<DeskItemResponse>()));
 
 
+            TypeAdapterConfig<InviteDto, Invite>
+            .NewConfig()
+           .Ignore(dest => dest.Id)
+            .Ignore(dest => dest.CreatedAt)
+            .Ignore(dest => dest.CheckinQrcode)
+            .Ignore(dest => dest.CheckoutQrcode);
             // Add more mappings here if needed
         }
     }

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OnePass.Dto\OnePass.Dto.csproj" />
+  </ItemGroup>
+
 </Project>
