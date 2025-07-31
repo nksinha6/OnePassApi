@@ -27,4 +27,13 @@ public class VisitReadController(
             notFoundMessage: $"No visit purposes found."
         );
 
+    [HttpGet("GetHostInvites")]
+    public Task<ActionResult<IEnumerable<HostInviteDetail>>> GetHostInvites([FromQuery] string hostPhoneNo) =>
+        ExecuteAsync(
+            null,
+            () => "",
+            () => _visitReadService.GetHostInvites(new GetInviteByHostPhoneQuery() { PhoneNo = hostPhoneNo }),
+            notFoundMessage: $"No invites found in next 7 days."
+        );
+
 }

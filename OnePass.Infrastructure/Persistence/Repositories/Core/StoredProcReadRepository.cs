@@ -1,77 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
+using Npgsql;
 using OnePass.Domain;
 using OpenTelemetry.Trace;
 
 namespace OnePass.Infrastructure.Persistence
 {
     public class StoredProcReadRepository<TQuery, TResult> : IStoredProcReadRepository<TQuery, TResult>
-    where TQuery : IReadQuery
-    where TResult : class, new()
+        where TQuery : IReadQuery
+        where TResult : class, new()
     {
-        private readonly SqlConnection _connection;
+        private readonly NpgsqlConnection _connection;
         private readonly ILogger<StoredProcReadRepository<TQuery, TResult>> _logger;
         private readonly Tracer _tracer;
         private readonly Dictionary<Type, string> _queryMappings;
 
-        public StoredProcReadRepository(SqlConnection connection, Tracer tracer, ILogger<StoredProcReadRepository<TQuery, TResult>> logger)
+        public StoredProcReadRepository(NpgsqlConnection connection, Tracer tracer, ILogger<StoredProcReadRepository<TQuery, TResult>> logger)
         {
             _connection = connection;
             _tracer = tracer;
             _logger = logger;
 
+            // ✅ Map Query DTO -> Postgres Function Name
             _queryMappings = new Dictionary<Type, string>
             {
-                { typeof(IUnitOfWork), "GETDSLBySuperintendentId" }
+                { typeof(GetInviteByHostPhoneQuery), "get_host_invite_details" }
             };
         }
 
         public async Task<IEnumerable<TResult>> ExecuteQueryAsync(TQuery query)
         {
-            if (!_queryMappings.TryGetValue(typeof(TQuery), out var storedProcedure))
-                throw new ArgumentException($"No stored procedure mapping for query type: {typeof(TQuery).Name}");
+            if (!_queryMappings.TryGetValue(typeof(TQuery), out var functionName))
+                throw new ArgumentException($"No mapping found for query type: {typeof(TQuery).Name}");
 
-            using var span = _tracer.StartSpan($"SP:{storedProcedure}", SpanKind.Internal);
+            using var span = _tracer.StartSpan($"PGFUNC:{functionName}", SpanKind.Internal);
             span.SetAttribute("query.type", typeof(TQuery).Name);
-            span.SetAttribute("sp.storedProcedure", storedProcedure);
+            span.SetAttribute("pg.function", functionName);
 
             try
             {
-                var result = await ExecuteStoredProcAsync(storedProcedure, query, span);
-                span.SetAttribute("sp.success", true);
-                span.End();
+                var result = await ExecuteFunctionAsync(functionName, query, span);
+                span.SetAttribute("pg.success", true);
                 return result;
             }
             catch (Exception ex)
             {
                 span.RecordException(ex);
-                _logger.LogError(ex, "Stored procedure execution failed: {Procedure}", storedProcedure);
-                span.End();
+                _logger.LogError(ex, "Postgres function execution failed: {Function}", functionName);
                 throw;
+            }
+            finally
+            {
+                span.End();
             }
         }
 
-        private async Task<IEnumerable<TResult>> ExecuteStoredProcAsync(string sp, object query, TelemetrySpan span)
+        private async Task<IEnumerable<TResult>> ExecuteFunctionAsync(string functionName, object query, TelemetrySpan span)
         {
             var results = new List<TResult>();
 
-            using var command = _connection.CreateCommand();
-            command.CommandText = sp;
-            command.CommandType = CommandType.StoredProcedure;
-            AddParameters(command, query, span);
+            // ✅ Instead of StoredProcedure, we SELECT from function
+            var sql = $"SELECT * FROM {functionName}({BuildParameterList(query)})";
+
+            using var cmd = new NpgsqlCommand(sql, _connection);
+            AddParameters(cmd, query, span);
 
             if (_connection.State != ConnectionState.Open)
                 await _connection.OpenAsync();
 
-            using var reader = await command.ExecuteReaderAsync();
+            using var reader = await cmd.ExecuteReaderAsync();
             var propertyMap = GetPropertyMap(typeof(TResult));
 
             while (await reader.ReadAsync())
@@ -92,7 +94,15 @@ namespace OnePass.Infrastructure.Persistence
             return results;
         }
 
-        private void AddParameters(SqlCommand cmd, object query, TelemetrySpan span)
+        // ✅ Build a parameter list like: @p_host_phone
+        private string BuildParameterList(object query)
+        {
+            var props = query.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            return string.Join(", ", props.Select(p => $"@{p.Name}"));
+        }
+
+        // ✅ Add query params to command
+        private void AddParameters(NpgsqlCommand cmd, object query, TelemetrySpan span)
         {
             foreach (var prop in query.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
@@ -103,6 +113,7 @@ namespace OnePass.Infrastructure.Persistence
             }
         }
 
+        // ✅ Map properties from reader to TResult
         private Dictionary<string, PropertyInfo> GetPropertyMap(Type type)
         {
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
@@ -114,5 +125,5 @@ namespace OnePass.Infrastructure.Persistence
             throw new NotImplementedException("ExecuteAllAsync not implemented");
         }
     }
-
 }
+

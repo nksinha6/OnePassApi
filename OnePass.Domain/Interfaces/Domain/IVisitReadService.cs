@@ -10,6 +10,6 @@ namespace OnePass.Domain
     {
         Task<IEnumerable<VisitPurpose>> GetVisitPurposes(GetAllVisitPurposesQuery query);
 
-       // Task<IEnumerable<VisitPurpose>> GetInvites(GetInvitesByPhone query);
+        Task<IEnumerable<HostInviteDetail>> GetHostInvites(GetInviteByHostPhoneQuery query);
     }
 }

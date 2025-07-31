@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using Npgsql;
 
 namespace OnePass.Infrastructure.Persistence
 {
-    public static class SqlDataReaderExtensions
+    public static class NpgsqlDataReaderExtensions
     {
-        public static bool HasColumn(this SqlDataReader reader, string columnName)
+        public static bool HasColumn(this NpgsqlDataReader reader, string columnName)
         {
             for (int i = 0; i < reader.FieldCount; i++)
             {

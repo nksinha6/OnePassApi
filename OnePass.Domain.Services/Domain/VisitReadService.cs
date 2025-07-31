@@ -17,5 +17,10 @@ namespace OnePass.Domain
         HandleQueryAsync<GetAllVisitPurposesQuery, VisitPurpose>(
                 query,
                 useStoredProcedure: false);
+
+        public Task<IEnumerable<HostInviteDetail>> GetHostInvites(GetInviteByHostPhoneQuery query) =>
+        HandleQueryAsync<GetInviteByHostPhoneQuery, HostInviteDetail>(
+                query,
+                useStoredProcedure: true);
     }
 }

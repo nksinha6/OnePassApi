@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain.Services
 {
-    public abstract class ReadServiceBase
+    public abstract class ReadServiceBase(IReadRepositoryFactory repositoryFactory)
     {
-        private readonly IReadRepositoryFactory _repositoryFactory;
-
-        protected ReadServiceBase(IReadRepositoryFactory repositoryFactory)
-        {
-            _repositoryFactory = repositoryFactory;
-        }
+        private readonly IReadRepositoryFactory _repositoryFactory = repositoryFactory;
 
         protected IReadRepository<TQuery, TResult> GetRepository<TQuery, TResult>(bool useStoredProcedure)
             where TQuery : IReadQuery
