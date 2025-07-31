@@ -10,8 +10,8 @@ namespace OnePass.Domain
     {
         public string Phone { get; set; } = null!;   // PK
 
-        public string FirstName { get; set; } = null!;
-        public string LastName { get; set; } = null!;
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
 
         public string? Email { get; set; }
 

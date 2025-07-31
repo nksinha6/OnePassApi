@@ -9,5 +9,7 @@ namespace OnePass.Domain
     public interface IVisitReadService
     {
         Task<IEnumerable<VisitPurpose>> GetVisitPurposes(GetAllVisitPurposesQuery query);
+
+       // Task<IEnumerable<VisitPurpose>> GetInvites(GetInvitesByPhone query);
     }
 }

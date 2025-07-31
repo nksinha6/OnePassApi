@@ -11,6 +11,7 @@ namespace OnePass.Domain.Services
     public class VisitPersistService(IPersistRepository<VisitPurpose> visitorPersistsRepository,
         IPersistRepository<Invite> inviteService,
         IPersistRepository<InviteGuest> inviteGuestService,
+        IUserPersistsService userPersistService,
         IUnitOfWork unitOfWork) : IVisitPersistService
     {
         private readonly IPersistRepository<VisitPurpose> _visitorPersistsRepository = visitorPersistsRepository;
@@ -18,6 +19,8 @@ namespace OnePass.Domain.Services
         private readonly IPersistRepository<Invite> _inviteService = inviteService;
 
         private readonly IPersistRepository<InviteGuest> _inviteGuestService = inviteGuestService;
+
+        private readonly IUserPersistsService _userPersistService = userPersistService;
 
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         public async Task<VisitPurpose> PersistVisitPurposeAsync(VisitPurpose visitPurpose)
@@ -48,6 +51,7 @@ namespace OnePass.Domain.Services
                         GuestPhone = guest
                     };
 
+                    await _userPersistService.PersistsIfNotExistsAsync(guest);
                     await _inviteGuestService.AddAsync(inviteGuest);
                 }
 

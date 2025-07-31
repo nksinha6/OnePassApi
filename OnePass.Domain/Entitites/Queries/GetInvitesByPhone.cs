@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public interface IUserPersistsService
+    public class GetInvitesByPhone
     {
-        Task<User> PersistsAsync(User user);
-        Task<User> PersistsIfNotExistsAsync(string phoneNo);
-
+        public string PhoneNo { get; set; }
     }
 }

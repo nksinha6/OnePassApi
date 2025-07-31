@@ -16,5 +16,9 @@ namespace OnePass.Domain.Services
             var result = await _userPersistsRepository.AddOrUpdateAllAsync(new List<User> { user });
             return result.First();
         }
+
+        public Task<User> PersistsIfNotExistsAsync(string phoneNo)
+        => _userPersistsRepository.AddIfNotExistAsync(new User() { Phone = phoneNo });
+        
     }
 }
