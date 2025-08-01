@@ -19,6 +19,6 @@ namespace OnePass.Domain
 
         Task<IEnumerable<T>> AddOrUpdateAllAsync(IEnumerable<T> entities);
         Task<T> AddIfNotExistAsync(T entity);
-        Task UpdatePartialAsync(T entity, params Expression<Func<T, object>>[] updatedProperties);
+        Task<T> UpdatePartialAsync(T entity, params Expression<Func<T, object>>[] updatedProperties);
     }
 }

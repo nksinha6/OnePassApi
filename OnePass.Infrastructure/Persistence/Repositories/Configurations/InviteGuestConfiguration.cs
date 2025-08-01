@@ -16,12 +16,8 @@ namespace OnePass.Infrastructure.Persistence
             // ✅ Table name
             builder.ToTable("invite_guests");
 
-            // ✅ Primary Key
-            builder.HasKey(x => x.Id);
-
-            // ✅ Properties
-            builder.Property(x => x.Id)
-                   .IsRequired();
+            // ✅ Composite key instead of single Id
+            builder.HasKey(ig => new { ig.InviteId, ig.GuestPhone });
 
             builder.Property(x => x.InviteId)
                    .IsRequired();

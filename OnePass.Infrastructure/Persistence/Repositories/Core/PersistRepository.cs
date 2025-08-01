@@ -85,7 +85,7 @@ namespace OnePass.Infrastructure.Persistence
                 await _context.SaveChangesAsync();
             }).ContinueWith(_ => entities);
 
-        public async Task UpdatePartialAsync(T entity, params Expression<Func<T, object>>[] updatedProperties) =>
+        public async Task<T> UpdatePartialAsync(T entity, params Expression<Func<T, object>>[] updatedProperties) =>
             await ExecuteDbOperation(entity, async () =>
             {
                 _dbSet.Attach(entity);
@@ -94,6 +94,7 @@ namespace OnePass.Infrastructure.Persistence
                     entry.Property(property).IsModified = true;
 
                 await _context.SaveChangesAsync();
+                return entity;
             });
 
         /// <summary>

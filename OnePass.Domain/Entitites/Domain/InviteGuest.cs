@@ -8,8 +8,6 @@ namespace OnePass.Domain
 {
     public class InviteGuest
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-
         public Guid InviteId { get; set; }        // FK to invites.id
         public string GuestPhone { get; set; } = null!;
 

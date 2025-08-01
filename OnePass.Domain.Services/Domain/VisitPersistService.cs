@@ -46,7 +46,6 @@ namespace OnePass.Domain.Services
                 {
                     var inviteGuest = new InviteGuest
                     {
-                        Id = Guid.NewGuid(),
                         InviteId = invite.Id,
                         GuestPhone = guest
                     };
@@ -60,5 +59,6 @@ namespace OnePass.Domain.Services
             });
         }
 
+        public Task<InviteGuest> UpdateRSVPStatus(UpdateRSVPParam param) => _inviteGuestService.UpdatePartialAsync(new InviteGuest() { InviteId = param.InviteId, GuestPhone = param.GuestId, RsvpStatus = param.RSVPStatus }, x => x.RsvpStatus);
     }
 }
