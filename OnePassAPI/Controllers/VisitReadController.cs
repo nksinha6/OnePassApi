@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Caching.Memory;
 using OnePass.API;
 using OnePass.Domain;
+using OnePass.Domain.Entitites.Queries;
 using OnePass.Dto;
 using OnePass.Dto.Response;
 
@@ -33,6 +34,15 @@ public class VisitReadController(
             null,
             () => "",
             () => _visitReadService.GetHostInvites(new GetInviteByHostPhoneQuery() { PhoneNo = hostPhoneNo }),
+            notFoundMessage: $"No invites found in next 7 days."
+        );
+
+    [HttpGet("GetGuestInvites")]
+    public Task<ActionResult<IEnumerable<GuestInviteResponseDto>>> GetGuestInvites([FromQuery] string guestPhoneNo) =>
+        ExecuteAsync(
+            null,
+            () => "",
+            () => _visitReadService.GetGuestInvites(new GetInvitesByGuestPhoneQuery() { PhoneNo = guestPhoneNo }),
             notFoundMessage: $"No invites found in next 7 days."
         );
 

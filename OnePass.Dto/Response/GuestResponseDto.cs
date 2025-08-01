@@ -12,5 +12,6 @@ namespace OnePass.Dto
         public string GuestFirstName { get; set; }
         public string GuestLastName { get; set; }
         public string GuestVerificationStatus { get; set; }
+        public string RsvpStatus { get; set; }
     }
 }

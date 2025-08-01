@@ -29,7 +29,8 @@ namespace OnePass.Infrastructure.Persistence
             // ✅ Map Query DTO -> Postgres Function Name
             _queryMappings = new Dictionary<Type, string>
             {
-                { typeof(GetInviteByHostPhoneQuery), "get_host_invite_details" }
+                { typeof(GetInviteByHostPhoneQuery), "get_host_invite_details" },
+                { typeof(GetInvitesByGuestPhoneQuery), "get_guest_invite_details" }
             };
         }
 
@@ -41,7 +42,6 @@ namespace OnePass.Infrastructure.Persistence
             using var span = _tracer.StartSpan($"PGFUNC:{functionName}", SpanKind.Internal);
             span.SetAttribute("query.type", typeof(TQuery).Name);
             span.SetAttribute("pg.function", functionName);
-
             try
             {
                 var result = await ExecuteFunctionAsync(functionName, query, span);
