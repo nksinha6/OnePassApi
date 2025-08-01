@@ -28,7 +28,7 @@ public class VisitReadController(
         );
 
     [HttpGet("GetHostInvites")]
-    public Task<ActionResult<IEnumerable<HostInviteDetail>>> GetHostInvites([FromQuery] string hostPhoneNo) =>
+    public Task<ActionResult<IEnumerable<InviteResponseDto>>> GetHostInvites([FromQuery] string hostPhoneNo) =>
         ExecuteAsync(
             null,
             () => "",

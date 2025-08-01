@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OnePass.Dto;
 
 namespace OnePass.Domain
 {
@@ -10,6 +11,6 @@ namespace OnePass.Domain
     {
         Task<IEnumerable<VisitPurpose>> GetVisitPurposes(GetAllVisitPurposesQuery query);
 
-        Task<IEnumerable<HostInviteDetail>> GetHostInvites(GetInviteByHostPhoneQuery query);
+        Task<IEnumerable<InviteResponseDto>> GetHostInvites(GetInviteByHostPhoneQuery query);
     }
 }

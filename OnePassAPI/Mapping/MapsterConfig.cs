@@ -42,6 +42,7 @@ namespace OnePass.API
             .Ignore(dest => dest.CheckinQrcode)
             .Ignore(dest => dest.CheckoutQrcode);
             // Add more mappings here if needed
+
         }
     }
 }

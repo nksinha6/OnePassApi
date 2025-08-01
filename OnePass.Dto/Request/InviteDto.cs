@@ -10,6 +10,7 @@ namespace OnePass.Dto
     {
         public string HostUserPhone { get; set; } = null!;
         public Guid UnitId { get; set; }
+        public string UnitName { get; set; }
 
         public string? Title { get; set; }
         public string? Description { get; set; }
