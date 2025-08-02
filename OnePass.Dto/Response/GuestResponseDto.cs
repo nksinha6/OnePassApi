@@ -13,5 +13,7 @@ namespace OnePass.Dto
         public string GuestLastName { get; set; }
         public string GuestVerificationStatus { get; set; }
         public string RsvpStatus { get; set; }
+
+        public bool? HasNdaAccepted { get; set; }
     }
 }

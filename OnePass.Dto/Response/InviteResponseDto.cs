@@ -21,6 +21,8 @@ namespace OnePass.Dto
         public string ZoneLevel { get; set; }
         public string HostPhone { get; set; }
 
+        public bool NdaRequired { get; set; }          // from Units table
+
         // ✅ guests grouped under this invite
         public List<GuestResponseDto> Guests { get; set; } = new();
     }

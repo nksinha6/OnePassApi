@@ -61,7 +61,8 @@ namespace OnePass.Domain
                     x.Scope,
                     x.VisitPurpose,
                     x.ZoneLevel,
-                    x.HostPhone
+                    x.HostPhone,
+                    x.NdaRequired,
                 })
                 .Select(g => new InviteResponseDto
                 {
@@ -76,7 +77,7 @@ namespace OnePass.Domain
                     VisitPurpose = g.Key.VisitPurpose,
                     ZoneLevel = g.Key.ZoneLevel,
                     HostPhone = g.Key.HostPhone,
-
+                    NdaRequired = g.Key.NdaRequired,
                     // ✅ Guests list for this invite
                     Guests = g
                         .Where(x => !string.IsNullOrWhiteSpace(x.GuestPhone))
@@ -85,7 +86,8 @@ namespace OnePass.Domain
                             GuestPhone = x.GuestPhone,
                             GuestFirstName = x.GuestFirstName,
                             GuestLastName = x.GuestLastName,
-                            GuestVerificationStatus = x.GuestVerificationStatus
+                            GuestVerificationStatus = x.GuestVerificationStatus,
+                            HasNdaAccepted = x.HasNdaAccepted
                         })
                         .GroupBy(guest => guest.GuestPhone)        // remove duplicates by phone
                         .Select(grp => grp.First())                // only first if multiple
