@@ -37,6 +37,7 @@ namespace OnePass.Infrastructure.Persistence
             builder.Property(x => x.CreatedAt)
                    .IsRequired();
 
+            builder.Property(ig => ig.HasAcceptedNda);
             // ✅ Foreign Key (without navigation property)
             builder.HasIndex(x => x.InviteId);
         }

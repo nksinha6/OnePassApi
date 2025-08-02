@@ -60,5 +60,7 @@ namespace OnePass.Domain.Services
         }
 
         public Task<InviteGuest> UpdateRSVPStatus(UpdateRSVPParam param) => _inviteGuestService.UpdatePartialAsync(new InviteGuest() { InviteId = param.InviteId, GuestPhone = param.GuestId, RsvpStatus = param.RSVPStatus }, x => x.RsvpStatus);
+
+        public Task<InviteGuest> UpdateNDAStatus(UpdateNDAParam param) => _inviteGuestService.UpdatePartialAsync(new InviteGuest() { InviteId = param.InviteId, GuestPhone = param.GuestId, HasAcceptedNda = true }, x => x.HasAcceptedNda);
     }
 }

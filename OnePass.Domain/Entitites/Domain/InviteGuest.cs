@@ -13,6 +13,8 @@ namespace OnePass.Domain
 
         public string RsvpStatus { get; set; } = "pending";   // pending, accepted, declined
 
+        public bool? HasAcceptedNda { get; set; }   // nullable: only relevant if NDA is required
+
         public DateTime? CheckinTime { get; set; }
         public DateTime? CheckoutTime { get; set; }
 

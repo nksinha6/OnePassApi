@@ -54,5 +54,19 @@ namespace OnePass.API.Controllers
                 {
                     return await _visitPersistService.UpdateRSVPStatus(param);
                 });
+
+        [HttpPut("UpdateNDA")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> UpdateNDA([FromBody] UpdateNDAParam param) =>
+            ExecutePersistAsync(
+                param,
+                nameof(VisitReadController.GetVisitPurposes),
+                "VisitRead",
+                async () =>
+                {
+                    return await _visitPersistService.UpdateNDAStatus(param);
+                });
     }
 }
