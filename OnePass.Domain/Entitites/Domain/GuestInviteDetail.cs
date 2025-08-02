@@ -24,5 +24,8 @@ namespace OnePass.Domain
         public string GuestVerificationStatus { get; set; }
         public string RsvpStatus { get; set; }
         public string HostPhone { get; set; }
+
+        public bool NdaRequired { get; set; }       // from Units table
+        public bool? HasNdaAccepted { get; set; }   // nullable: only relevant if NDA is required
     }
 }

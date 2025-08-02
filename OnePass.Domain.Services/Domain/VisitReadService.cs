@@ -108,7 +108,9 @@ namespace OnePass.Domain
                     x.GuestPhone,
                     x.GuestFirstName,
                     x.GuestLastName,
-                    x.GuestVerificationStatus
+                    x.GuestVerificationStatus,
+                    x.NdaRequired,
+                    x.HasNdaAccepted
                 })
                 .Select(g => new GuestInviteResponseDto
                 {
@@ -118,7 +120,8 @@ namespace OnePass.Domain
                         GuestPhone = g.Key.GuestPhone,
                         GuestFirstName = g.Key.GuestFirstName,
                         GuestLastName = g.Key.GuestLastName,
-                        GuestVerificationStatus = g.Key.GuestVerificationStatus
+                        GuestVerificationStatus = g.Key.GuestVerificationStatus,
+                        HasNdaAccepted = g.Key.HasNdaAccepted
                     },
 
                     // ✅ Collect all invites for this guest
@@ -135,7 +138,9 @@ namespace OnePass.Domain
                             inv.Scope,
                             inv.VisitPurpose,
                             inv.ZoneLevel,
-                            inv.HostPhone
+                            inv.HostPhone,
+                            inv.NdaRequired,
+                            inv.HasNdaAccepted
                         })
                         .Select(invGroup => new GuestInviteDetailDto
                         {
@@ -149,7 +154,9 @@ namespace OnePass.Domain
                             Scope = invGroup.Key.Scope,
                             VisitPurpose = invGroup.Key.VisitPurpose,
                             ZoneLevel = invGroup.Key.ZoneLevel,
-                            HostPhone = invGroup.Key.HostPhone
+                            HostPhone = invGroup.Key.HostPhone,
+                            NdaRequired = invGroup.Key.NdaRequired,
+                            HasNdaAccepted = invGroup.Key.HasNdaAccepted,
                         })
                         .ToList()
                 })

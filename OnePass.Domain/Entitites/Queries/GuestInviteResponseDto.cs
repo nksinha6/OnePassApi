@@ -32,5 +32,8 @@ namespace OnePass.Domain.Entitites.Queries
         public string ZoneLevel { get; set; }
 
         public string HostPhone { get; set; }
+
+        public bool NdaRequired { get; set; }       // from Units table
+        public bool? HasNdaAccepted { get; set; }
     }
 }
