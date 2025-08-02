@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OnePass.Domain;
 using OnePass.Dto;
 
@@ -66,5 +68,38 @@ namespace OnePass.API.Controllers
                 {
                     return await _userPersistsService.UpdateUserProfileAsync(request);
                 });
+
+
+        [HttpPost("users/{phone}/photo")]
+        public async Task<IActionResult> UpdateUserPhoto(string phone, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("No file uploaded.");
+
+            // ✅ Validate file type (optional)
+            var allowedTypes = new[] { "image/jpeg", "image/png" };
+            if (!allowedTypes.Contains(file.ContentType))
+                return BadRequest("Only JPEG and PNG files are allowed.");
+
+            // ✅ Convert file to byte[]
+            byte[] photoBytes;
+            using (var ms = new MemoryStream())
+            {
+                await file.CopyToAsync(ms);
+                photoBytes = ms.ToArray();
+            }
+
+            return await
+                ExecutePersistAsync(
+                photoBytes,
+                nameof(UserReadController.GetUser),
+                "UserRead",
+                async () =>
+                {
+                    return await _userPersistsService.UpdateUserImageAsync(phone, photoBytes);
+                });
+
+        }
+
     }
 }

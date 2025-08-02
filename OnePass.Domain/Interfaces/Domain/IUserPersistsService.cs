@@ -14,5 +14,6 @@ namespace OnePass.Domain
         Task<User> UpdateStatusAsync(UpdateUserStatusParam param);
         Task<User> VerifyEmailAsync(string phoneNo);
         Task<User> UpdateUserProfileAsync(UserProfileUpdateDto user);
+        Task<User> UpdateUserImageAsync(string phoneNo, byte[] image);
     }
 }

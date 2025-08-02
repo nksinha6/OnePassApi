@@ -25,6 +25,9 @@ namespace OnePass.Domain.Services
         public Task<User> UpdateStatusAsync(UpdateUserStatusParam param)
        => _userPersistsRepository.UpdatePartialAsync(new User() { Phone = param.PhoneNo, Status = param.Status }, x => x.Status);
 
+        public Task<User> UpdateUserImageAsync(string phoneNo, byte[] image)
+        => _userPersistsRepository.UpdatePartialAsync(new User() { Phone = phoneNo, Photo = image }, x => x.Photo);
+
         public Task<User> UpdateUserProfileAsync(UserProfileUpdateDto user) =>
         _userPersistsRepository.UpdatePartialAsync(new User() { Phone = user.Phone, FirstName = user.FirstName, LastName = user.LastName, Email = user.Email }, 
             x => x.FirstName,

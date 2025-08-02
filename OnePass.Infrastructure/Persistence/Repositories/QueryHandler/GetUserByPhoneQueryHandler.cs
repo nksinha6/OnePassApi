@@ -26,6 +26,7 @@ namespace OnePass.Infrastructure.Persistence
                         Email = u.Email,
                         Status = u.Status,
                         IsEmailVerified = u.IsEmailVerified,
+                        Photo = u.Photo,
                         CreatedAt = u.CreatedAt
                     })
                     .FirstOrDefault());

@@ -18,6 +18,7 @@ namespace OnePass.Domain
         public string Status { get; set; } = "unverified";  // allowed values: unverified, created, registered, verified
 
         public bool IsEmailVerified { get; set; } = false;
+        public byte[]? Photo { get; set; }
 
         public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
     }

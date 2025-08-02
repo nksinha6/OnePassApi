@@ -56,6 +56,10 @@ namespace OnePass.Infrastructure.Persistence
                 .HasDefaultValue(false)
                 .IsRequired();
 
+            builder.Property(u => u.Photo)
+           .HasColumnType("bytea")
+           .IsRequired(false);
+
             builder.Property(u => u.CreatedAt)
                 .HasColumnName("created_at")
                  .HasColumnType("timestamptz")
