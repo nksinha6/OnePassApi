@@ -10,6 +10,8 @@ namespace OnePass.Domain
     {
         Task<User> PersistsAsync(User user);
         Task<User> PersistsIfNotExistsAsync(string phoneNo);
+        Task<User> UpdateStatusAsync(UpdateUserStatusParam param);
+
 
     }
 }

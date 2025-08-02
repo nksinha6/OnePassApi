@@ -24,5 +24,19 @@ namespace OnePass.API.Controllers
                 {
                     return await _userPersistsService.PersistsAsync(request);
                 });
+
+        [HttpPut("UpdateUser")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> UpdateUser([FromBody] UpdateUserStatusParam param) =>
+            ExecutePersistAsync(
+                param,
+                nameof(UserReadController.GetUser),
+                "UserRead",
+                async () =>
+                {
+                    return await _userPersistsService.UpdateStatusAsync(param);
+                });
     }
 }
