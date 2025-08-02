@@ -38,5 +38,19 @@ namespace OnePass.API.Controllers
                 {
                     return await _userPersistsService.UpdateStatusAsync(param);
                 });
+
+        [HttpPut("VerifyUserEmail")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> VerifyUserEmail([FromQuery] string phoneNo) =>
+            ExecutePersistAsync(
+                phoneNo,
+                nameof(UserReadController.GetUser),
+                "UserRead",
+                async () =>
+                {
+                    return await _userPersistsService.VerifyEmailAsync(phoneNo);
+                });
     }
 }

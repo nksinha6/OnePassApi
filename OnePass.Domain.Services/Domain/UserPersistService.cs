@@ -23,5 +23,8 @@ namespace OnePass.Domain.Services
         public Task<User> UpdateStatusAsync(UpdateUserStatusParam param)
        => _userPersistsRepository.UpdatePartialAsync(new User() { Phone = param.PhoneNo, Status = param.Status }, x => x.Status);
 
+        public Task<User> VerifyEmailAsync(string phoneNo)
+       => _userPersistsRepository.UpdatePartialAsync(new User() { Phone = phoneNo, IsEmailVerified = true }, x => x.IsEmailVerified);
+
     }
 }
