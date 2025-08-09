@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class UpdateVisitStatusParam
+    public class UpdateVisitApprovalStatusParam
     {
         public Guid VisitId { get; set; }
-        public string Status { get; set; }
+        public string ApprovedByPhone { get; set; }
     }
 }

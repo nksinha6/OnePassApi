@@ -15,7 +15,7 @@ namespace OnePass.Domain
         Task<InviteGuest> UpdateRSVPStatus(UpdateRSVPParam param);
         Task<InviteGuest> UpdateNDAStatus(UpdateNDAParam param);
         Task<Visit> UpdateVisitNDAStatus(UpdateVisitNDAParam param);
-        Task<Visit> UpdateVisitStatus(UpdateVisitStatusParam param);
+        Task<Visit> UpdateVisitApprovalStatus(UpdateVisitApprovalStatusParam param);
 
         Task<Visit> CheckinVisit(Guid visitId);
 

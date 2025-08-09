@@ -71,7 +71,7 @@ namespace OnePass.Domain.Services
 
         public Task<Visit> UpdateVisitNDAStatus(UpdateVisitNDAParam param) => _visitService.UpdatePartialAsync(new Visit() { Id = param.VisitId, HasAcceptedNda = true }, x => x.HasAcceptedNda);
 
-        public Task<Visit> UpdateVisitStatus(UpdateVisitStatusParam param) => _visitService.UpdatePartialAsync(new Visit() { Id = param.VisitId, Status = param.Status }, x => x.Status);
+        public Task<Visit> UpdateVisitApprovalStatus(UpdateVisitApprovalStatusParam param) => _visitService.UpdatePartialAsync(new Visit() { Id = param.VisitId, Status = "host_accepted", ApprovedByPhone = param.ApprovedByPhone }, x => x.Status, x => x.ApprovedByPhone);
 
         public Task<Visit> CheckinVisit(Guid visitId) => _visitService.UpdatePartialAsync(new Visit() { Id = visitId, CheckInTime = DateTimeOffset.UtcNow, Status = "checked_in" }, x => x.CheckInTime, x => x.Status);
 

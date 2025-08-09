@@ -28,6 +28,10 @@ namespace OnePass.Infrastructure.Persistence
                 .IsRequired()
                 .HasMaxLength(20);
 
+            builder.Property(v => v.ApprovedByPhone)
+                .IsRequired()
+                .HasMaxLength(20);
+
             builder.Property(v => v.VisitPurposeId)
                 .IsRequired();
 

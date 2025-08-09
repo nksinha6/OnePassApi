@@ -96,18 +96,18 @@ namespace OnePass.API.Controllers
                     return await _visitPersistService.UpdateVisitNDAStatus(param);
                 });
 
-        [HttpPut("UpdateVisitStatus")]
+        [HttpPut("update_visit_approval_status")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> UpdateVisitStatus([FromBody] UpdateVisitStatusParam param) =>
+        public Task<IActionResult> UpdateVisitApprovalStatus([FromBody] UpdateVisitApprovalStatusParam param) =>
             ExecutePersistAsync(
                 param,
                 nameof(VisitReadController.GetVisitPurposes),
                 "VisitRead",
                 async () =>
                 {
-                    return await _visitPersistService.UpdateVisitStatus(param);
+                    return await _visitPersistService.UpdateVisitApprovalStatus(param);
                 });
 
         [HttpPut("checkin_visit")]

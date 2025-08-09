@@ -12,6 +12,7 @@ namespace OnePass.Domain
 
         public string GuestPhone { get; set; }
         public string HostPhone { get; set; }
+        public string ApprovedByPhone { get; set; }
 
         public Guid VisitPurposeId { get; set; }
 
