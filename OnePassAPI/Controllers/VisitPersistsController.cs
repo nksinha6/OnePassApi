@@ -40,6 +40,19 @@ namespace OnePass.API.Controllers
                     return await _visitPersistService.PersistInviteAsync(request);
                 });
 
+        [HttpPost("PersistVisit")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> CreateVisit([FromBody] VisitDto request) =>
+            ExecutePersistAsync(
+                request,
+                nameof(VisitReadController.GetVisitPurposes),
+                "VisitRead",
+                async () =>
+                {
+                    return await _visitPersistService.PersistVisitAsync(request);
+                });
 
         [HttpPut("UpdateRSVP")]
         [ProducesResponseType(StatusCodes.Status201Created)]

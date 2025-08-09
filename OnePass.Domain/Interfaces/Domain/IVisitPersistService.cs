@@ -11,8 +11,8 @@ namespace OnePass.Domain
     {
         Task<VisitPurpose> PersistVisitPurposeAsync(VisitPurpose request);
         Task<Invite> PersistInviteAsync(InviteDto request);
+        Task<Visit> PersistVisitAsync(VisitDto request);
         Task<InviteGuest> UpdateRSVPStatus(UpdateRSVPParam param);
-
         Task<InviteGuest> UpdateNDAStatus(UpdateNDAParam param);
     }
 }

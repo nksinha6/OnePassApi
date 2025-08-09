@@ -10,6 +10,7 @@ namespace OnePass.Domain.Services
 {
     public class VisitPersistService(IPersistRepository<VisitPurpose> visitorPersistsRepository,
         IPersistRepository<Invite> inviteService,
+        IPersistRepository<Visit> visitService,
         IPersistRepository<InviteGuest> inviteGuestService,
         IUserPersistsService userPersistService,
         IUnitOfWork unitOfWork) : IVisitPersistService
@@ -17,6 +18,8 @@ namespace OnePass.Domain.Services
         private readonly IPersistRepository<VisitPurpose> _visitorPersistsRepository = visitorPersistsRepository;
 
         private readonly IPersistRepository<Invite> _inviteService = inviteService;
+
+        private readonly IPersistRepository<Visit> _visitService = visitService;
 
         private readonly IPersistRepository<InviteGuest> _inviteGuestService = inviteGuestService;
 
@@ -62,5 +65,7 @@ namespace OnePass.Domain.Services
         public Task<InviteGuest> UpdateRSVPStatus(UpdateRSVPParam param) => _inviteGuestService.UpdatePartialAsync(new InviteGuest() { InviteId = param.InviteId, GuestPhone = param.GuestId, RsvpStatus = param.RSVPStatus }, x => x.RsvpStatus);
 
         public Task<InviteGuest> UpdateNDAStatus(UpdateNDAParam param) => _inviteGuestService.UpdatePartialAsync(new InviteGuest() { InviteId = param.InviteId, GuestPhone = param.GuestId, HasAcceptedNda = true }, x => x.HasAcceptedNda);
+
+        public Task<Visit> PersistVisitAsync(VisitDto request) => _visitService.AddAsync(request.Adapt<Visit>());
     }
 }

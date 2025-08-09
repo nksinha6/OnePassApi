@@ -16,7 +16,6 @@ namespace OnePass.Infrastructure.Persistence
         public DbSet<AccessCategory> AccessCategories => Set<AccessCategory>();
         public DbSet<Company> Companies => Set<Company>();
         public DbSet<User> Users => Set<User>();
-        public DbSet<Tenant> Tenants => Set<Tenant>();
         public DbSet<VisitPurpose> VisitPurposes => Set<VisitPurpose>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

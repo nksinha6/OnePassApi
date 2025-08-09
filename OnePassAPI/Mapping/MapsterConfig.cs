@@ -43,5 +43,15 @@ namespace OnePass.API
             .Ignore(dest => dest.CheckoutQrcode);
             // Add more mappings here if needed
 
+            TypeAdapterConfig<VisitDto, Visit>
+            .NewConfig()
+            .Map(dest => dest.Id, src => Guid.NewGuid()) // auto-generate ID
+            .Map(dest => dest.CreatedAt, src => DateTimeOffset.UtcNow)
+            .Map(dest => dest.UpdatedAt, src => DateTimeOffset.UtcNow)
+            .Map(dest => dest.Status, src => "pending") // default status
+            .Ignore(dest => dest.CheckInTime)
+            .Ignore(dest => dest.CheckOutTime)
+            .Ignore(dest => dest.HasAcceptedNda);
+
         }    }
 }
