@@ -14,5 +14,11 @@ namespace OnePass.Domain
         Task<Visit> PersistVisitAsync(VisitDto request);
         Task<InviteGuest> UpdateRSVPStatus(UpdateRSVPParam param);
         Task<InviteGuest> UpdateNDAStatus(UpdateNDAParam param);
+        Task<Visit> UpdateVisitNDAStatus(UpdateVisitNDAParam param);
+        Task<Visit> UpdateVisitStatus(UpdateVisitStatusParam param);
+
+        Task<Visit> CheckinVisit(Guid visitId);
+
+        Task<Visit> CheckoutVisit(Guid visitId);
     }
 }

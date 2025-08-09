@@ -81,5 +81,61 @@ namespace OnePass.API.Controllers
                 {
                     return await _visitPersistService.UpdateNDAStatus(param);
                 });
+
+        [HttpPut("UpdateVisitNDA")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> UpdateVisitNDA([FromBody] UpdateVisitNDAParam param) =>
+            ExecutePersistAsync(
+                param,
+                nameof(VisitReadController.GetVisitPurposes),
+                "VisitRead",
+                async () =>
+                {
+                    return await _visitPersistService.UpdateVisitNDAStatus(param);
+                });
+
+        [HttpPut("UpdateVisitStatus")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> UpdateVisitStatus([FromBody] UpdateVisitStatusParam param) =>
+            ExecutePersistAsync(
+                param,
+                nameof(VisitReadController.GetVisitPurposes),
+                "VisitRead",
+                async () =>
+                {
+                    return await _visitPersistService.UpdateVisitStatus(param);
+                });
+
+        [HttpPut("checkin_visit")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> CheckinVisit([FromQuery] Guid visitId) =>
+            ExecutePersistAsync(
+                "",
+                nameof(VisitReadController.GetVisitPurposes),
+                "VisitRead",
+                async () =>
+                {
+                    return await _visitPersistService.CheckinVisit(visitId);
+                });
+
+        [HttpPut("checkout_visit")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> CheckoutVisit([FromQuery] Guid visitId) =>
+            ExecutePersistAsync(
+                "",
+                nameof(VisitReadController.GetVisitPurposes),
+                "VisitRead",
+                async () =>
+                {
+                    return await _visitPersistService.CheckoutVisit(visitId);
+                });
     }
 }

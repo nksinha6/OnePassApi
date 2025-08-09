@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mapster;
+using Microsoft.VisualBasic;
 using OnePass.Dto;
 
 namespace OnePass.Domain.Services
@@ -67,5 +68,13 @@ namespace OnePass.Domain.Services
         public Task<InviteGuest> UpdateNDAStatus(UpdateNDAParam param) => _inviteGuestService.UpdatePartialAsync(new InviteGuest() { InviteId = param.InviteId, GuestPhone = param.GuestId, HasAcceptedNda = true }, x => x.HasAcceptedNda);
 
         public Task<Visit> PersistVisitAsync(VisitDto request) => _visitService.AddAsync(request.Adapt<Visit>());
+
+        public Task<Visit> UpdateVisitNDAStatus(UpdateVisitNDAParam param) => _visitService.UpdatePartialAsync(new Visit() { Id = param.VisitId, HasAcceptedNda = true }, x => x.HasAcceptedNda);
+
+        public Task<Visit> UpdateVisitStatus(UpdateVisitStatusParam param) => _visitService.UpdatePartialAsync(new Visit() { Id = param.VisitId, Status = param.Status }, x => x.Status);
+
+        public Task<Visit> CheckinVisit(Guid visitId) => _visitService.UpdatePartialAsync(new Visit() { Id = visitId, CheckInTime = DateTimeOffset.UtcNow, Status = "checked_in" }, x => x.CheckInTime, x => x.Status);
+
+        public Task<Visit> CheckoutVisit(Guid visitId) => _visitService.UpdatePartialAsync(new Visit() { Id = visitId, CheckOutTime = DateTimeOffset.UtcNow, Status = "checked_out" }, x => x.CheckOutTime, x => x.Status);
     }
 }
