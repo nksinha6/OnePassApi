@@ -12,7 +12,7 @@ namespace OnePass.API.Controllers
         private readonly IVisitPersistService _visitPersistService = visitPersistService;
         private readonly ILogger<VisitPersistsController> _logger = logger;
 
-        [HttpPost("PersistVisitPurpose")]
+        [HttpPost("persist_visit_purpose")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
@@ -26,7 +26,7 @@ namespace OnePass.API.Controllers
                     return await _visitPersistService.PersistVisitPurposeAsync(request.Adapt<VisitPurpose>());
                 });
 
-        [HttpPost("PersistInvite")]
+        [HttpPost("persist_invite")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
@@ -40,7 +40,7 @@ namespace OnePass.API.Controllers
                     return await _visitPersistService.PersistInviteAsync(request);
                 });
 
-        [HttpPost("PersistVisit")]
+        [HttpPost("persist_visit")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
@@ -54,7 +54,7 @@ namespace OnePass.API.Controllers
                     return await _visitPersistService.PersistVisitAsync(request);
                 });
 
-        [HttpPut("UpdateRSVP")]
+        [HttpPut("update_RSVP")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
@@ -68,7 +68,7 @@ namespace OnePass.API.Controllers
                     return await _visitPersistService.UpdateRSVPStatus(param);
                 });
 
-        [HttpPut("UpdateNDA")]
+        [HttpPut("update_NDA")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
@@ -82,7 +82,7 @@ namespace OnePass.API.Controllers
                     return await _visitPersistService.UpdateNDAStatus(param);
                 });
 
-        [HttpPut("UpdateVisitNDA")]
+        [HttpPut("update_visit_NDA")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]

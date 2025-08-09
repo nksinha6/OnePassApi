@@ -67,7 +67,15 @@ namespace OnePass.Domain.Services
 
         public Task<InviteGuest> UpdateNDAStatus(UpdateNDAParam param) => _inviteGuestService.UpdatePartialAsync(new InviteGuest() { InviteId = param.InviteId, GuestPhone = param.GuestId, HasAcceptedNda = true }, x => x.HasAcceptedNda);
 
-        public Task<Visit> PersistVisitAsync(VisitDto request) => _visitService.AddAsync(request.Adapt<Visit>());
+        public async Task<Visit> PersistVisitAsync(VisitDto request)
+        {
+            return await _unitOfWork.ExecuteInTransactionAsync(async () =>
+            {
+                await _userPersistService.PersistsIfNotExistsAsync(request.GuestPhone);
+                
+                return await _visitService.AddAsync(request.Adapt<Visit>());
+            });
+        }  
 
         public Task<Visit> UpdateVisitNDAStatus(UpdateVisitNDAParam param) => _visitService.UpdatePartialAsync(new Visit() { Id = param.VisitId, HasAcceptedNda = true }, x => x.HasAcceptedNda);
 
