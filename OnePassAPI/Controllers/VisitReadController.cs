@@ -28,6 +28,16 @@ public class VisitReadController(
             notFoundMessage: $"No visit purposes found."
         );
 
+    [HttpPost("GetVisitPurposeDetails")]
+    public Task<ActionResult<IEnumerable<VisitPurposeWithOverrides>>> GetVisitPurposeDetails([FromBody] VisitPurposeOverridesQuery? request) =>
+        ExecuteAsync
+        (
+            Guid.NewGuid(),
+            () => "",
+            () => _visitReadService.GetVisitPurposeDetails(request),
+            notFoundMessage: $"No visit purposes found."
+        );
+
     [HttpGet("GetHostInvites")]
     public Task<ActionResult<IEnumerable<InviteResponseDto>>> GetHostInvites([FromQuery] string hostPhoneNo) =>
         ExecuteAsync(

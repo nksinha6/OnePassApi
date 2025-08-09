@@ -29,7 +29,7 @@ namespace OnePass.Domain
                 useStoredProcedure: true);
 
             // 2️⃣ Adapt raw list → grouped InviteDto list using Mapster config
-            return TransformInvites(rawData.ToList());
+                return TransformInvites(rawData.ToList());
         }
 
         public async Task<IEnumerable<GuestInviteResponseDto>> GetGuestInvites(GetInvitesByGuestPhoneQuery query)
@@ -42,7 +42,10 @@ namespace OnePass.Domain
             // 2️⃣ Adapt raw list → grouped InviteDto list using Mapster config
             return TransformGuestInvites(rawData.ToList());
         }
-
+        public Task<IEnumerable<VisitPurposeWithOverrides>> GetVisitPurposeDetails(VisitPurposeOverridesQuery query) =>
+        HandleQueryAsync<VisitPurposeOverridesQuery, VisitPurposeWithOverrides>(
+                query,
+                useStoredProcedure: true);
         public List<InviteResponseDto> TransformInvites(List<HostInviteDetail> hostInviteDetails)
         {
             if (hostInviteDetails == null || !hostInviteDetails.Any())
@@ -162,5 +165,7 @@ namespace OnePass.Domain
                 })
                 .ToList();
         }
+
+        
     }
 }

@@ -26,6 +26,16 @@ namespace OnePass.Infrastructure.Persistence
             builder.Property(vp => vp.Description)
                 .IsRequired(false);
 
+            builder.Property(v => v.IsVerificationRequired)
+           .HasDefaultValue(false);
+
+            builder.Property(v => v.IsHostApprovalRequired)
+                .HasDefaultValue(false);
+
+            builder.HasCheckConstraint(
+            "chk_vp_verification_requires_approval",
+            "is_verification_required = false OR (is_verification_required = true AND is_host_approval_required = true)"
+            );
             builder.Property(vp => vp.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
         }

@@ -30,7 +30,8 @@ namespace OnePass.Infrastructure.Persistence
             _queryMappings = new Dictionary<Type, string>
             {
                 { typeof(GetInviteByHostPhoneQuery), "get_host_invite_details" },
-                { typeof(GetInvitesByGuestPhoneQuery), "get_guest_invite_details" }
+                { typeof(GetInvitesByGuestPhoneQuery), "get_guest_invite_details" },
+                { typeof(VisitPurposeOverridesQuery), "get_visit_purposes_with_overrides" }
             };
         }
 

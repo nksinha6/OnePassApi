@@ -15,5 +15,7 @@ namespace OnePass.Domain
         Task<IEnumerable<InviteResponseDto>> GetHostInvites(GetInviteByHostPhoneQuery query);
 
         Task<IEnumerable<GuestInviteResponseDto>> GetGuestInvites(GetInvitesByGuestPhoneQuery query);
+
+        Task<IEnumerable<VisitPurposeWithOverrides>> GetVisitPurposeDetails(VisitPurposeOverridesQuery query);
     }
 }
