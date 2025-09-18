@@ -10,7 +10,7 @@ namespace OnePass.Domain
     {
         public Guid Id { get; set; }
         public Guid CompanyId { get; set; }
-        public string CompanyName { get; set; }  // NEW
+        public string? CompanyName { get; set; }  // NEW
         public string Name { get; set; }
         public string? Address { get; set; }
         public string? City { get; set; }

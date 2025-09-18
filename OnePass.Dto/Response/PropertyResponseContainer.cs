@@ -9,7 +9,7 @@ namespace OnePass.Dto.Response
     public class PropertyResponseContainer
     {
         public Guid CompanyId { get; set; }
-        public string CompanyName { get; set; }
+        public string? CompanyName { get; set; }
         public IEnumerable<PropertyItemResponse> Items { get; set; } = Enumerable.Empty<PropertyItemResponse>();
 
     }

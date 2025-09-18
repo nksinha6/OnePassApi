@@ -28,7 +28,7 @@ public class PremiseReadController(
             var properties = await _premiseReadService.GetPropertyAsync(
                 new GetPropertiesByCompanyIdQuery { CompanyId = companyId }
             );
-            return properties.Adapt<PropertyResponseContainer>();
+            return properties?.Adapt<PropertyResponseContainer>() ?? new PropertyResponseContainer();
         },
         notFoundMessage: $"No property found for CompanyId {companyId}."
     );
