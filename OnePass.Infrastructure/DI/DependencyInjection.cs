@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using OnePass.Domain;
 using OnePass.Infrastructure.Persistence;
+using OnePass.Infrastructure.Security;
 
 namespace OnePass.Infrastructure
 {
@@ -33,6 +34,8 @@ namespace OnePass.Infrastructure
             services.AddScoped<IReadRepositoryFactory, ReadRepositoryFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPasswordHasher, Sha256PasswordHasher>();
+            services.AddScoped<IJwtService, JwtService>();
+
 
             //Add query handler
             services.AddScoped<IReadQueryHandler<GetPropertiesByCompanyIdQuery, PropertyResponse>, GetPropertiesByCompanyIdQueryHandler>();
@@ -48,8 +51,12 @@ services.AddScoped<IReadQueryHandler<GetUserQuery, User>, GetUserByPhoneQueryHan
 
 services.AddScoped<IReadQueryHandler<GetAllVisitPurposesQuery, VisitPurpose>, GetAllVisitPurposesQueryHandler>();
             services.AddScoped<IReadQueryHandler<GetAllCompaniesQuery, Company>, GetAllCompaniesQueryHandler>();
+
+            services.AddScoped<IReadQueryHandler<GetHotelUserPasswordQuery, HotelUserPassword>, GetHotelUserPasswordByIdQueryHandler>();
+
+            services.AddScoped<IReadQueryHandler<GetHotelUserRefreshTokensQuery, HotelUserRefreshToken>, GetHotelUserRefreshTokensQueryHandler>();
             // Add other infrastructure services here (e.g., DbContext, caching, etc.)
-           
+
             return services;
         }
     }

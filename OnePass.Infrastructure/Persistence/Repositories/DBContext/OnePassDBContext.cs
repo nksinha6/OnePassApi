@@ -20,6 +20,10 @@ namespace OnePass.Infrastructure.Persistence
 
         public DbSet<HotelTenant> HotelTenants => Set<HotelTenant>();
         public DbSet<HotelUser> HotelUsers => Set<HotelUser>();
+
+        public DbSet<HotelUserPassword> HotelUserPasswords => Set<HotelUserPassword>();
+
+        public DbSet<HotelUserRefreshToken> HotelUserRefreshToken => Set<HotelUserRefreshToken>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Apply all IEntityTypeConfiguration<T> from this assembly
