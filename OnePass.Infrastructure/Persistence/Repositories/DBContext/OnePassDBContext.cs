@@ -17,6 +17,9 @@ namespace OnePass.Infrastructure.Persistence
         public DbSet<Company> Companies => Set<Company>();
         public DbSet<User> Users => Set<User>();
         public DbSet<VisitPurpose> VisitPurposes => Set<VisitPurpose>();
+
+        public DbSet<HotelTenant> HotelTenants => Set<HotelTenant>();
+        public DbSet<HotelUser> HotelUsers => Set<HotelUser>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Apply all IEntityTypeConfiguration<T> from this assembly

@@ -53,5 +53,8 @@ namespace OnePass.API
             .Ignore(dest => dest.CheckOutTime)
             .Ignore(dest => dest.HasAcceptedNda);
 
+            TypeAdapterConfig<HotelUserPasswordDto, HotelUserPassword>
+             .NewConfig(); // prevent accidental overwrite
+
         }    }
 }

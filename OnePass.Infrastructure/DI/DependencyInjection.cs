@@ -32,7 +32,7 @@ namespace OnePass.Infrastructure
             services.AddScoped(typeof(IStoredProcReadRepository<,>), typeof(StoredProcReadRepository<,>));
             services.AddScoped<IReadRepositoryFactory, ReadRepositoryFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            services.AddScoped<IPasswordHasher, Sha256PasswordHasher>();
 
             //Add query handler
             services.AddScoped<IReadQueryHandler<GetPropertiesByCompanyIdQuery, PropertyResponse>, GetPropertiesByCompanyIdQueryHandler>();
