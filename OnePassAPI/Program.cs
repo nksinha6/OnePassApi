@@ -1,4 +1,9 @@
-﻿using OnePass.API;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using OnePass.API;
 using OnePass.Infrastructure;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -45,6 +50,29 @@ builder.Services.AddOpenTelemetry()
         tracing.AddOtlpExporter(); // or Jaeger/Zipkin
     });
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
+        ),
+        NameClaimType = JwtRegisteredClaimNames.Sub,  // ✅ Important
+        RoleClaimType = ClaimTypes.Role,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 MapsterConfig.RegisterMappings();
@@ -61,6 +89,7 @@ app.UseRequestTracing();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

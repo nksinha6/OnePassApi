@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Design;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Caching.Memory;
@@ -19,6 +20,7 @@ public class CompanyReadController(
     private readonly ICompanyReadService _companyReadService = companyReadService;
 
     [HttpGet]
+    [Authorize]
     public Task<ActionResult<IEnumerable<Company>>> GetCompanies() =>
         ExecuteAsync(
             null,
