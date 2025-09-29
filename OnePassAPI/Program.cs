@@ -49,6 +49,16 @@ builder.Services.AddOpenTelemetry()
         tracing.AddHttpClientInstrumentation();
         tracing.AddOtlpExporter(); // or Jaeger/Zipkin
     });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 
 builder.Services.AddAuthentication(options =>
 {
@@ -71,7 +81,7 @@ builder.Services.AddAuthentication(options =>
         NameClaimType = JwtRegisteredClaimNames.Sub,  // ✅ Important
         RoleClaimType = ClaimTypes.Role,
         ClockSkew = TimeSpan.Zero
-    };
+    };      
 });
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -88,6 +98,8 @@ if (app.Environment.IsDevelopment())
 app.UseRequestTracing();
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();
