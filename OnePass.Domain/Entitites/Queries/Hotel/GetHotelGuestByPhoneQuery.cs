@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class HotelUser
+    public class GetHotelGuestByPhoneQuery : IReadQuery
     {
-        public string Id { get; set; } = null!; // string like "abc.xyz"
-        public int TenantId { get; set; }
+
+        public string PhoneCountryCode { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

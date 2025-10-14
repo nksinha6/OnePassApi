@@ -57,6 +57,9 @@ services.AddScoped<IReadQueryHandler<GetAllVisitPurposesQuery, VisitPurpose>, Ge
             services.AddScoped<IReadQueryHandler<GetHotelUserRefreshTokensQuery, HotelUserRefreshToken>, GetHotelUserRefreshTokensQueryHandler>();
 
             services.AddScoped<IReadQueryHandler<GetHotelUserByIdQuery, HotelUserResponse>, GetHotelUserByIdQueryHandler>();
+
+            services.AddScoped<IReadQueryHandler<GetHotelGuestByPhoneQuery, HotelGuestResponse>, GetHotelGuestByPhoneQueryHandler>();
+
             // Add other infrastructure services here (e.g., DbContext, caching, etc.)
 
             return services;

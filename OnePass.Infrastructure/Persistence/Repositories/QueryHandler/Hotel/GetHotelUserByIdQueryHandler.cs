@@ -23,8 +23,7 @@ namespace OnePass.Infrastructure.Persistence
                  {
                      Id = u.Id,
                      TenantId = u.TenantId,
-                     TenantName = t.Name,
-                     AadharStatus = u.AadharStatus.ToString()
+                     TenantName = t.Name
                  })
                 .FirstOrDefault());
 

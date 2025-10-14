@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class HotelUser
+    public interface IHotelGuestReadService
     {
-        public string Id { get; set; } = null!; // string like "abc.xyz"
-        public int TenantId { get; set; }
+        Task<HotelGuestResponse> GetHotelGuestAsync(GetHotelGuestByPhoneQuery query);
     }
 }

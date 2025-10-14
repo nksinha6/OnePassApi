@@ -11,6 +11,5 @@ namespace OnePass.Domain
         public string Id { get; set; }
         public int TenantId { get; set; }
         public string TenantName { get; set; }
-        public string AadharStatus { get; set; }
     }
 }
