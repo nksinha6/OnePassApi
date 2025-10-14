@@ -10,5 +10,14 @@ namespace OnePass.Domain
     {
         public string Id { get; set; } = null!; // string like "abc.xyz"
         public int TenantId { get; set; }
+        public string AadharStatus { get; set; } = "Pending";
     }
+
+    public enum AadharStatus
+    {
+        Pending,
+        Verified,
+        Rejected
+    }
+
 }

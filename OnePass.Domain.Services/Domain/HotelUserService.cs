@@ -29,6 +29,8 @@ namespace OnePass.Domain.Services
 
         public Task<HotelUserPassword> GetPassword(string userId, int tenantId) =>  HandleSingleOrDefaultAsync<GetHotelUserPasswordQuery, HotelUserPassword>(new GetHotelUserPasswordQuery() { UserId = userId, TenantId = tenantId },
             useStoredProcedure: false);
-        
+
+        public Task<HotelUserResponse> GetUser(string userId, int tenantId) => HandleSingleOrDefaultAsync<GetHotelUserByIdQuery, HotelUserResponse>(new GetHotelUserByIdQuery() { Id = userId, TenantId = tenantId },
+            useStoredProcedure: false);
     }
 }

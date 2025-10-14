@@ -11,5 +11,7 @@ namespace OnePass.Domain
        public Task SetPassword(string userId, string password, int tenantId);
 
        public Task<HotelUserPassword> GetPassword(string userId, int tenantId);
+
+        public Task<HotelUserResponse> GetUser(string userId, int tenantId);
     }
 }

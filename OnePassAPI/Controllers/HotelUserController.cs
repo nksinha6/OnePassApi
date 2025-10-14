@@ -70,7 +70,5 @@ namespace OnePass.API.Controllers
 
             return Ok(new { AccessToken = newAccessToken });
         }
-
-
     }
 }

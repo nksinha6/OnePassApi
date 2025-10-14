@@ -25,6 +25,10 @@ namespace OnePass.Infrastructure.Persistence
             builder.Property(u => u.TenantId)
                    .IsRequired();
 
+            builder.Property(u => u.AadharStatus)
+              .HasMaxLength(20)
+              .HasDefaultValue(AadharStatus.Pending);
+
             // Foreign key to hotel_tenant
             builder.HasOne<HotelTenant>() // no navigation property
                    .WithMany()
