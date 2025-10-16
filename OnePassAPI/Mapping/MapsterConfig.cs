@@ -56,5 +56,11 @@ namespace OnePass.API
             TypeAdapterConfig<HotelUserPasswordDto, HotelUserPassword>
              .NewConfig(); // prevent accidental overwrite
 
+            TypeAdapterConfig<HotelGuestDto, HotelGuest>
+          .NewConfig()
+          .Map(dest => dest.Id, _ => Guid.NewGuid()) // generate new ID
+          .Map(dest => dest.CreatedAt, _ => DateTime.UtcNow)
+          .Map(dest => dest.UpdatedAt, _ => DateTime.UtcNow);
+
         }    }
 }

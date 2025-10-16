@@ -211,7 +211,7 @@ namespace OnePass.Infrastructure.Persistence
             }
             catch (Exception ex)
             {
-                HandleDbException(ex, span, req);
+                   HandleDbException(ex, span, req);
                 throw;
             }
             finally

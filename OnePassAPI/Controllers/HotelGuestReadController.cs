@@ -18,7 +18,7 @@ namespace OnePass.API.Controllers
 
         [HttpGet("guest_by_id")]
         [Authorize]
-        public Task<ActionResult<HotelGuestResponse>> GetUnitsByCompanyId([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
+        public Task<ActionResult<HotelGuestResponse>> GetGuestById([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
         ExecuteAsync(
             Guid.NewGuid(),
             () => $"guest_id_{phoneCountryCode}-{phoneno}",

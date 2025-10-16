@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnePass.Domain
+namespace OnePass.Dto
 {
-    public class HotelGuest
+    public class HotelGuestDto
     {
-        public Guid Id { get; set; }
         public Guid? LinkedPrimaryGuestId { get; set; }
         public string FullName { get; set; } = default!;
         public DateTime? DateOfBirth { get; set; }
@@ -19,7 +18,13 @@ namespace OnePass.Domain
         public string? Nationality { get; set; }
 
         public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Pending;
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
+    }
+
+    public enum VerificationStatus
+    {
+        Pending,
+        Verified,
+        Rejected,
+        ManualReview
     }
 }
