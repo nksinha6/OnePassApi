@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnePass.Domain;
 using OnePass.Domain.Services;
@@ -15,6 +16,7 @@ namespace OnePass.API.Controllers
         private readonly ILogger<HotelGuestPersistController> _logger = logger;
 
         [HttpPost("persist_guest")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
