@@ -1,4 +1,6 @@
 ﻿
+using System.Linq.Expressions;
+
 namespace OnePass.Domain.Services
 {
     public class HotelGuestPersistService(IPersistRepository<HotelGuest> guestRepository) : IHotelGuestPersistService
@@ -14,5 +16,8 @@ namespace OnePass.Domain.Services
 
         public Task<HotelGuest> Persist(HotelGuest guest) =>
             PersistSingleAsync(_guestRepository, guest);
+
+        public Task<HotelGuest> UpdateAadharStatus(UpdateAadharStatusParam param) =>
+           _guestRepository.UpdatePartialAsync(new HotelGuest() { Id = param.Id, VerificationStatus = param.VerificationStatus}, x => x.VerificationStatus);
     }
 }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace OnePass.Domain
 {
     public interface IHotelGuestPersistService
     {
         Task<HotelGuest> Persist(HotelGuest guest);
+        Task<HotelGuest> UpdateAadharStatus(UpdateAadharStatusParam param);
     }
 }

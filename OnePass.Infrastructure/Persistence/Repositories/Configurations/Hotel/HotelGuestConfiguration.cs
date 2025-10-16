@@ -64,9 +64,8 @@ namespace OnePass.Infrastructure.Persistence
 
             builder.Property(x => x.VerificationStatus)
                    .HasColumnName("verification_status")
-                   .HasConversion<string>() // Enum <-> string
-                   .HasDefaultValue(VerificationStatus.Pending)
-                   .IsRequired();
+                    .HasColumnType("verification_status_enum")
+               .HasDefaultValue(VerificationStatus.Pending);
 
             // Constraints
             builder.HasIndex(x => new { x.PhoneCountryCode, x.PhoneNumber })

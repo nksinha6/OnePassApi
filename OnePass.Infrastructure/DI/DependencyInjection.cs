@@ -22,7 +22,11 @@ namespace OnePass.Infrastructure
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<OnePassDbContext>(options =>
-                options.UseNpgsql(connectionString));
+                options.UseNpgsql(connectionString, npgsqlOptions =>
+                {
+                    // register enums globally
+                    npgsqlOptions.MapEnum<VerificationStatus>("verification_status_enum");
+                }));
 
             services.AddSingleton(_ =>
     new NpgsqlConnection(connectionString));

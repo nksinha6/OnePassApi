@@ -25,13 +25,18 @@ namespace OnePass.Infrastructure.Persistence
         public DbSet<HotelUserPassword> HotelUserPasswords => Set<HotelUserPassword>();
 
         public DbSet<HotelUserRefreshToken> HotelUserRefreshToken => Set<HotelUserRefreshToken>();
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+            /// Register PostgreSQL enum type first
+            modelBuilder.HasPostgresEnum<VerificationStatus>("verification_status_enum");
+
+            // Apply PostgreSQL-friendly naming convention
+            modelBuilder.UseSnakeCaseNames();
+
+
             // Apply all IEntityTypeConfiguration<T> from this assembly
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            // Apply PostgreSQL-friendly lowercase naming convention
-            modelBuilder.UseSnakeCaseNames();
-        }
+            }
     }
 }
