@@ -17,7 +17,7 @@ namespace OnePass.API.Controllers
         private readonly IHotelGuestReadService _hotelGuestReadService = hotelGuestReadService;
 
         [HttpGet("guest_by_id")]
-      //  [Authorize]
+        [Authorize]
         public Task<ActionResult<HotelGuestResponse>> GetUnitsByCompanyId([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
         ExecuteAsync(
             Guid.NewGuid(),
