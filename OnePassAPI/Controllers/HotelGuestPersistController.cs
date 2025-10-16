@@ -16,7 +16,7 @@ namespace OnePass.API.Controllers
         private readonly ILogger<HotelGuestPersistController> _logger = logger;
 
         [HttpPost("persist_guest")]
-       // [Authorize]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
@@ -33,7 +33,7 @@ namespace OnePass.API.Controllers
                 });
 
         [HttpPost("update_aadhar")]
-        //[Authorize]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
