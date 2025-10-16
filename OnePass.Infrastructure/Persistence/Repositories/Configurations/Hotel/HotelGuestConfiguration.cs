@@ -62,6 +62,12 @@ namespace OnePass.Infrastructure.Persistence
                    .HasColumnName("updated_at")
                    .HasDefaultValueSql("now()");
 
+            builder.Property(x => x.VerificationStatus)
+                   .HasColumnName("verification_status")
+                   .HasConversion<string>() // Enum <-> string
+                   .HasDefaultValue(VerificationStatus.Pending)
+                   .IsRequired();
+
             // Constraints
             builder.HasIndex(x => new { x.PhoneCountryCode, x.PhoneNumber })
                    .IsUnique()

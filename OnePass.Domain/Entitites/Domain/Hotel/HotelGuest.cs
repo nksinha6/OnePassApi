@@ -17,6 +17,8 @@ namespace OnePass.Domain
         public string PhoneNumber { get; set; } = default!;
         public string? Email { get; set; }
         public string? Nationality { get; set; }
+
+        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Pending;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

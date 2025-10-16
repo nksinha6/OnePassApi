@@ -28,6 +28,7 @@ namespace OnePass.Infrastructure.Persistence
                      Email = g.Email,
                      Nationality = g.Nationality,
                      Gender = g.Gender,
+                     VerificationStatus = g.VerificationStatus,
                      DateOfBirth = g.DateOfBirth
                  })
                 .FirstOrDefault());
