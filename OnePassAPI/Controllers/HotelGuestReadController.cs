@@ -24,7 +24,13 @@ namespace OnePass.API.Controllers
             () => $"guest_id_{phoneCountryCode}-{phoneno}",
         async () =>
         {
-                 var guest = await _hotelGuestReadService.GetHotelGuestAsync(new GetHotelGuestByPhoneQuery()
+            if (!string.IsNullOrEmpty(phoneCountryCode))
+            {
+                // Replace space with plus if it was decoded
+                phoneCountryCode = phoneCountryCode.Replace(" ", "+");
+            }
+
+            var guest = await _hotelGuestReadService.GetHotelGuestAsync(new GetHotelGuestByPhoneQuery()
                  {
                      PhoneCountryCode = phoneCountryCode,
                      PhoneNumber = phoneno
