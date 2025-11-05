@@ -20,7 +20,7 @@ namespace OnePass.API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> CreateProperty([FromBody] HotelGuestDto request) =>
+        public Task<IActionResult> CreateGuest([FromBody] HotelGuestDto request) =>
             ExecutePersistAsync(
                 request,
                 nameof(HotelGuestReadController.GetGuestById),
@@ -30,6 +30,23 @@ namespace OnePass.API.Controllers
                     var guest = request.Adapt<HotelGuest>();
 
                     return await _hotelGuestPersistService.Persist(guest);
+                });
+
+        [HttpPost("persist_guest_facecapture")]
+       // [Authorize]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> CreateFaceMatch([FromBody] HotelGuestFaceCaptureDto request) =>
+            ExecutePersistAsync(
+                request,
+                nameof(HotelGuestReadController.GetGuestById),
+                "guest_by_id",
+                async () =>
+                {
+                    var guestFaceCapture = request.Adapt<HotelGuestFaceCapture>();
+
+                    return await _hotelGuestPersistService.PersistFaceCapture(guestFaceCapture);
                 });
 
         [HttpPost("update_aadhar")]

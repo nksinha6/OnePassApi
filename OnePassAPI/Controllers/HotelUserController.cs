@@ -43,8 +43,10 @@ namespace OnePass.API.Controllers
             if (!passwordHasher.VerifyPassword(request.Password, passwordRecord.PasswordHash))
                 return Unauthorized("Invalid credentials.");
 
+            var user = await _hotelUserService.GetUser(request.UserId, request.TenantId);
+
             // Generate access token
-            var accessToken = jwtService.GenerateToken(request.UserId, request.TenantId, "User");
+            var accessToken = jwtService.GenerateToken(request.UserId, request.TenantId, user.Role);
 
             // Generate refresh token
             var refreshToken = await refreshTokenService.CreateRefreshToken(request.UserId, request.TenantId);

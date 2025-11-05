@@ -21,6 +21,13 @@ namespace OnePass.Infrastructure.Persistence
             builder.Property(u => u.Id)
                    .HasMaxLength(50)
                    .IsRequired();
+            builder.Property(u => u.Role)
+              .HasMaxLength(30)
+              .HasDefaultValue("Admin")
+              .IsRequired();
+
+            builder.HasCheckConstraint("chk_hotel_users_role",
+            "role IN ('Owner', 'Admin', 'LawEnforcement')");
 
             builder.Property(u => u.TenantId)
                    .IsRequired();

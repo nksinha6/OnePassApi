@@ -62,5 +62,13 @@ namespace OnePass.API
           .Map(dest => dest.CreatedAt, _ => DateTime.UtcNow)
           .Map(dest => dest.UpdatedAt, _ => DateTime.UtcNow);
 
+           TypeAdapterConfig<HotelGuestFaceCaptureDto, HotelGuestFaceCapture>.NewConfig()
+           .Ignore(dest => dest.Id)
+           .Ignore(dest => dest.CreatedAt)
+           .Ignore(dest => dest.UpdatedAt)
+           .Map(dest => dest.LiveCaptureDatetime, src => src.LiveCaptureDatetime == default
+               ? DateTime.UtcNow
+               : src.LiveCaptureDatetime);
+
         }    }
 }

@@ -6,5 +6,6 @@ namespace OnePass.Domain
     {
         Task<HotelGuest> Persist(HotelGuest guest);
         Task<HotelGuest> UpdateAadharStatus(UpdateAadharStatusParam param);
+        Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture);
     }
 }

@@ -23,7 +23,8 @@ namespace OnePass.Infrastructure.Persistence
                  {
                      Id = u.Id,
                      TenantId = u.TenantId,
-                     TenantName = t.Name
+                     TenantName = t.Name,
+                     Role = u.Role
                  })
                 .FirstOrDefault());
 

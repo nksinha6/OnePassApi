@@ -21,7 +21,7 @@ namespace OnePass.Infrastructure.Persistence
         public DbSet<HotelTenant> HotelTenants => Set<HotelTenant>();
         public DbSet<HotelUser> HotelUsers => Set<HotelUser>();
         public DbSet<HotelGuest> HotelGuests => Set<HotelGuest>();
-
+        public DbSet<HotelGuestFaceCapture> HotelGuestFaceCaptures => Set<HotelGuestFaceCapture>();
         public DbSet<HotelUserPassword> HotelUserPasswords => Set<HotelUserPassword>();
 
         public DbSet<HotelUserRefreshToken> HotelUserRefreshToken => Set<HotelUserRefreshToken>();
