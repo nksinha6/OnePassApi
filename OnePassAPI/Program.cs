@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using OnePass.API;
+using OnePass.Domain;
 using OnePass.Infrastructure;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -31,6 +32,17 @@ builder.Services.AddSingleton<Tracer>(sp =>
     var tracerProvider = sp.GetRequiredService<TracerProvider>();
     return tracerProvider.GetTracer("OnePass.API");
 });
+
+builder.Services.AddHttpClient("Cashfree", client =>
+{
+    var cfg = builder.Configuration.GetSection("Cashfree");
+    client.BaseAddress = new Uri(cfg["ApiBaseUrl"]);
+    client.DefaultRequestHeaders.Add("x-client-id", cfg["ClientId"]);
+    client.DefaultRequestHeaders.Add("x-client-secret", cfg["ClientSecret"]);
+}).AddAsKeyed();
+
+builder.Services.AddScoped<IDigilockerService, DigilockerService>();
+
 builder.Services.AddControllers();
 builder.Services.AddMemoryCache();
 // ✅ Add OpenTelemetry Exporter (Prometheus, OTLP, etc.)

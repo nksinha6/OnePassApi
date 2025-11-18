@@ -10,14 +10,16 @@ namespace OnePass.API.Controllers
     [Route("api/[controller]")]
     public class HotelGuestReadController(
     IHotelGuestReadService hotelGuestReadService,
+    IHotelGuestAppService hotelGuestAppService,
     ILogger<HotelGuestReadController> logger,
     IMemoryCache cache)
     : ReadControllerBase(logger, cache)
     {
         private readonly IHotelGuestReadService _hotelGuestReadService = hotelGuestReadService;
+        private readonly IHotelGuestAppService _hotelGuestAppService = hotelGuestAppService;
 
         [HttpGet("guest_by_id")]
-        [Authorize]
+       // [Authorize]
         public Task<ActionResult<HotelGuestResponse>> GetGuestById([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
         ExecuteAsync(
             Guid.NewGuid(),
@@ -30,7 +32,7 @@ namespace OnePass.API.Controllers
                 phoneCountryCode = phoneCountryCode.Replace(" ", "+");
             }
 
-            var guest = await _hotelGuestReadService.GetHotelGuestAsync(new GetHotelGuestByPhoneQuery()
+            var guest = await _hotelGuestAppService.GetForCreateIfNotExists(new GetHotelGuestByPhoneQuery()
                  {
                      PhoneCountryCode = phoneCountryCode,
                      PhoneNumber = phoneno
