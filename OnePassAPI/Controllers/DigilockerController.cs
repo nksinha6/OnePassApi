@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using OnePass.Domain;
 
 namespace DigiLockerApi
 {
+    [EnableCors("AllowAll")]
     [ApiController]
     [Route("api/digilocker")]
     public class DigilockerController : ControllerBase
