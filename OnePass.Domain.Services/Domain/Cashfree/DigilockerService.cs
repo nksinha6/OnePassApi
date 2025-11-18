@@ -10,11 +10,12 @@ namespace OnePass.Domain
         public DigilockerService([FromKeyedServices("Cashfree")] HttpClient httpClient)
         {
             _httpClient = httpClient;
+            _httpClient.BaseAddress = new Uri("https://sandbox.cashfree.com/verification/digilocker");
         }
 
         public async Task<VerifyAccountResponse> VerifyAccountAsync(string verificationId, string mobile)
         {
-            _httpClient.BaseAddress = new Uri("https://sandbox.cashfree.com/verification/digilocker/");
+            
 
             var req = new VerifyAccountRequest
             {

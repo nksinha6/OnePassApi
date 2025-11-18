@@ -25,21 +25,41 @@ namespace OnePass.Domain
     // Models/CreateUrlRequest.cs
     public class CreateUrlRequest
     {
+        [JsonPropertyName("verification_id")]
         public string VerificationId { get; set; }
+
+        [JsonPropertyName("document_requested")]
         public List<string> DocumentRequested { get; set; }
+
+        [JsonPropertyName("redirect_url")]
         public string RedirectUrl { get; set; }
+
+        [JsonPropertyName("user_flow")]
         public string UserFlow { get; set; }
     }
 
     // Models/CreateUrlResponse.cs
     public class CreateUrlResponse
     {
+        [JsonPropertyName("verification_id")]
         public string VerificationId { get; set; }
+
+        [JsonPropertyName("reference_id")]
         public long ReferenceId { get; set; }
+
+        [JsonPropertyName("url")]
         public string Url { get; set; }
+
+        [JsonPropertyName("status")]
         public string Status { get; set; }
+
+        [JsonPropertyName("document_requested")]
         public List<string> DocumentRequested { get; set; }
+
+        [JsonPropertyName("redirect_url")]
         public string RedirectUrl { get; set; }
+
+        [JsonPropertyName("user_flow")]
         public string UserFlow { get; set; }
     }
 
