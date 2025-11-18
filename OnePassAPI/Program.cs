@@ -108,6 +108,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRequestTracing();
+app.UseRouting();
 
 app.UseHttpsRedirection();
 
