@@ -20,11 +20,24 @@ namespace DigiLockerApi
         public async Task<IActionResult> Verify([FromBody] VerifyAccountRequest req)
         {
             if (req == null || string.IsNullOrEmpty(req.VerificationId) || string.IsNullOrEmpty(req.MobileNumber))
+            {
                 return BadRequest("verificationId and mobileNumber required");
+            }
 
-            var resp = await _service.VerifyAccountAsync(req.VerificationId, req.MobileNumber);
-            return Ok(resp);
+            try
+            {
+                var resp = await _service.VerifyAccountAsync(req.VerificationId, req.MobileNumber);
+                return Ok(resp);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in VerifyAccount"+ex.Message);
+
+                // Return a 500 but CORS middleware will apply
+                return StatusCode(500, new { error = "Internal server error" });
+            }
         }
+
 
         [HttpPost("create-url")]
         public async Task<IActionResult> CreateUrl([FromBody] CreateUrlRequest req)
