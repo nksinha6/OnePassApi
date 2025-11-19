@@ -20,6 +20,7 @@ namespace OnePass.Domain
                 VerificationId = Guid.NewGuid().ToString(),
                 MobileNumber = mobile
             };
+
             var resp = await _httpClient.PostAsJsonAsync("verify-account", req);
             resp.EnsureSuccessStatusCode();
             var res = await resp.Content.ReadFromJsonAsync<VerifyAccountResponse>();

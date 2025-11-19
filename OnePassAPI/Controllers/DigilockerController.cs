@@ -31,7 +31,7 @@ namespace DigiLockerApi
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error in VerifyAccount"+ex.Message);
+                Console.WriteLine("Error in VerifyAccount: "+ex.Message);
 
                 // Return a 500 but CORS middleware will apply
                 return StatusCode(500, new { error = "Internal server error" });
@@ -42,9 +42,28 @@ namespace DigiLockerApi
         [HttpPost("create-url")]
         public async Task<IActionResult> CreateUrl([FromBody] CreateUrlRequest req)
         {
-            var resp = await _service.CreateUrlAsync(req.VerificationId, req.DocumentRequested, req.RedirectUrl, req.UserFlow);
-            return Ok(resp);
+            if (req == null || string.IsNullOrEmpty(req.VerificationId) || req.DocumentRequested == null)
+            {
+                return BadRequest("verificationId, documentRequested and redirectUrl required");
+            }
+
+            try
+            {
+                var resp = await _service.CreateUrlAsync(
+                    req.VerificationId,
+                    req.DocumentRequested,
+                    req.RedirectUrl,
+                    req.UserFlow
+                );
+                return Ok(resp);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in CreateUrl: "+ex.Message);
+                return StatusCode(500, new { error = "Internal server error" });
+            }
         }
+
 
         [HttpGet("status")]
         public async Task<IActionResult> Status([FromQuery] string verificationId, [FromQuery] long? referenceId)
