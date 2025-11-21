@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using OnePass.API;
 using OnePass.Domain;
+using OnePass.Domain.Services;
 using OnePass.Infrastructure;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -42,6 +43,8 @@ builder.Services.AddHttpClient("Cashfree", client =>
 }).AddAsKeyed();
 
 builder.Services.AddScoped<IDigilockerService, DigilockerService>();
+
+builder.Services.AddScoped<IFaceVerificationService, FaceVerificationService>();
 
 builder.Services.AddControllers();
 builder.Services.AddMemoryCache();
