@@ -102,18 +102,43 @@ namespace OnePass.Domain
     // Models/AadhaarDocumentResponse.cs
     public class AadhaarDocumentResponse
     {
+        [JsonPropertyName("reference_id")]
         public long ReferenceId { get; set; }
+
+        [JsonPropertyName("verification_id")]
         public string VerificationId { get; set; }
+
+        [JsonPropertyName("status")]
         public string Status { get; set; }
+
+        [JsonPropertyName("uid")]
         public string Uid { get; set; }
+
+        [JsonPropertyName("care_of")]
         public string CareOf { get; set; }
+
+        [JsonPropertyName("dob")]
         public string Dob { get; set; }
+
+        [JsonPropertyName("gender")]
         public string Gender { get; set; }
+
+        [JsonPropertyName("name")]
         public string Name { get; set; }
-        public string PhotoLink { get; set; } // base64
+
+        [JsonPropertyName("photo_link")]
+        public string PhotoLink { get; set; }
+
+        [JsonPropertyName("split_address")]
         public Address SplitAddress { get; set; }
+
+        [JsonPropertyName("year_of_birth")]
         public int YearOfBirth { get; set; }
+
+        [JsonPropertyName("xml_file")]
         public string XmlFile { get; set; }
+
+        [JsonPropertyName("message")]
         public string Message { get; set; }
     }
 }

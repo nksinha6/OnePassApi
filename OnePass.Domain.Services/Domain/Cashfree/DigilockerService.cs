@@ -57,7 +57,7 @@ namespace OnePass.Domain
 
         public async Task<AadhaarDocumentResponse> GetAadhaarDocumentAsync(string verificationId, long referenceId)
         {
-            _httpClient.BaseAddress = new Uri("https://sandbox.cashfree.com/verification/digilocker");
+            _httpClient.BaseAddress = new Uri("https://sandbox.cashfree.com/verification/digilocker/");
             var url = $"document/AADHAAR?verification_id={Uri.EscapeDataString(verificationId)}&reference_id={referenceId}";
             var resp = await _httpClient.GetAsync(url);
             resp.EnsureSuccessStatusCode();
