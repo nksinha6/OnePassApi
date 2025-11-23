@@ -15,7 +15,7 @@ namespace OnePass.API
 
         private readonly ILogger<HotelBookingController> _logger = logger;
 
-        [HttpPost("persist_checkin")]
+        [HttpPost("begin_checkin")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
@@ -27,6 +27,21 @@ namespace OnePass.API
                 async () =>
                 {
                     return await _hotelBookingService.StartBookingCheckin(tenantId, bookingId);
+                });
+    
+    
+    [HttpPost("record_checkin")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> RecordCheckin([FromQuery] string bookingId, [FromQuery] int tenantId) =>
+            ExecutePersistAsync(
+                bookingId,
+                nameof(HotelGuestReadController.GetGuestById),
+                "guest_by_id",
+                async () =>
+                {
+                    return await _hotelBookingService.RecordBookingCheckin(tenantId, bookingId);
                 });
     }
 }

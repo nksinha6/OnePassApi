@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OnePass.Domain.Services
+﻿namespace OnePass.Domain.Services
 {
     public class HotelBookingService(IPersistRepository<BookingCheckin> checkinRepository) : IHotelBookingService
     {
         IPersistRepository<BookingCheckin> _checkinRepository = checkinRepository;
+
         public async Task<BookingCheckin> StartBookingCheckin(int tenantId, string bookingId)
         {
             var checkinBooking = new BookingCheckin()
@@ -20,5 +15,9 @@ namespace OnePass.Domain.Services
 
             return await _checkinRepository.AddIfNotExistAsync(checkinBooking);
         }
+
+        public Task<BookingCheckin> RecordBookingCheckin(int tenantId, string bookingId)
+        =>
+            _checkinRepository.UpdatePartialAsync(new BookingCheckin() { BookingId = bookingId, TenantId = tenantId, ActualCheckinAt = DateTime.UtcNow }, x => x.ActualCheckinAt);
     }
 }
