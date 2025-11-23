@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Cors;
 namespace OnePass.API.Controllers
 {
     [ApiController]
-    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     public class HotelUserController(
     IHotelUserService hotelUserService,
