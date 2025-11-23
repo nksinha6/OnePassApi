@@ -25,7 +25,9 @@ namespace OnePass.Infrastructure.Persistence
         public DbSet<HotelUserPassword> HotelUserPasswords => Set<HotelUserPassword>();
 
         public DbSet<HotelUserRefreshToken> HotelUserRefreshToken => Set<HotelUserRefreshToken>();
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        public DbSet<BookingCheckin> BookingCheckins => Set<BookingCheckin>();
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
             /// Register PostgreSQL enum type first
             modelBuilder.HasPostgresEnum<VerificationStatus>("verification_status_enum");
