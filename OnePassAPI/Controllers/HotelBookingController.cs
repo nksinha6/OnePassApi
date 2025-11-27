@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OnePass.API.Controllers;
 using OnePass.Domain;
-using OnePass.Domain.Services;
-using OnePass.Dto;
 
 namespace OnePass.API
 {
