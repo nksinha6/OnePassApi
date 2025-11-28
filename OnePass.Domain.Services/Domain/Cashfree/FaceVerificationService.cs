@@ -51,7 +51,7 @@ namespace OnePass.Domain.Services
             var idContent = new StreamContent(idStream);
             idContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(idImage.ContentType);
             content.Add(idContent, "second_image", idImage.FileName);
-
+            _httpClient.BaseAddress = new Uri("https://sandbox.cashfree.com/verification/");
             var resp = await _httpClient.PostAsync("face-match", content);
             resp.EnsureSuccessStatusCode();
             var respObj = await resp.Content.ReadFromJsonAsync<FaceMatchResponse>();
