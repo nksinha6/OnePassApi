@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace OnePass.Domain
@@ -19,10 +20,19 @@ namespace OnePass.Domain
 
     public class FaceMatchResponse
     {
+        [JsonPropertyName("status")]
         public string Status { get; set; }
+
+        [JsonPropertyName("ref_id")]
         public long RefId { get; set; }
+
+        [JsonPropertyName("verification_id")]
         public string VerificationId { get; set; }
+
+        [JsonPropertyName("face_match_result")]
         public string FaceMatchResult { get; set; }
+
+        [JsonPropertyName("face_match_score")]
         public double FaceMatchScore { get; set; }
     }
 
