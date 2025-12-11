@@ -98,6 +98,32 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };      
 });
+
+// Bind Msg91Options from configuration (appsettings.json or environment variables)
+builder.Services.Configure<Msg91Options>(builder.Configuration.GetSection("Msg91"));
+
+// Register HttpClient for Msg91 service using IHttpClientFactory
+builder.Services.AddHttpClient<Msg91SmsService>(client =>
+{
+    // optional: configure client timeouts
+    client.Timeout = TimeSpan.FromSeconds(30);
+    // don't set BaseAddress here — we use the ApiUrl from options inside the service
+})
+// THIS ensures HttpClientHandler will not use any system or env proxy (fixes 127.0.0.1:8888)
+.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+{
+    UseProxy = false
+})
+.AddTypedClient<Msg91SmsService>((http, provider) =>
+{
+    var opts = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<Msg91Options>>().Value;
+    var logger = provider.GetRequiredService<ILogger<Msg91SmsService>>();
+    return new Msg91SmsService(http, Microsoft.Extensions.Options.Options.Create(opts), logger);
+});
+
+// Register interface to implementation
+builder.Services.AddScoped<ISmsService>(sp => sp.GetRequiredService<Msg91SmsService>());
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 MapsterConfig.RegisterMappings();

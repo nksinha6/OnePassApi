@@ -3,7 +3,7 @@
     public class GuestCheckin
     {
         public Guid CheckinId { get; set; }
-        public Guid PropertyId { get; set; }
+        public int PropertyId { get; set; }
         public Guid PrimaryGuestId { get; set; }
         public DateTimeOffset CheckinDatetime { get; set; }
         public DateTimeOffset? CheckoutDatetime { get; set; }

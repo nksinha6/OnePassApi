@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,13 @@ namespace OnePass.Domain.Services
         public Task<HotelGuestResponse> GetHotelGuestAsync(GetHotelGuestByPhoneQuery query) =>
              HandleSingleOrDefaultAsync<GetHotelGuestByPhoneQuery, HotelGuestResponse>(
                 query,
+                useStoredProcedure: false);
+
+        public Task<IEnumerable<HotelPendingFaceMatchResponse>> GetPendingFaceMatchesAsync(int tenantId, int propertyId)
+        =>
+             HandleQueryAsync<GetPendingFaceMatchesQuery, HotelPendingFaceMatchResponse>(
+                new GetPendingFaceMatchesQuery()
+                { PropertyId = propertyId, TenantId = tenantId},
                 useStoredProcedure: false);
     }
 }

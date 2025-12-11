@@ -15,54 +15,61 @@ namespace OnePass.Infrastructure.Persistence
         {
             builder.ToTable("hotel_properties");
 
-            builder.HasKey(h => h.Id);
+            // Primary key
+            builder.HasKey(x => x.Id);
 
-            builder.Property(h => h.Name)
-                .HasMaxLength(150)
-                .IsRequired();
+            // Auto-increment
+            builder.Property(x => x.Id)
+                   .ValueGeneratedOnAdd();
 
-            builder.Property(h => h.AddressLine1)
-                .HasMaxLength(255);
+            // Properties
+            builder.Property(x => x.Name)
+                   .IsRequired()
+                   .HasMaxLength(150);
 
-            builder.Property(h => h.AddressLine2)
-                .HasMaxLength(255);
+            builder.Property(x => x.AddressLine1)
+                   .HasMaxLength(255);
 
-            builder.Property(h => h.City)
-                .HasMaxLength(100);
+            builder.Property(x => x.AddressLine2)
+                   .HasMaxLength(255);
 
-            builder.Property(h => h.State)
-                .HasMaxLength(100);
+            builder.Property(x => x.City)
+                   .HasMaxLength(100);
 
-            builder.Property(h => h.Country)
-                .HasMaxLength(100);
+            builder.Property(x => x.State)
+                   .HasMaxLength(100);
 
-            builder.Property(h => h.Zipcode)
-                .HasMaxLength(20);
+            builder.Property(x => x.Country)
+                   .HasMaxLength(100);
 
-            builder.Property(h => h.ContactEmail)
-                .HasMaxLength(150);
+            builder.Property(x => x.Zipcode)
+                   .HasMaxLength(20);
 
-            builder.Property(h => h.ContactPhone)
-                .HasMaxLength(20);
+            builder.Property(x => x.ContactEmail)
+                   .HasMaxLength(150);
 
-            builder.Property(h => h.CreatedAt)
-                .HasDefaultValueSql("now()");
+            builder.Property(x => x.ContactPhone)
+                   .HasMaxLength(20);
 
-            builder.Property(h => h.UpdatedAt)
-                .HasDefaultValueSql("now()");
+            // DateTimeOffset mapping to timestamptz in PostgreSQL
+            builder.Property(x => x.CreatedAt)
+                   .HasDefaultValueSql("now() AT TIME ZONE 'UTC'");
 
-            // Foreign keys (no navigation props)
-            builder.HasOne<HotelOwner>() 
-                .WithMany()
-                .HasForeignKey(h => h.OwnerId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("fk_owner");
+            builder.Property(x => x.UpdatedAt)
+                   .HasDefaultValueSql("now() AT TIME ZONE 'UTC'");
 
-            builder.HasOne<LawEnforcementOffice>() 
-                .WithMany()
-                .HasForeignKey(h => h.LawEnforcementId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_law_enforcement");
+            // Foreign keys without navigation properties
+            builder.HasOne<HotelTenant>()
+                   .WithMany()
+                   .HasForeignKey(x => x.TenantId)
+                   .OnDelete(DeleteBehavior.Cascade)
+                   .HasConstraintName("fk_hotel_properties_tenant");
+
+            builder.HasOne<LawEnforcementOffice>()
+                   .WithMany()
+                   .HasForeignKey(x => x.LawEnforcementId)
+                   .OnDelete(DeleteBehavior.Restrict)
+                   .HasConstraintName("fk_hotel_properties_law_enforcement");
         }
     }
 }
