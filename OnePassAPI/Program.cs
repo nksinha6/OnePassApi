@@ -72,7 +72,8 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins("http://localhost:5173")
                       .AllowAnyHeader()
-                  .AllowAnyMethod();
+                  .AllowAnyMethod()
+                  .SetPreflightMaxAge(TimeSpan.FromHours(1));
         });
 });
 
@@ -141,10 +142,10 @@ app.UseRouting();
 
 app.UseCors("AllowAll");
 
-/* 🔥 THIS IS THE MISSING PIECE */
-app.MapMethods("{*path}", new[] { "OPTIONS" }, () =>
+app.MapMethods("{*path}", new[] { "OPTIONS" }, (HttpContext ctx) =>
 {
-    return Results.Ok();
+    ctx.Response.StatusCode = StatusCodes.Status200OK;
+    return ctx.Response.WriteAsync("OK");
 })
 .RequireCors("AllowAll");
 
@@ -154,5 +155,4 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
