@@ -3,6 +3,7 @@ using OnePass.Domain;
 using OnePass.Dto;
 using Mapster;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnePass.API.Controllers
 {
@@ -31,6 +32,7 @@ namespace OnePass.API.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(
     [FromBody] HotelLoginRequest request,
     [FromServices] IJwtService jwtService,
