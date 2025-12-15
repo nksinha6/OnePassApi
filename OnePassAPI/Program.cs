@@ -142,7 +142,15 @@ app.UseRouting();
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
-
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == HttpMethods.Options)
+    {
+        context.Response.StatusCode = 200;
+        return;
+    }
+    await next();
+});
 app.UseAuthentication();
 app.UseAuthorization();
 
