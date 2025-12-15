@@ -137,15 +137,21 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-app.UseRequestTracing();
-/*Routing first */
 app.UseRouting();
 
-/* 🔥 CORS MUST be immediately after routing */
 app.UseCors("AllowAll");
 
-/* Anything that can short-circuit goes AFTER CORS */
-app.UseRequestTracing();
+// Safe tracing (must NOT short-circuit OPTIONS)
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == HttpMethods.Options)
+    {
+        await next();
+        return;
+    }
+    await next();
+});
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
