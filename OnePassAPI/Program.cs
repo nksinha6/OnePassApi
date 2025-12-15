@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -137,20 +138,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRequestTracing();
+/*Routing first */
 app.UseRouting();
 
+/* 🔥 CORS MUST be immediately after routing */
+app.UseCors("AllowAll");
+
+/* Anything that can short-circuit goes AFTER CORS */
+app.UseRequestTracing();
 app.UseHttpsRedirection();
 
-app.UseCors("AllowAll");
-app.Use(async (context, next) =>
-{
-    if (context.Request.Method == HttpMethods.Options)
-    {
-        context.Response.StatusCode = 200;
-        return;
-    }
-    await next();
-});
 app.UseAuthentication();
 app.UseAuthorization();
 
