@@ -141,16 +141,12 @@ app.UseRouting();
 
 app.UseCors("AllowAll");
 
-// Safe tracing (must NOT short-circuit OPTIONS)
-app.Use(async (context, next) =>
+/* 🔥 THIS IS THE MISSING PIECE */
+app.MapMethods("{*path}", new[] { "OPTIONS" }, () =>
 {
-    if (context.Request.Method == HttpMethods.Options)
-    {
-        await next();
-        return;
-    }
-    await next();
-});
+    return Results.Ok();
+})
+.RequireCors("AllowAll");
 
 app.UseHttpsRedirection();
 
