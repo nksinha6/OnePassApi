@@ -13,18 +13,18 @@ namespace OnePass.API
 
         private readonly ILogger<HotelBookingController> _logger = logger;
 
-        [HttpPost("begin_checkin")]
+        [HttpPost("begin_verification")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> CreateGuest([FromQuery] string bookingId, [FromQuery] int tenantId) =>
+        public Task<IActionResult> CreateGuest([FromQuery] string bookingId) =>
             ExecutePersistAsync(
                 bookingId,
                 nameof(HotelGuestReadController.GetGuestById),
                 "guest_by_id",
                 async () =>
                 {
-                    return await _hotelBookingService.StartBookingCheckin(tenantId, bookingId);
+                    return await _hotelBookingService.StartBookingCheckin(1, bookingId);
                 });
     
     
