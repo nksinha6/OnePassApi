@@ -17,6 +17,23 @@ namespace OnePass.API
         }
 
         [HttpPost("liveness")]
+        public IActionResult FaceMatch(
+    [FromForm] string countryCode,
+    [FromForm] string phoneNumber,
+    [FromForm] IFormFile selfieImage)
+        {
+            if (selfieImage == null || selfieImage.Length == 0)
+                return BadRequest("Selfie image is required");
+
+            return Ok(new
+            {
+                faceVerified = true,
+                faceMatchScore = 93.2
+            });
+        }
+
+
+        [HttpPost("face-match")]
         public async Task<IActionResult> Liveness([FromForm] string verificationId, [FromForm] IFormFile selfie)
         {
             if (string.IsNullOrEmpty(verificationId) || selfie == null)
