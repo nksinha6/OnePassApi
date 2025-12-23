@@ -20,6 +20,7 @@ namespace OnePass.API
         public IActionResult FaceMatch(
     [FromForm] string countryCode,
     [FromForm] string phoneNumber,
+    [FromForm] string bookingId,
     [FromForm] IFormFile selfieImage)
         {
             if (selfieImage == null || selfieImage.Length == 0)
