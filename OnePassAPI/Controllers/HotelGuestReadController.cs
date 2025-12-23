@@ -42,6 +42,30 @@ namespace OnePass.API.Controllers
             notFoundMessage: $"No user found for Id {phoneCountryCode}-{phoneno}."
         );
 
+        [HttpGet("verification/ensure")]
+        // [Authorize]
+        public Task<ActionResult<HotelGuestResponse>> EnsureVerification([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
+        ExecuteAsync(
+            Guid.NewGuid(),
+            () => $"guest_id_{phoneCountryCode}-{phoneno}",
+        async () =>
+        {
+            if (!string.IsNullOrEmpty(phoneCountryCode))
+            {
+                // Replace space with plus if it was decoded
+                phoneCountryCode = phoneCountryCode.Replace(" ", "+");
+            }
+
+            var guest = await _hotelGuestAppService.GetForCreateIfNotExists(new GetHotelGuestByPhoneQuery()
+            {
+                PhoneCountryCode = phoneCountryCode,
+                PhoneNumber = phoneno
+            });
+            return guest;
+        },
+            notFoundMessage: $"No user found for Id {phoneCountryCode}-{phoneno}."
+        );
+
         [HttpGet("pending_face_matches")]
         // [Authorize]
         public Task<ActionResult<IEnumerable<HotelPendingFaceMatchResponse>>> GetPendingFaceMatches()
