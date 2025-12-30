@@ -14,7 +14,7 @@ namespace OnePass.Domain
 
         public async Task<VerifyAccountResponse> VerifyAccountAsync(string verificationId, string mobile)
         {
-            _httpClient.BaseAddress = new Uri("https://api.cashfree.com/verification/digilocker/");
+            _httpClient.BaseAddress = new Uri("https://sandbox.cashfree.com/verification/digilocker/");
             var req = new VerifyAccountRequest
             {
                 VerificationId = Guid.NewGuid().ToString(),
@@ -30,7 +30,7 @@ namespace OnePass.Domain
 
         public async Task<CreateUrlResponse> CreateUrlAsync(string verificationId, List<string> documents, string redirectUrl, string userFlow)
         {
-            _httpClient.BaseAddress = new Uri("https://api.cashfree.com/verification/digilocker");
+            _httpClient.BaseAddress = new Uri("https://sandbox.cashfree.com/verification/digilocker");
             var req = new CreateUrlRequest
             {
                 VerificationId = verificationId,
@@ -46,7 +46,7 @@ namespace OnePass.Domain
         public async Task<VerificationStatusResponse> GetStatusAsync(string verificationId, long? referenceId = null)
         {
 
-            _httpClient.BaseAddress = new Uri("https://api.cashfree.com/verification/digilocker");
+            _httpClient.BaseAddress = new Uri("https://sandbox.cashfree.com/verification/digilocker");
             var url = $"?verification_id={Uri.EscapeDataString(verificationId)}";
             if (referenceId.HasValue)
                 url += $"&reference_id={referenceId.Value}";
@@ -57,7 +57,7 @@ namespace OnePass.Domain
 
         public async Task<AadhaarDocumentResponse> GetAadhaarDocumentAsync(string verificationId, long referenceId)
         {
-            _httpClient.BaseAddress = new Uri("https://api.cashfree.com/verification/digilocker/");
+            _httpClient.BaseAddress = new Uri("https://sandbox.cashfree.com/verification/digilocker/");
             var url = $"document/AADHAAR?verification_id={Uri.EscapeDataString(verificationId)}&reference_id={referenceId}";
             var resp = await _httpClient.GetAsync(url);
             resp.EnsureSuccessStatusCode();
