@@ -35,8 +35,7 @@ namespace OnePass.API
 
             return Ok(new
             {
-                bookingId = request.BookingId,
-                isInitiated = true
+               isInitiated = true
             });
         }
 
