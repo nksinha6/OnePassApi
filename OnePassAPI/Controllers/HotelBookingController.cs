@@ -54,7 +54,7 @@ namespace OnePass.API
                     return await _hotelBookingService.RecordBookingCheckin(tenantId, bookingId);
                 });
 
-        [HttpGet("face-match/status")]
+        [HttpPost("face-match/status")]
         public async Task<IActionResult> GetFaceMatchStatus(
     [FromBody] FaceMatchStatusRequest request)
         {
