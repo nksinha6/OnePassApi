@@ -72,7 +72,7 @@ namespace OnePass.Domain.Services
             content.Add(idContent, "second_image", idFilename);
 
             // Prepare request (use absolute URI to avoid changing HttpClient.BaseAddress)
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://sandbox.cashfree.com/verification/face-match")
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://api.cashfree.com/verification/face-match")
             {
                 Content = content
             };
