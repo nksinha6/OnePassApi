@@ -27,6 +27,20 @@ namespace OnePass.API
                     return await _hotelBookingService.StartBookingCheckin(1, bookingId);
                 });
 
+        [HttpPost("end_verification")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> EndVerification([FromQuery] string bookingId) =>
+            ExecutePersistAsync(
+                bookingId,
+                nameof(HotelGuestReadController.GetGuestById),
+                "guest_by_id",
+                async () =>
+                {
+                    return await _hotelBookingService.RecordBookingCheckin(1, bookingId);
+                });
+
         [HttpPost("face-match/initiate")]
         public async Task<IActionResult> InitiateFaceMatch(
         [FromBody] FaceMatchInitiateRequest request)
