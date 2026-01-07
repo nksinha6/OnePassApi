@@ -42,17 +42,17 @@ namespace OnePass.API
                 });
 
         [HttpPost("face-match/initiate")]
-        public async Task<IActionResult> InitiateFaceMatch(
+        public Task<IActionResult> InitiateFaceMatch(
         [FromBody] FaceMatchInitiateRequest request)
-        {
-            // TODO: Implement logic
-
-            return Ok(new
-            {
-               isInitiated = true
-            });
-        }
-
+        =>
+            ExecutePersistAsync(
+                 request.BookingId,
+                 nameof(HotelGuestReadController.GetGuestById),
+                 "guest_by_id",
+                 async () =>
+                 {
+                     return await _hotelBookingService.RecordBookingPendingFaceVerification(1, 1, request);
+                 });
 
         [HttpPost("record_checkin")]
         [ProducesResponseType(StatusCodes.Status201Created)]

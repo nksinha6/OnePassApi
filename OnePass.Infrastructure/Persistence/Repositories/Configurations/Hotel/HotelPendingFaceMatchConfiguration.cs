@@ -47,6 +47,17 @@ namespace OnePass.Infrastructure.Persistence
                    .HasMaxLength(50)
                    .HasDefaultValue("pending");
 
+            builder.HasIndex(x => new
+            {
+                x.BookingId,
+                x.TenantId,
+                x.PropertyId,
+                x.PhoneCountryCode,
+                x.PhoneNumber
+            })
+       .IsUnique()
+       .HasDatabaseName("uq_hpfm_booking_tenant_property_phone");
+
             // Indexes
             builder.HasIndex(x => new { x.TenantId, x.PropertyId });
             builder.HasIndex(x => x.BookingId);

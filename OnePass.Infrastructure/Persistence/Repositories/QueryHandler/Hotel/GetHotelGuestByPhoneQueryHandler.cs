@@ -46,14 +46,14 @@ namespace OnePass.Infrastructure.Persistence
             throw new NotSupportedException("Fetching all hotel guests is not supported in this query.");
         }
 
-        public async Task<IEnumerable<HotelGuestResponse>> HandleQueryAsync(GetHotelGuestByPhoneQuery query)
-        {
-            return await ExecuteQuerySafelyAsync(async ctx =>
+            public async Task<IEnumerable<HotelGuestResponse>> HandleQueryAsync(GetHotelGuestByPhoneQuery query)
             {
-                var result = await GetHotelGuestByPhoneCompiledQuery(ctx, query.PhoneCountryCode, query.PhoneNumber);
-                return result != null ? new List<HotelGuestResponse> { result } : Enumerable.Empty<HotelGuestResponse>();
-            });
-        }
+                return await ExecuteQuerySafelyAsync(async ctx =>
+                {
+                    var result = await GetHotelGuestByPhoneCompiledQuery(ctx, query.PhoneCountryCode, query.PhoneNumber);
+                    return result != null ? new List<HotelGuestResponse> { result } : Enumerable.Empty<HotelGuestResponse>();
+                });
+            }
     }
 
 }

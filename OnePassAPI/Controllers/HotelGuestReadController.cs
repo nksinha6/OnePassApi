@@ -76,7 +76,7 @@ namespace OnePass.API.Controllers
 
         [HttpGet("pending_face_matches")]
         // [Authorize]
-        public Task<ActionResult<IEnumerable<HotelPendingFaceMatchResponse>>> GetPendingFaceMatches()
+        public Task<ActionResult<IEnumerable<HotelPendingFaceMatchDetailedResponse>>> GetPendingFaceMatches()
     => ExecuteAsync(
         Guid.NewGuid(),
         () => $"pending_face_matches",
