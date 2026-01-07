@@ -32,16 +32,17 @@ namespace OnePass.Domain.Services
             _logger = logger;
         }
 
-        public async Task<bool> SendSmsAsync(SmsRequest request)
+        public async Task<bool> SendSmsAsync(string to)
         {
-            if (request == null) throw new ArgumentNullException(nameof(request));
-
+            
             // ✅ Normalize phone
             var recipient = System.Text.RegularExpressions.Regex
-                .Replace(request.To ?? string.Empty, "\\D", "");
+                .Replace(to ?? string.Empty, "\\D", "");
 
             // ✅ Convert route
             int routeInt = int.Parse(_opts.Route);
+            var variables = new Dictionary<string, string>();
+            variables["var1"] = "https://www.onepass.co.in/onoarding";
 
             // ✅ FINAL DLT TEMPLATE PAYLOAD (EXACT MATCH)
             var payload = new
@@ -52,7 +53,7 @@ namespace OnePass.Domain.Services
                 mobiles = recipient,
                 short_url = 1,
                 templateId = _opts.TemplateId,
-                variables = request.Variables
+                variables = variables
             };
 
             var json = System.Text.Json.JsonSerializer.Serialize(payload);

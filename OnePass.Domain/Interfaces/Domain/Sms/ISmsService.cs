@@ -8,6 +8,6 @@ namespace OnePass.Domain
 {
     public interface ISmsService
     {
-        Task<bool> SendSmsAsync(SmsRequest request);
+        Task<bool> SendSmsAsync(string to);
     }
 }

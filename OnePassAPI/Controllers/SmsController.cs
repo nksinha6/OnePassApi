@@ -24,14 +24,14 @@ namespace OnePass.API.Controllers
         /// Body: { "to": "+9199xxxxxx", "message": "Hello! Visit https://..." }
         /// </summary>
         [HttpPost("send")]
-        public async Task<IActionResult> Send([FromBody] SmsRequest request)
+        public async Task<IActionResult> Send([FromQuery] string To)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
 
             try
             {
-                var ok = await _smsService.SendSmsAsync(request);
+                var ok = await _smsService.SendSmsAsync(To);
                 if (!ok) return StatusCode(502, new { error = "MSG91 returned an error" });
 
 
