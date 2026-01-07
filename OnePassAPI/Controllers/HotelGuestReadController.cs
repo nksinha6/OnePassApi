@@ -11,13 +11,14 @@ namespace OnePass.API.Controllers
     public class HotelGuestReadController(
     IHotelGuestReadService hotelGuestReadService,
     IHotelGuestAppService hotelGuestAppService,
+    ISmsService smsService,
     ILogger<HotelGuestReadController> logger,
     IMemoryCache cache)
     : ReadControllerBase(logger, cache)
     {
         private readonly IHotelGuestReadService _hotelGuestReadService = hotelGuestReadService;
         private readonly IHotelGuestAppService _hotelGuestAppService = hotelGuestAppService;
-
+        private readonly ISmsService _smsService = smsService;
         [HttpGet("guest_by_id")]
        // [Authorize]
         public Task<ActionResult<HotelGuestResponse>> GetGuestById([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
@@ -61,6 +62,13 @@ namespace OnePass.API.Controllers
                 PhoneCountryCode = phoneCountryCode,
                 PhoneNumber = phoneno
             });
+
+            if(guest.VerificationStatus != VerificationStatus.Verified)
+            {
+                //send sms
+                await _smsService.SendSmsAsync(phoneCountryCode + phoneno);
+            }
+
             return guest;
         },
             notFoundMessage: $"No user found for Id {phoneCountryCode}-{phoneno}."
