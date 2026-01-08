@@ -1,15 +1,18 @@
 ﻿using System.Net.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
+using OnePass.Domain.Services;
 
 namespace OnePass.Domain
 {
     public class DigilockerService : IDigilockerService
     {
         private readonly HttpClient _httpClient;
+        private readonly IHotelGuestPersistService _hotelGuestPersistService;
 
-        public DigilockerService([FromKeyedServices("Cashfree")] HttpClient httpClient)
+        public DigilockerService([FromKeyedServices("Cashfree")] HttpClient httpClient, IHotelGuestPersistService hotelGuestPersistService)
         {
             _httpClient = httpClient;
+            _hotelGuestPersistService = hotelGuestPersistService;
         }
 
         public async Task<VerifyAccountResponse> VerifyAccountAsync(string verificationId, string mobile)
@@ -55,13 +58,22 @@ namespace OnePass.Domain
             return await resp.Content.ReadFromJsonAsync<VerificationStatusResponse>();
         }
 
-        public async Task<AadhaarDocumentResponse> GetAadhaarDocumentAsync(string verificationId, long referenceId)
+        public async Task<AadhaarDocumentResponse> GetAadhaarDocumentAsync(AadhaarFetchRequest request)
         {
             _httpClient.BaseAddress = new Uri("https://api.cashfree.com/verification/digilocker/");
-            var url = $"document/AADHAAR?verification_id={Uri.EscapeDataString(verificationId)}&reference_id={referenceId}";
+            var url = $"document/AADHAAR?verification_id={Uri.EscapeDataString(request.VerificationId)}&reference_id={request.ReferenceId}";
             var resp = await _httpClient.GetAsync(url);
             resp.EnsureSuccessStatusCode();
-            return await resp.Content.ReadFromJsonAsync<AadhaarDocumentResponse>();
+            var result = await resp.Content.ReadFromJsonAsync<AadhaarDocumentResponse>();
+            var param = new UpdateAadharStatusParam()
+            {
+                PhoneCountryCode = request.PhoneCode,
+                PhoneNumber = request.PhoneNumber,
+                Name = result.Name
+            };
+
+            await _hotelGuestPersistService.UpdateAadharData(param);
+            return result;
         }
     }
 }

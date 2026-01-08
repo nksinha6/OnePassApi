@@ -72,10 +72,10 @@ namespace DigiLockerApi
             return Ok(resp);
         }
 
-        [HttpGet("aadhaar")]
-        public async Task<IActionResult> GetAadhaar([FromQuery] string verificationId, [FromQuery] long referenceId)
+        [HttpPut("aadhaar")]
+        public async Task<IActionResult> GetAadhaar([FromBody] AadhaarFetchRequest request)
         {
-            var resp = await _service.GetAadhaarDocumentAsync(verificationId, referenceId);
+            var resp = await _service.GetAadhaarDocumentAsync(request);
             return Ok(resp);
         }
 

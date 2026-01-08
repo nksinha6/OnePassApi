@@ -11,11 +11,10 @@ namespace OnePass.Infrastructure.Persistence
     {
         // Compiled async query returning a List<HotelPendingFaceMatchResponse>
         private static readonly Func<
-    OnePassDbContext,
-    int,
-    int,
-    IAsyncEnumerable<HotelPendingFaceMatchDetailedResponse>
-> GetPendingFaceMatchesEntitiesCompiledQuery =
+        OnePassDbContext,
+        int,
+        int,                IAsyncEnumerable<HotelPendingFaceMatchDetailedResponse>
+    > GetPendingFaceMatchesEntitiesCompiledQuery =
 EF.CompileAsyncQuery(
     (OnePassDbContext ctx, int tenantId, int propertyId) =>
 

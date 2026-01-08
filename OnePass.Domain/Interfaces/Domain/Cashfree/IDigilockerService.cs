@@ -5,6 +5,6 @@
         Task<VerifyAccountResponse> VerifyAccountAsync(string verificationId, string mobile);
         Task<CreateUrlResponse> CreateUrlAsync(string verificationId, List<string> documents, string redirectUrl, string userFlow);
         Task<VerificationStatusResponse> GetStatusAsync(string verificationId, long? referenceId = null);
-        Task<AadhaarDocumentResponse> GetAadhaarDocumentAsync(string verificationId, long referenceId);
+        Task<AadhaarDocumentResponse> GetAadhaarDocumentAsync(AadhaarFetchRequest request);
     }
 }

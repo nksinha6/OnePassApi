@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class UpdateAadharStatusParam
+    public class AadhaarFetchRequest
     {
-        public string PhoneCountryCode { get; set; }
+        public string VerificationId { get; set; }
+        public long ReferenceId { get; set; }
+
+        public string PhoneCode { get; set; }
         public string PhoneNumber { get; set; }
-        public string Name { get; set; }
     }
 }

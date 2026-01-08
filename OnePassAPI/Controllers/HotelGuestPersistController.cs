@@ -48,20 +48,5 @@ namespace OnePass.API.Controllers
 
                     return await _hotelGuestPersistService.PersistFaceCapture(guestFaceCapture);
                 });
-
-        [HttpPost("update_aadhar")]
-        [Authorize]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> UpdateAadhar([FromBody] UpdateAadharStatusParam request) =>
-            ExecutePersistAsync(
-                request,
-                nameof(HotelGuestReadController.GetGuestById),
-                "guest_by_id",
-                async () =>
-                {
-                    return await _hotelGuestPersistService.UpdateAadharStatus(request);
-                });
     }
 }
