@@ -72,7 +72,7 @@ namespace DigiLockerApi
             return Ok(resp);
         }
 
-        [HttpPut("aadhaar")]
+        [HttpPost("aadhaar")]
         public async Task<IActionResult> GetAadhaar([FromBody] AadhaarFetchRequest request)
         {
             var resp = await _service.GetAadhaarDocumentAsync(request);
