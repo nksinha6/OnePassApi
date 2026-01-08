@@ -49,7 +49,7 @@ namespace OnePass.API.Controllers
                     return await _hotelGuestPersistService.PersistFaceCapture(guestFaceCapture);
                 });
 
-        [HttpPost("persist_guest_selfie")]
+        [HttpPost("selfie")]
         public Task<IActionResult> PersistGuestSelfie([FromBody] HotelGuestSelfie request) =>
             ExecutePersistAsync(
                 request,
