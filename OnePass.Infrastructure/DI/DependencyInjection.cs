@@ -68,6 +68,8 @@ services.AddScoped<IReadQueryHandler<GetAllVisitPurposesQuery, VisitPurpose>, Ge
 
             services.AddScoped<IReadQueryHandler<GetPendingFaceMatchesQuery, HotelPendingFaceMatchDetailedResponse>, GetPendingFaceMatchesQueryHandler>();
 
+            services.AddScoped<IReadQueryHandler<GetHotelGuestSelfieQuery, HotelGuestSelfie>, GetHotelGuestSelfieQueryHandler>();
+
             // Add other infrastructure services here (e.g., DbContext, caching, etc.)
 
             return services;

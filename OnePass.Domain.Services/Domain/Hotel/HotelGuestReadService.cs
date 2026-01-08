@@ -15,6 +15,11 @@ namespace OnePass.Domain.Services
                 query,
                 useStoredProcedure: false);
 
+        public Task<HotelGuestSelfie> GetHotelGuestSelfieAsync(GetHotelGuestSelfieQuery query)
+        =>   HandleSingleOrDefaultAsync<GetHotelGuestSelfieQuery, HotelGuestSelfie>(
+                query,
+                useStoredProcedure: false);
+
         public Task<IEnumerable<HotelPendingFaceMatchDetailedResponse>> GetPendingFaceMatchesAsync(int tenantId, int propertyId)
         =>
              HandleQueryAsync<GetPendingFaceMatchesQuery, HotelPendingFaceMatchDetailedResponse>(

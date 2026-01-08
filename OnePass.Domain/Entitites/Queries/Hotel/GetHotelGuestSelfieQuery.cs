@@ -6,16 +6,10 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class GetHotelGuestSelfieQuery
+    public class GetHotelGuestSelfieQuery : IReadQuery
     {
-        public string PhoneCountryCode { get; }
-        public string PhoneNumber { get; }
-
-        public GetHotelGuestSelfieQuery(string phoneCountryCode, string phoneNumber)
-        {
-            PhoneCountryCode = phoneCountryCode;
-            PhoneNumber = phoneNumber;
-        }
+        public string PhoneCountryCode { get; set; }
+        public string PhoneNumber { get; set; }
     }
 
 }
