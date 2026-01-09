@@ -67,8 +67,10 @@ services.AddScoped<IReadQueryHandler<GetAllVisitPurposesQuery, VisitPurpose>, Ge
             services.AddScoped<IReadQueryHandler<GetHotelGuestFaceCaptureQuery, HotelGuestFaceCaptureResponse>, GetHotelGuestFaceCaptureQueryHandler>();
 
             services.AddScoped<IReadQueryHandler<GetPendingFaceMatchesQuery, HotelPendingFaceMatchDetailedResponse>, GetPendingFaceMatchesQueryHandler>();
-
             services.AddScoped<IReadQueryHandler<GetHotelGuestSelfieQuery, HotelGuestSelfie>, GetHotelGuestSelfieQueryHandler>();
+
+            services.AddScoped<IReadQueryHandler<GetFaceMatchByBookingAndPhoneQuery, HotelPendingFaceMatchResponse>, GetFaceMatchByBookingAndPhoneQueryHandler>();
+
 
             // Add other infrastructure services here (e.g., DbContext, caching, etc.)
 

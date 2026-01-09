@@ -74,19 +74,6 @@ namespace OnePass.API.Controllers
             notFoundMessage: $"No user found for Id {phoneCountryCode}-{phoneno}."
         );
 
-        [HttpGet("pending_face_matches")]
-        // [Authorize]
-        public Task<ActionResult<IEnumerable<HotelPendingFaceMatchDetailedResponse>>> GetPendingFaceMatches()
-    => ExecuteAsync(
-        Guid.NewGuid(),
-        () => $"pending_face_matches",
-        async () =>
-        {
-            var result = await _hotelGuestReadService.GetPendingFaceMatchesAsync(1, 1);
-
-            return result;
-        },
-        notFoundMessage: $"No pending face match reservations found for tenantId 1 and propertyId 1."
-    );
+        
     }
 }

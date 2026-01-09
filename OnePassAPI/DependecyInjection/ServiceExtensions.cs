@@ -14,6 +14,7 @@ namespace OnePass.API
             services.AddScoped<IUserPersistsService, UserPersistsService>();
 
             services.AddScoped<IHotelBookingService, HotelBookingService>();
+            services.AddScoped<IHotelBookingReadService, HotelBookingReadService>();
             services.AddScoped<IVisitReadService, VisitReadService>();
             services.AddScoped<IVisitPersistService, VisitPersistService>();
             services.AddScoped<IHotelUserService, HotelUserService>();  

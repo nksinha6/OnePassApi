@@ -20,11 +20,5 @@ namespace OnePass.Domain.Services
                 query,
                 useStoredProcedure: false);
 
-        public Task<IEnumerable<HotelPendingFaceMatchDetailedResponse>> GetPendingFaceMatchesAsync(int tenantId, int propertyId)
-        =>
-             HandleQueryAsync<GetPendingFaceMatchesQuery, HotelPendingFaceMatchDetailedResponse>(
-                new GetPendingFaceMatchesQuery()
-                { PropertyId = propertyId, TenantId = tenantId},
-                useStoredProcedure: false);
     }
 }

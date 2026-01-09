@@ -67,27 +67,5 @@ namespace OnePass.API
                 {
                     return await _hotelBookingService.RecordBookingCheckin(tenantId, bookingId);
                 });
-
-        [HttpPost("face-match/status")]
-        public async Task<IActionResult> GetFaceMatchStatus(
-    [FromBody] FaceMatchStatusRequest request)
-        {
-            /*  var response = await _faceMatchService.GetFaceMatchStatus(
-                  request.BookingId,
-                  request.PhoneCountryCode,
-                  request.PhoneNumber);
-            */
-            var response = new FaceMatchStatusResponse
-            {
-                BookingId = request.BookingId,
-                PhoneCountryCode = request.PhoneCountryCode,
-                PhoneNumber = request.PhoneNumber,
-                IsFaceMatched = true,
-                FaceMatchScore = 87.3
-            };
-
-            return Ok(response);
-        }
-
     }
 }
