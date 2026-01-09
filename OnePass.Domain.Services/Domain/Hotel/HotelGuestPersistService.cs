@@ -31,18 +31,17 @@ namespace OnePass.Domain.Services
                 PhoneCountryCode = param.PhoneCountryCode,
                 PhoneNumber = param.PhoneNumber
             });
-            Guid id = guest != null ? guest.Id : Guid.NewGuid();
-            if(guest == null)
+            if(guest.Id == Guid.Empty)
             {
-                var result = await guestRepository.AddIfNotExistAsync(new HotelGuest()
+                return await guestRepository.AddIfNotExistAsync(new HotelGuest()
                 {
                     PhoneCountryCode = param.PhoneCountryCode,
                     PhoneNumber = param.PhoneNumber,
-                    Id = id
+                    VerificationStatus = VerificationStatus.Verified
                 });
             }
 
-            return await _guestRepository.UpdatePartialAsync(new HotelGuest() { Id = id, VerificationStatus = VerificationStatus.Verified, FullName = param.Name}, x => x.VerificationStatus);
+            return await _guestRepository.UpdatePartialAsync(new HotelGuest() { Id = guest.Id, VerificationStatus = VerificationStatus.Verified, FullName = param.Name}, x => x.VerificationStatus);
         }
 
         public Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture) =>

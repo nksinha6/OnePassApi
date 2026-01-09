@@ -10,7 +10,7 @@ namespace OnePass.Domain
     {
         public Guid Id { get; set; }
         public Guid? LinkedPrimaryGuestId { get; set; }
-        public string FullName { get; set; } = default!;
+        public string? FullName { get; set; } = default!;
         public DateTime? DateOfBirth { get; set; }
         public string? Gender { get; set; }
         public string PhoneCountryCode { get; set; } = default!;

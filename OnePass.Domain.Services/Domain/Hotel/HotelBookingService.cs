@@ -40,5 +40,9 @@
 
             return await _hotelPendingFaceMatchRepository.AddIfNotExistAsync(hotelPendingFaceMatch);
         }
+
+        public Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(long id)
+         =>
+            _hotelPendingFaceMatchRepository.UpdatePartialAsync(new HotelPendingFaceMatch() { Id = id, Status = "Verified" }, x => x.Status);
     }
 }

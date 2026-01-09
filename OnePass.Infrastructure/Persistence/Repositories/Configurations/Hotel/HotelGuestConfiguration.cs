@@ -26,8 +26,7 @@ namespace OnePass.Infrastructure.Persistence
 
             builder.Property(x => x.FullName)
                    .HasColumnName("full_name")
-                   .HasMaxLength(150)
-                   .IsRequired();
+                   .HasMaxLength(150);
 
             builder.Property(x => x.DateOfBirth)
                    .HasColumnName("date_of_birth");
