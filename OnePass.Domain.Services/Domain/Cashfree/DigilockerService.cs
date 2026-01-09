@@ -67,7 +67,7 @@ namespace OnePass.Domain
             var result = await resp.Content.ReadFromJsonAsync<AadhaarDocumentResponse>();
             var param = new UpdateAadharStatusParam()
             {
-                PhoneCountryCode = request.PhoneCode,
+                PhoneCountryCode = request.PhoneCountryCode,
                 PhoneNumber = request.PhoneNumber,
                 Name = result.Name
             };
