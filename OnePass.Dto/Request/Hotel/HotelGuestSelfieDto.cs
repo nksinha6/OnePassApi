@@ -9,7 +9,7 @@ namespace OnePass.Dto
 {
     public class HotelGuestSelfieDto
     {
-        public string PhoneCode { get; set; } = null!;
+        public string PhoneCountryCode { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
 
         public IFormFile Selfie { get; set; } = null!;

@@ -70,7 +70,7 @@ namespace OnePass.API
                ? DateTime.UtcNow
                : src.LiveCaptureDatetime);
             TypeAdapterConfig<HotelGuestSelfieDto, HotelGuestSelfie>.NewConfig()
-           .Map(dest => dest.PhoneCountryCode, src => src.PhoneCode)
+           .Map(dest => dest.PhoneCountryCode, src => src.PhoneCountryCode)
            .Map(dest => dest.PhoneNumber, src => src.PhoneNumber)
            .Map(dest => dest.ContentType,
                 src => src.Selfie.ContentType ?? "image/jpeg")
