@@ -23,13 +23,15 @@ namespace OnePass.Infrastructure.Persistence
             EF.CompileAsyncQuery(
                 (OnePassDbContext ctx, string phoneCountryCode, string phoneNumber) =>
                     from hgs in ctx.HotelGuestSelfies.AsNoTracking()
-                    where hgs.PhoneCode == phoneCountryCode
+                    where hgs.PhoneCountryCode == phoneCountryCode
                           && hgs.PhoneNumber == phoneNumber
                     select new HotelGuestSelfie
                     {
-                        PhoneCode = hgs.PhoneCode,
+                        PhoneCountryCode = hgs.PhoneCountryCode,
                         PhoneNumber = hgs.PhoneNumber,
-                        Selfie = hgs.Selfie,
+                        ImageOid = hgs.ImageOid,
+                        ContentType = hgs.ContentType,
+                        FileSize = hgs.FileSize,
                         CreatedAt = hgs.CreatedAt,
                         UpdatedAt = hgs.UpdatedAt
                     });

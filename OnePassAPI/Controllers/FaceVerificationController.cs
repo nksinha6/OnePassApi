@@ -64,8 +64,26 @@ namespace OnePass.API
 
             try
             {
-                var result = await _faceService.MatchFacesAsync(verificationId, selfie, idImage, threshold);
-                return Ok(result);
+                var selfieInput = new ImageInput(
+    selfie.OpenReadStream(),
+    Path.GetFileName(selfie.FileName),
+    selfie.ContentType ?? "image/jpeg",
+    selfie.Length
+);
+
+                var idInput = new ImageInput(
+                    idImage.OpenReadStream(),
+                    Path.GetFileName(idImage.FileName),
+                    idImage.ContentType ?? "image/jpeg",
+                    idImage.Length
+                );
+
+                var res = await _faceService.MatchFacesAsync(
+                    verificationId,
+                    selfieInput,
+                    idInput
+                );
+                return Ok(res);
             }
             catch (Exception ex)
             {
@@ -74,54 +92,7 @@ namespace OnePass.API
             }
         }
 
-        [HttpPost("match2")]
-        public async Task<IActionResult> Match2(
-[FromForm] string verificationId,
-[FromForm] string selfieBase64,
-[FromForm] string idImageBase64,
-[FromForm] double threshold = 0.75)
-        {
-            if (string.IsNullOrEmpty(verificationId) || string.IsNullOrEmpty(selfieBase64) || string.IsNullOrEmpty(idImageBase64))
-                return BadRequest("verificationId, selfie and id image are required");
-
-
-try
-            {
-                IFormFile selfie = ConvertBase64ToFormFile(selfieBase64, "selfie.jpg");
-                IFormFile idImage = ConvertBase64ToFormFile(idImageBase64, "idImage.jpg");
-
-                var result = await _faceService.MatchFacesAsync(verificationId, selfie, idImage, threshold);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error in Face Match");
-                return StatusCode(500, new { error = "Face match failed" });
-            }
-
-
-}
-
-        // Helper method
-        private IFormFile ConvertBase64ToFormFile(string base64, string fileName)
-        {
-            // Remove data URL prefix if present
-            var commaIndex = base64.IndexOf(',');
-            if (commaIndex >= 0)
-                base64 = base64.Substring(commaIndex + 1);
-
-
-byte[] bytes = Convert.FromBase64String(base64);
-            var stream = new MemoryStream(bytes);
-
-            return new FormFile(stream, 0, bytes.Length, fileName, fileName)
-            {
-                Headers = new HeaderDictionary(),
-                ContentType = "image/jpeg"
-            };
-
-
-}
-
     }
 }
+
+        

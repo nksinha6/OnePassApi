@@ -16,23 +16,43 @@ namespace OnePass.Infrastructure.Persistence
         {
             builder.ToTable("hotel_guest_selfies");
 
-            builder.HasKey(x => new { x.PhoneCode, x.PhoneNumber });
+            // Composite primary key
+            builder.HasKey(x => new
+            {
+                x.PhoneCountryCode,
+                x.PhoneNumber
+            });
 
-            builder.Property(x => x.PhoneCode)
-                   .IsRequired()
-                   .HasMaxLength(10);
+            builder.Property(x => x.PhoneCountryCode)
+                .HasColumnName("phone_country_code")
+                .HasMaxLength(10)
+                .IsRequired();
 
             builder.Property(x => x.PhoneNumber)
-                   .IsRequired()
-                   .HasMaxLength(20);
+                .HasColumnName("phone_number")
+                .HasMaxLength(20)
+                .IsRequired();
 
-            builder.Property(x => x.Selfie)
-                   .IsRequired();
+            builder.Property(x => x.ImageOid)
+                .HasColumnName("image_oid")
+                .IsRequired();
+
+            builder.Property(x => x.ContentType)
+                .HasColumnName("content_type")
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder.Property(x => x.FileSize)
+                .HasColumnName("file_size")
+                .IsRequired();
 
             builder.Property(x => x.CreatedAt)
-                   .IsRequired();
+                .HasColumnName("created_at")
+                .HasDefaultValueSql("NOW()")
+                .IsRequired();
 
-            builder.Property(x => x.UpdatedAt);
+            builder.Property(x => x.UpdatedAt)
+                .HasColumnName("updated_at");
         }
     }
 

@@ -10,6 +10,11 @@ namespace OnePass.Domain
     public interface IFaceVerificationService
     {
         Task<FaceLivenessResponse> CheckLivenessAsync(string verificationId, IFormFile selfie);
-        Task<FaceMatchResponse> MatchFacesAsync(string verificationId, IFormFile selfie, IFormFile idImage, double threshold = 0.75);
+        Task<FaceMatchResponse> MatchFacesAsync(
+    string verificationId,
+    ImageInput selfie,
+    ImageInput idImage,
+    double threshold = 0.75,
+    CancellationToken ct = default);
     }
 }

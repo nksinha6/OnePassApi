@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+
+namespace OnePass.Dto
+{
+    public class HotelBookingGuestSelfieMatchRequestDto
+    {
+        public string PhoneCountryCode { get; set; } = null!;
+        public string PhoneNumber { get; set; } = null!;
+        public string BookingId { get; set; } = null!;
+        public IFormFile Selfie { get; set; } = null!;
+    }
+}

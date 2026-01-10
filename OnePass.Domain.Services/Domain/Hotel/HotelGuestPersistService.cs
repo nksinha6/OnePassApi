@@ -1,12 +1,15 @@
 ﻿
 using System.Linq.Expressions;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
 
 namespace OnePass.Domain.Services
 {
     public class HotelGuestPersistService(IPersistRepository<HotelGuest> guestRepository,
         IPersistRepository<HotelGuestFaceCapture> hotelGuestFaceCapturePersistRepository,
         IPersistRepository<HotelGuestSelfie> hotelGuestSelfieRepository,
-        IHotelGuestReadService hotelGuestReadService) : IHotelGuestPersistService
+        IHotelGuestReadService hotelGuestReadService,
+        IConfiguration configuration) : IHotelGuestPersistService
     {
         private readonly IPersistRepository<HotelGuest> _guestRepository = guestRepository;
 
@@ -14,6 +17,8 @@ namespace OnePass.Domain.Services
         private readonly IPersistRepository<HotelGuestFaceCapture> _hotelGuestFaceCapturePersistRepository = hotelGuestFaceCapturePersistRepository;
 
         private readonly IPersistRepository<HotelGuestSelfie> _hotelGuestSelfieRepository = hotelGuestSelfieRepository;
+
+        private readonly string _connectionString = configuration.GetConnectionString("DefaultConnection");
 
         // ✅ DRY helper method
         private static async Task<T> PersistSingleAsync<T>(IPersistRepository<T> repository, T entity) where T : class
@@ -47,8 +52,32 @@ namespace OnePass.Domain.Services
         public Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture) =>
             PersistSingleAsync(_hotelGuestFaceCapturePersistRepository, hotelGuestFaceCapture);
 
-        public Task<HotelGuestSelfie> PersistSelfie(HotelGuestSelfie selfieRequest)
-        =>
-            PersistSingleAsync(_hotelGuestSelfieRepository, selfieRequest);
+        public async Task<HotelGuestSelfie> PersistSelfieAsync(
+    HotelGuestSelfie selfie,
+    Stream selfieStream,
+    CancellationToken ct = default)
+        {
+            await using var conn = new NpgsqlConnection(_connectionString);
+            await conn.OpenAsync(ct);
+
+            await using var tx = await conn.BeginTransactionAsync(ct);
+
+            var loManager = new NpgsqlLargeObjectManager(conn);
+            uint oid = loManager.Create();
+
+            await using (var loStream = loManager.OpenReadWrite(oid))
+            {
+                await selfieStream.CopyToAsync(loStream, ct);
+            }
+
+            selfie.ImageOid = oid;   // ✅ persistence assigns OID
+
+            // insert row here (or pass to another persistence service)
+
+            await tx.CommitAsync(ct);
+
+            return await PersistSingleAsync(_hotelGuestSelfieRepository, selfie);
+        }
+            
     }
 }

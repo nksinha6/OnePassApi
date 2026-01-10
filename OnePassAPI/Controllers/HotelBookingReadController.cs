@@ -52,6 +52,11 @@ namespace OnePass.API
         },
         notFoundMessage: $"No pending face match reservations found for tenantId 1 and propertyId 1."
     );
+/*
+        [HttpPost("booking/selfie_match")]
+        public Task<IActionResult> MatchBookingGuestSelfie([FromBody] HotelBookingGuestSelfieMatchRequestDto request)
+        {
 
+        }*/
     }
 }

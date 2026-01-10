@@ -6,7 +6,10 @@ namespace OnePass.Domain
     {
         Task<HotelGuest> Persist(HotelGuest guest);
 
-        Task<HotelGuestSelfie> PersistSelfie(HotelGuestSelfie selfieRequest);
+        Task<HotelGuestSelfie> PersistSelfieAsync(
+    HotelGuestSelfie selfie,
+    Stream selfieStream,
+    CancellationToken ct = default);
 
         Task<HotelGuest> UpdateAadharData(UpdateAadharStatusParam param);
         Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture);

@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using System.ComponentModel.DataAnnotations;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnePass.Domain;
@@ -50,16 +51,21 @@ namespace OnePass.API.Controllers
                 });
 
         [HttpPost("selfie")]
-        public Task<IActionResult> PersistGuestSelfie([FromBody] HotelGuestSelfie request) =>
+        public Task<IActionResult> PersistGuestSelfie([FromBody] HotelGuestSelfieDto request) =>
             ExecutePersistAsync(
                 request,
                 nameof(HotelGuestReadController.GetGuestById),
                 "guest_by_id",
                 async () =>
                 {
-                    var guest = request.Adapt<HotelGuest>();
+                    if (request.Selfie == null || request.Selfie.Length == 0)
+                        throw new ValidationException("Selfie is required");
 
-                    return await _hotelGuestPersistService.PersistSelfie(request);
-                });
+                    // Map DTO → Entity (metadata only)
+                    var entity = request.Adapt<HotelGuestSelfie>();
+                    return await _hotelGuestPersistService.PersistSelfieAsync(
+                entity,
+                request.Selfie.OpenReadStream()
+);                });
     }
 }

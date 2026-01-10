@@ -8,13 +8,17 @@ namespace OnePass.Domain
 {
     public class HotelGuestSelfie
     {
-        public string PhoneCode { get; set; } = null!;
-        public string PhoneNumber { get; set; } = null!;
+        public string PhoneCountryCode { get; set; } = default!;
+        public string PhoneNumber { get; set; } = default!;
 
-        public byte[] Selfie { get; set; } = null!;
+        // PostgreSQL OID is uint
+        public uint ImageOid { get; set; }
 
-        public DateTime? CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
+        public string ContentType { get; set; } = default!;
+        public long FileSize { get; set; }
+
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
     }
 
 }
