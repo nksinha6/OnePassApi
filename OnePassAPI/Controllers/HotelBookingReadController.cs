@@ -7,7 +7,9 @@ using OnePass.Dto;
 
 namespace OnePass.API
 {
-    public class HotelBookingReadControl(
+    [ApiController]
+    [Route("api/[controller]")]
+    public class HotelBookingReadController(
         IHotelBookingReadService hotelBookingReadService,
         IHotelGuestReadService
             hotelGuestReadService,
@@ -63,8 +65,9 @@ ILogger<HotelGuestReadController> logger,
         notFoundMessage: $"No pending face match reservations found for tenantId 1 and propertyId 1."
     );
 
-        [HttpPost("booking/selfie_match")]
-        public async Task<IActionResult> MatchBookingGuestSelfie([FromBody] HotelBookingGuestSelfieMatchRequestDto request)
+        [HttpPost("selfie_match")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> MatchBookingGuestSelfie([FromForm] HotelBookingGuestSelfieMatchRequestDto request)
         {
             var selfie = await _hotelGuestReadService.GetHotelGuestSelfieAsync(new GetHotelGuestSelfieQuery()
             {
