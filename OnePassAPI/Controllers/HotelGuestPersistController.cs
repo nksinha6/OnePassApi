@@ -51,7 +51,8 @@ namespace OnePass.API.Controllers
                 });
 
         [HttpPost("selfie")]
-        public Task<IActionResult> PersistGuestSelfie([FromBody] HotelGuestSelfieDto request) =>
+        [Consumes("multipart/form-data")]
+        public Task<IActionResult> PersistGuestSelfie([FromForm] HotelGuestSelfieDto request) =>
             ExecutePersistAsync(
                 request,
                 nameof(HotelGuestReadController.GetGuestById),
