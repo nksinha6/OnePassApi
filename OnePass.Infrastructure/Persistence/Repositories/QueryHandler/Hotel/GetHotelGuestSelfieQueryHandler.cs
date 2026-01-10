@@ -29,7 +29,7 @@ namespace OnePass.Infrastructure.Persistence
                     {
                         PhoneCountryCode = hgs.PhoneCountryCode,
                         PhoneNumber = hgs.PhoneNumber,
-                        ImageOid = hgs.ImageOid,
+                        Image = hgs.Image,
                         ContentType = hgs.ContentType,
                         FileSize = hgs.FileSize,
                         CreatedAt = hgs.CreatedAt,

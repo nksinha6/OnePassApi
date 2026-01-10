@@ -64,6 +64,12 @@ namespace OnePass.API.Controllers
 
                     // Map DTO → Entity (metadata only)
                     var entity = request.Adapt<HotelGuestSelfie>();
+
+                    await using var ms = new MemoryStream();
+                    await request.Selfie.CopyToAsync(ms);
+
+                    entity.Image = ms.ToArray();
+                    entity.CreatedAt = DateTimeOffset.UtcNow;
                     return await _hotelGuestPersistService.PersistSelfieAsync(
                 entity,
                 request.Selfie.OpenReadStream()

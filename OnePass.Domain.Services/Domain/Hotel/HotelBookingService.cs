@@ -43,6 +43,6 @@
 
         public Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(long id)
          =>
-            _hotelPendingFaceMatchRepository.UpdatePartialAsync(new HotelPendingFaceMatch() { Id = id, Status = "Verified" }, x => x.Status);
+            _hotelPendingFaceMatchRepository.UpdatePartialAsync(new HotelPendingFaceMatch() { Id = id, Status = "verified" }, x => x.Status);
     }
 }

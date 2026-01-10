@@ -11,8 +11,7 @@ namespace OnePass.Domain
         public string PhoneCountryCode { get; set; } = default!;
         public string PhoneNumber { get; set; } = default!;
 
-        // PostgreSQL OID is uint
-        public uint ImageOid { get; set; }
+        public byte[] Image { get; set; } = default!;
 
         public string ContentType { get; set; } = default!;
         public long FileSize { get; set; }
@@ -20,5 +19,6 @@ namespace OnePass.Domain
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
     }
+
 
 }

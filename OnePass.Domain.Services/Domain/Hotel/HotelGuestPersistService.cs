@@ -54,29 +54,23 @@ namespace OnePass.Domain.Services
 
         public async Task<HotelGuestSelfie> PersistSelfieAsync(
     HotelGuestSelfie selfie,
-    Stream selfieStream,
-    CancellationToken ct = default)
+    Stream selfieStream)
         {
-            await using var conn = new NpgsqlConnection(_connectionString);
-            await conn.OpenAsync(ct);
+            if (selfieStream == null)
+                throw new ArgumentNullException(nameof(selfieStream));
 
-            await using var tx = await conn.BeginTransactionAsync(ct);
+            // Convert stream → byte[]
+            await using var ms = new MemoryStream();
+            await selfieStream.CopyToAsync(ms);
 
-            var loManager = new NpgsqlLargeObjectManager(conn);
-            uint oid = loManager.Create();
+            selfie.Image = ms.ToArray();
+            selfie.FileSize = selfie.Image.LongLength;
+            selfie.CreatedAt = DateTimeOffset.UtcNow;
 
-            await using (var loStream = loManager.OpenReadWrite(oid))
-            {
-                await selfieStream.CopyToAsync(loStream, ct);
-            }
-
-            selfie.ImageOid = oid;   // ✅ persistence assigns OID
-
-            // insert row here (or pass to another persistence service)
-
-            await tx.CommitAsync(ct);
-
-            return await PersistSingleAsync(_hotelGuestSelfieRepository, selfie);
+            // Persist using repository / EF
+            return await PersistSingleAsync(
+                _hotelGuestSelfieRepository,
+                selfie);
         }
             
     }

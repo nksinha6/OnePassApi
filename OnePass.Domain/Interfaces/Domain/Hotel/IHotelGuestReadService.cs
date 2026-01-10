@@ -5,7 +5,7 @@ namespace OnePass.Domain
     {
         Task<HotelGuestResponse> GetHotelGuestAsync(GetHotelGuestByPhoneQuery query);
 
-        Task<GuestSelfieResult> GetHotelGuestSelfieAsync(GetHotelGuestSelfieQuery query);
+        Task<HotelGuestSelfie> GetHotelGuestSelfieAsync(GetHotelGuestSelfieQuery query);
 
     }
 }

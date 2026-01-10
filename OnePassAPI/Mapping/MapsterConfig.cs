@@ -69,19 +69,17 @@ namespace OnePass.API
            .Map(dest => dest.LiveCaptureDatetime, src => src.LiveCaptureDatetime == default
                ? DateTime.UtcNow
                : src.LiveCaptureDatetime);
-            TypeAdapterConfig<HotelGuestSelfieDto, HotelGuestSelfie>.NewConfig()
-           .Map(dest => dest.PhoneCountryCode, src => src.PhoneCountryCode)
-           .Map(dest => dest.PhoneNumber, src => src.PhoneNumber)
+            TypeAdapterConfig<HotelGuestSelfieDto, HotelGuestSelfie>
+           .NewConfig()
+           .Ignore(dest => dest.Image)        // handled separately
+           .Ignore(dest => dest.CreatedAt)
+           .Ignore(dest => dest.UpdatedAt)
            .Map(dest => dest.ContentType,
-                src => src.Selfie.ContentType ?? "image/jpeg")
+                src => string.IsNullOrWhiteSpace(src.Selfie.ContentType)
+                    ? "application/octet-stream"
+                    : src.Selfie.ContentType)
            .Map(dest => dest.FileSize,
-                src => src.Selfie.Length)
-           .Map(dest => dest.CreatedAt,
-                src => DateTimeOffset.UtcNow)
-
-           // IMPORTANT: explicitly ignore ImageOid
-           .Ignore(dest => dest.ImageOid)
-           .Ignore(dest => dest.UpdatedAt);
+                src => src.Selfie.Length);
 
         }    }
 }
