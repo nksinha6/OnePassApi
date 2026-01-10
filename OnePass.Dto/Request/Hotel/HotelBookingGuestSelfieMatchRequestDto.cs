@@ -11,7 +11,7 @@ namespace OnePass.Dto
     {
         public string PhoneCountryCode { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
-        public string BookingId { get; set; } = null!;
+        public long Id { get; set; }
         public IFormFile Selfie { get; set; } = null!;
     }
 }
