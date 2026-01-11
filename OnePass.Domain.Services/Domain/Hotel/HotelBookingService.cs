@@ -1,28 +1,26 @@
 ﻿namespace OnePass.Domain.Services
 {
-    public class HotelBookingService(IPersistRepository<BookingCheckin> checkinRepository, IPersistRepository<HotelPendingFaceMatch> hotelPendingFaceMatchRepository) : IHotelBookingService
+    public class HotelBookingService(IPersistRepository<BookingVerificationWindow> checkinRepository, IPersistRepository<HotelPendingFaceMatch> hotelPendingFaceMatchRepository) : IHotelBookingService
     {
-        IPersistRepository<BookingCheckin> _checkinRepository = checkinRepository;
+        IPersistRepository<BookingVerificationWindow> _checkinRepository = checkinRepository;
         IPersistRepository<HotelPendingFaceMatch> _hotelPendingFaceMatchRepository = hotelPendingFaceMatchRepository;
 
-        public async Task<BookingCheckin> StartBookingCheckin(int tenantId, string bookingId)
+        public async Task<BookingVerificationWindow> StartBookingVerification(int tenantId, string bookingId)
         {
-            var checkinBooking = new BookingCheckin()
+            var checkinBooking = new BookingVerificationWindow()
             {
                 TenantId = tenantId,
                 BookingId = bookingId,
-                CheckinWindowStart = DateTime.UtcNow
+                WindowStart = DateTime.UtcNow
             };
 
             return await _checkinRepository.AddIfNotExistAsync(checkinBooking);
         }
 
-        public Task<BookingCheckin> RecordBookingCheckin(int tenantId, string bookingId)
-        =>            _checkinRepository.UpdatePartialAsync(new BookingCheckin() { BookingId = bookingId, TenantId = tenantId, ActualCheckinAt = DateTime.UtcNow }, x => x.ActualCheckinAt);
+        public Task<BookingVerificationWindow> EndBookingVerification(int tenantId, string bookingId)
+        =>            _checkinRepository.UpdatePartialAsync(new BookingVerificationWindow() { BookingId = bookingId, TenantId = tenantId, WindowEnd = DateTime.UtcNow }, x => x.WindowEnd);
 
-        public Task<BookingCheckin> RecordBookingCheckout(int tenantId, string bookingId)
-        =>            _checkinRepository.UpdatePartialAsync(new BookingCheckin() { BookingId = bookingId, TenantId = tenantId, ActualCheckinAt = DateTime.UtcNow }, x => x.ActualCheckinAt);
-
+      
         public async Task<HotelPendingFaceMatch> RecordBookingPendingFaceVerification(int tenantId, int propertyId, FaceMatchInitiateRequest faceMatchInitiateRequest)
         {
             var hotelPendingFaceMatch = new HotelPendingFaceMatch()

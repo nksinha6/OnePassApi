@@ -31,7 +31,7 @@ namespace OnePass.Infrastructure.Persistence
 
         public DbSet<HotelUserRefreshToken> HotelUserRefreshToken => Set<HotelUserRefreshToken>();
 
-        public DbSet<BookingCheckin> BookingCheckins => Set<BookingCheckin>();
+        public DbSet<BookingVerificationWindow> BookingCheckins => Set<BookingVerificationWindow>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
             /// Register PostgreSQL enum type first

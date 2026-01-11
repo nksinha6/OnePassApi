@@ -8,8 +8,8 @@ namespace OnePass.Domain
 {
     public interface IHotelBookingService
     {
-        public Task<BookingCheckin> StartBookingCheckin(int tenantId, string bookingId);
-        public Task<BookingCheckin> RecordBookingCheckin(int tenantId, string bookingId);
+        public Task<BookingVerificationWindow> StartBookingVerification(int tenantId, string bookingId);
+        public Task<BookingVerificationWindow> EndBookingVerification(int tenantId, string bookingId);
         public Task<HotelPendingFaceMatch> RecordBookingPendingFaceVerification(int tenantId, int propertyId, FaceMatchInitiateRequest faceMatchInitiateRequest);
 
         Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(long id);

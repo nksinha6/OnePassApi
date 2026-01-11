@@ -10,50 +10,47 @@ using OpenTelemetry.Trace;
 
 namespace OnePass.Infrastructure.Persistence
 {
-    public class GetBookingCheckinQueryHandler :
-    QueryHandlerBase<GetBookingCheckinQuery, BookingCheckinResponse>,
-    IReadQueryHandler<GetBookingCheckinQuery, BookingCheckinResponse>
+    public class GetBookingVerificationWindowQueryHandler :
+    QueryHandlerBase<GetBookingVerificationWindowQuery, BookingVerificationWindow>,
+    IReadQueryHandler<GetBookingVerificationWindowQuery, BookingVerificationWindow>
     {
-        private static readonly Func<OnePassDbContext, int, string, Task<BookingCheckinResponse>>
+        private static readonly Func<OnePassDbContext, int, string, Task<BookingVerificationWindow>>
             GetBookingCheckinCompiledQuery =
             EF.CompileAsyncQuery((OnePassDbContext ctx, int tenantId, string bookingId) =>
                 (from b in ctx.BookingCheckins.AsNoTracking()
                  where b.TenantId == tenantId
                        && b.BookingId == bookingId
-                 select new BookingCheckinResponse
+                 select new BookingVerificationWindow
                  {
                      BookingId = b.BookingId,
                      TenantId = b.TenantId,
 
-                     ScheduledCheckinAt = b.ScheduledCheckinAt,
-                     CheckinWindowStart = b.CheckinWindowStart,
-
-                     ActualCheckinAt = b.ActualCheckinAt,
-                     ActualCheckoutAt = b.ActualCheckoutAt
+                     WindowEnd = b.WindowEnd,
+                     WindowStart = b.WindowStart
                  })
                 .FirstOrDefault());
 
-        public GetBookingCheckinQueryHandler(
+        public GetBookingVerificationWindowQueryHandler(
             OnePassDbContext context,
             Tracer tracer,
-            ILogger<GetBookingCheckinQueryHandler> logger)
+            ILogger<GetBookingVerificationWindowQueryHandler> logger)
             : base(context, tracer, logger)
         {
         }
 
-        public async Task<IEnumerable<BookingCheckinResponse>> HandleAllAsync()
+        public async Task<IEnumerable<BookingVerificationWindow>> HandleAllAsync()
         {
             throw new NotSupportedException("Fetching all booking checkins is not supported in this query.");
         }
 
-        public async Task<IEnumerable<BookingCheckinResponse>> HandleQueryAsync(GetBookingCheckinQuery query)
+        public async Task<IEnumerable<BookingVerificationWindow>> HandleQueryAsync(GetBookingVerificationWindowQuery query)
         {
             return await ExecuteQuerySafelyAsync(async ctx =>
             {
                 var result = await GetBookingCheckinCompiledQuery(ctx, query.TenantId, query.BookingId);
                 return result != null ?
-                    new List<BookingCheckinResponse> { result } :
-                    Enumerable.Empty<BookingCheckinResponse>();
+                    new List<BookingVerificationWindow> { result } :
+                    Enumerable.Empty<BookingVerificationWindow>();
             });
         }
     }

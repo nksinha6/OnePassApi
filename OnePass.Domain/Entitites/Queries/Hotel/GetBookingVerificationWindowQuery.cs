@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class GetBookingCheckinQuery : IReadQuery
+    public class GetBookingVerificationWindowQuery : IReadQuery
     {
         public int TenantId { get; set; }
         public string BookingId { get; set; }
