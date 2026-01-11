@@ -62,7 +62,6 @@ namespace OnePass.API.Controllers
                     if (request.Selfie == null || request.Selfie.Length == 0)
                         throw new ValidationException("Selfie is required");
 
-                    // Map DTO → Entity (metadata only)
                     var entity = request.Adapt<HotelGuestSelfie>();
 
                     await using var ms = new MemoryStream();
@@ -74,5 +73,23 @@ namespace OnePass.API.Controllers
                 entity,
                 request.Selfie.OpenReadStream()
 );                });
+
+
+        [HttpPost("aadhaar/verify")]
+        // [Authorize]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> UpdateIdentity([FromBody] UpdateAadharStatusParam request) =>
+            ExecutePersistAsync(
+                request,
+                nameof(HotelGuestReadController.GetGuestById),
+                "guest_by_id",
+                async () =>
+                {
+                    var guestFaceCapture = request.Adapt<HotelGuestFaceCapture>();
+
+                    return await _hotelGuestPersistService.UpdateAadharData(request);
+                });
     }
 }

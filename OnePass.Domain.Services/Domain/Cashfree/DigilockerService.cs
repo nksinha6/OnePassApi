@@ -64,16 +64,7 @@ namespace OnePass.Domain
             var url = $"document/AADHAAR?verification_id={Uri.EscapeDataString(request.VerificationId)}&reference_id={request.ReferenceId}";
             var resp = await _httpClient.GetAsync(url);
             resp.EnsureSuccessStatusCode();
-            var result = await resp.Content.ReadFromJsonAsync<AadhaarDocumentResponse>();
-            var param = new UpdateAadharStatusParam()
-            {
-                PhoneCountryCode = request.PhoneCountryCode,
-                PhoneNumber = request.PhoneNumber,
-                Name = result.Name
-            };
-
-            await _hotelGuestPersistService.UpdateAadharData(param);
-            return result;
+            return await resp.Content.ReadFromJsonAsync<AadhaarDocumentResponse>();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace OnePass.Domain.Services
                 });
             }
 
-            return await _guestRepository.UpdatePartialAsync(new HotelGuest() { Id = guest.Id, VerificationStatus = VerificationStatus.Verified, FullName = param.Name}, x => x.VerificationStatus);
+            return await _guestRepository.UpdatePartialAsync(new HotelGuest() { Id = guest.Id, VerificationStatus = VerificationStatus.Verified, FullName = param.Name}, x => x.VerificationStatus, x => x.FullName);
         }
 
         public Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture) =>

@@ -18,12 +18,10 @@
         }
 
         public Task<BookingCheckin> RecordBookingCheckin(int tenantId, string bookingId)
-        =>
-            _checkinRepository.UpdatePartialAsync(new BookingCheckin() { BookingId = bookingId, TenantId = tenantId, ActualCheckinAt = DateTime.UtcNow }, x => x.ActualCheckinAt);
+        =>            _checkinRepository.UpdatePartialAsync(new BookingCheckin() { BookingId = bookingId, TenantId = tenantId, ActualCheckinAt = DateTime.UtcNow }, x => x.ActualCheckinAt);
 
         public Task<BookingCheckin> RecordBookingCheckout(int tenantId, string bookingId)
-        =>
-            _checkinRepository.UpdatePartialAsync(new BookingCheckin() { BookingId = bookingId, TenantId = tenantId, ActualCheckinAt = DateTime.UtcNow }, x => x.ActualCheckinAt);
+        =>            _checkinRepository.UpdatePartialAsync(new BookingCheckin() { BookingId = bookingId, TenantId = tenantId, ActualCheckinAt = DateTime.UtcNow }, x => x.ActualCheckinAt);
 
         public async Task<HotelPendingFaceMatch> RecordBookingPendingFaceVerification(int tenantId, int propertyId, FaceMatchInitiateRequest faceMatchInitiateRequest)
         {
@@ -42,7 +40,6 @@
         }
 
         public Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(long id)
-         =>
-            _hotelPendingFaceMatchRepository.UpdatePartialAsync(new HotelPendingFaceMatch() { Id = id, Status = "verified" }, x => x.Status);
+         =>            _hotelPendingFaceMatchRepository.UpdatePartialAsync(new HotelPendingFaceMatch() { Id = id, Status = "verified" }, x => x.Status);
     }
 }
