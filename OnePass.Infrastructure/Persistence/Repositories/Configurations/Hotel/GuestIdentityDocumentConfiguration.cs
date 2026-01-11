@@ -44,7 +44,7 @@ namespace OnePass.Infrastructure.Persistence
 
             builder.Property(d => d.VerificationStatus)
                 .HasConversion<string>() // Map enum -> PostgreSQL enum
-                .HasDefaultValue(VerificationStatus.Pending);
+                .HasDefaultValue(VerificationStatus.pending);
 
             builder.Property(d => d.CreatedAt)
                 .HasDefaultValueSql("now()");

@@ -18,7 +18,7 @@ namespace OnePass.Domain
         public string? Gender { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Pending;
-        public DateTime? DateOfBirth { get; set; }
+        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.pending;
+        public DateOnly? DateOfBirth { get; set; }
     }
 }

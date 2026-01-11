@@ -63,7 +63,7 @@ namespace OnePass.API.Controllers
                 PhoneNumber = phoneno
             });
 
-            if(guest.VerificationStatus != VerificationStatus.Verified)
+            if(guest.VerificationStatus != VerificationStatus.verified)
             {
                 //send sms
                 await _smsService.SendSmsAsync(phoneCountryCode + phoneno);

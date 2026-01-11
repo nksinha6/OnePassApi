@@ -15,69 +15,49 @@ namespace OnePass.Infrastructure.Persistence
         {
             builder.ToTable("hotel_guests");
 
-            builder.HasKey(x => x.Id);
+            builder.HasKey(g => g.Id);
 
-            builder.Property(x => x.Id)
-                   .HasColumnName("id")
+            builder.Property(g => g.Id)
                    .HasDefaultValueSql("gen_random_uuid()");
 
-            builder.Property(x => x.LinkedPrimaryGuestId)
-                   .HasColumnName("linked_primary_guest_id");
-
-            builder.Property(x => x.FullName)
-                   .HasColumnName("full_name")
+            builder.Property(g => g.FullName)
                    .HasMaxLength(150);
 
-            builder.Property(x => x.DateOfBirth)
-                   .HasColumnName("date_of_birth");
-
-            builder.Property(x => x.Gender)
-                   .HasColumnName("gender")
+            builder.Property(g => g.Gender)
                    .HasMaxLength(20);
 
-            builder.Property(x => x.PhoneCountryCode)
-                   .HasColumnName("phone_country_code")
+            builder.Property(g => g.PhoneCountryCode)
                    .HasMaxLength(10)
                    .IsRequired();
 
-            builder.Property(x => x.PhoneNumber)
-                   .HasColumnName("phone_number")
+            builder.Property(g => g.PhoneNumber)
                    .HasMaxLength(20)
                    .IsRequired();
 
-            builder.Property(x => x.Email)
-                   .HasColumnName("email")
+            builder.Property(g => g.Email)
                    .HasMaxLength(150);
 
-            builder.Property(x => x.Nationality)
-                   .HasColumnName("nationality")
+            builder.Property(g => g.Nationality)
                    .HasMaxLength(100);
 
-            builder.Property(x => x.CreatedAt)
-                   .HasColumnName("created_at")
+            builder.Property(g => g.VerificationStatus)
+                   .HasDefaultValue(VerificationStatus.pending);
+
+            builder.Property(g => g.CreatedAt)
                    .HasDefaultValueSql("now()");
 
-            builder.Property(x => x.UpdatedAt)
-                   .HasColumnName("updated_at")
+            builder.Property(g => g.UpdatedAt)
                    .HasDefaultValueSql("now()");
 
-            builder.Property(x => x.VerificationStatus)
-                   .HasColumnName("verification_status")
-                    .HasColumnType("verification_status_enum")
-               .HasDefaultValue(VerificationStatus.Pending);
+            // Unique constraint
+            builder.HasIndex(g => new { g.PhoneCountryCode, g.PhoneNumber })
+                   .IsUnique();
 
-            // Constraints
-            builder.HasIndex(x => new { x.PhoneCountryCode, x.PhoneNumber })
-                   .IsUnique()
-                   .HasDatabaseName("uq_phone");
-
-            builder.HasCheckConstraint("chk_phone_number", "phone_number ~ '^[0-9]{7,15}$'");
-
-            builder.HasOne<HotelGuest>()
-                   .WithMany()
-                   .HasForeignKey(x => x.LinkedPrimaryGuestId)
-                   .HasConstraintName("fk_primary_guest")
-                   .OnDelete(DeleteBehavior.NoAction);
+            // Check constraint
+            builder.HasCheckConstraint(
+                "chk_phone_number",
+                "phone_number ~ '^[0-9]{7,15}$'"
+            );
         }
     }
 }

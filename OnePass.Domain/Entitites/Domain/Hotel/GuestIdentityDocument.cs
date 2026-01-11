@@ -13,7 +13,7 @@
         public string? OcrExtractedName { get; set; }
         public DateTime? OcrExtractedDob { get; set; }
         public decimal? FaceMatchScore { get; set; }
-        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Pending;
+        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.pending;
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
     }
@@ -25,13 +25,5 @@
         DrivingLicense,
         VoterID,
         OCI
-    }
-
-    public enum VerificationStatus
-    {
-        Pending,
-        Verified,
-        Rejected,
-        ManualReview
     }
 }

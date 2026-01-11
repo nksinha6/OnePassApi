@@ -42,11 +42,11 @@ namespace OnePass.Domain.Services
                 {
                     PhoneCountryCode = param.PhoneCountryCode,
                     PhoneNumber = param.PhoneNumber,
-                    VerificationStatus = VerificationStatus.Verified
+                    VerificationStatus = VerificationStatus.verified
                 });
             }
 
-            return await _guestRepository.UpdatePartialAsync(new HotelGuest() { Id = guest.Id, VerificationStatus = VerificationStatus.Verified, FullName = param.Name}, x => x.VerificationStatus, x => x.FullName);
+            return await _guestRepository.UpdatePartialAsync(new HotelGuest() { Id = guest.Id, VerificationStatus = VerificationStatus.verified, FullName = param.Name}, x => x.VerificationStatus, x => x.FullName);
         }
 
         public Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture) =>
