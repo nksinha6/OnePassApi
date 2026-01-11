@@ -14,7 +14,7 @@ namespace OnePass.Domain.Services
         public async Task<HotelGuestResponse> GetForCreateIfNotExists(GetHotelGuestByPhoneQuery query)
         {
             var userResponse = await _readService.GetHotelGuestAsync(query);
-            if (userResponse == null)
+            if (userResponse.Id == Guid.Empty)
             {
                   var guest = await _persistService.Persist(new HotelGuest() {       Id = Guid.NewGuid(),
                       PhoneCountryCode = query.PhoneCountryCode, PhoneNumber = query.PhoneNumber });
