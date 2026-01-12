@@ -42,7 +42,7 @@ namespace OnePass.Domain.Services
                 {
                     PhoneCountryCode = param.PhoneCountryCode,
                     PhoneNumber = param.PhoneNumber,
-                    VerificationStatus = VerificationStatus.verified
+                    FullName = param.Name,      VerificationStatus = VerificationStatus.verified
                 });
             }
 
