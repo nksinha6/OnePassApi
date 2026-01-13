@@ -46,13 +46,24 @@ ReadServiceBase, IOtpService
                 IsUsed = false
             };
 
+            var existingRecord = await HandleSingleOrDefaultAsync<GetHotelGuestOtpCodeQuery, HotelGuestsOtpCode>(
+                new GetHotelGuestOtpCodeQuery()
+                {
+                    PhoneCountryCode = cleanedCountryCode,
+                    PhoneNumber = phoneNumber,
+                },
+                useStoredProcedure: false);
             //if it throws
-           /* await _guestOtpRepository.DeleteAsync(new HotelGuestsOtpCode()
+
+            if (existingRecord.HashedOtp != null)
             {
-                PhoneCountryCode = phoneCountryCode,
-                PhoneNumber = phoneNumber,
-            });
-           */
+                await _guestOtpRepository.DeleteAsync(new HotelGuestsOtpCode()
+                {
+                    PhoneCountryCode = phoneCountryCode,
+                    PhoneNumber = phoneNumber,
+                });
+            }
+
             await _guestOtpRepository.AddAsync(record);
            
             var fullPhoneNumber = cleanedCountryCode + phoneNumber;
@@ -89,7 +100,7 @@ ReadServiceBase, IOtpService
                 },
                 useStoredProcedure: false);
 
-            if (record == null)
+            if (record.HashedOtp == null)
                 return new HotelGuestVerifyOtpResponse
                 {
                     PhoneCountryCode = countryCode,
