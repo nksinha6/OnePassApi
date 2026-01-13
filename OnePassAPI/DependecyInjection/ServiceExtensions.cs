@@ -23,6 +23,8 @@ namespace OnePass.API
             
 services.AddScoped<IHotelGuestPersistService, HotelGuestPersistService>();
             services.AddScoped<IHotelGuestAppService, HotelGuestAppService>();
+
+            services.AddScoped<IOtpService, OtpService>();
             return services;
         }
     }

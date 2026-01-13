@@ -12,10 +12,8 @@ namespace OnePass.Domain.Services
 {
     public class HotelGuestReadService : ReadServiceBase, IHotelGuestReadService
     {
-        private readonly string _connectionString;
         public HotelGuestReadService(IConfiguration configuration, IReadRepositoryFactory repositoryFactory) : base(repositoryFactory) 
         {
-             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
         public Task<HotelGuestResponse> GetHotelGuestAsync(GetHotelGuestByPhoneQuery query) =>
              HandleSingleOrDefaultAsync<GetHotelGuestByPhoneQuery, HotelGuestResponse>(

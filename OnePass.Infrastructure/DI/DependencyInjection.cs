@@ -37,7 +37,7 @@ namespace OnePass.Infrastructure
             services.AddScoped(typeof(IStoredProcReadRepository<,>), typeof(StoredProcReadRepository<,>));
             services.AddScoped<IReadRepositoryFactory, ReadRepositoryFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IPasswordHasher, Sha256PasswordHasher>();
+            services.AddScoped<IHasher, Sha256Hasher>();
             services.AddScoped<IJwtService, JwtService>();
 
 
@@ -64,6 +64,7 @@ services.AddScoped<IReadQueryHandler<GetAllVisitPurposesQuery, VisitPurpose>, Ge
 
             services.AddScoped<IReadQueryHandler<GetHotelGuestByPhoneQuery, HotelGuestResponse>, GetHotelGuestByPhoneQueryHandler>();
             services.AddScoped<IReadQueryHandler<GetBookingVerificationWindowQuery, BookingVerificationWindow>, GetBookingVerificationWindowQueryHandler>();
+            services.AddScoped<IReadQueryHandler<GetHotelGuestOtpCodeQuery, HotelGuestsOtpCode>, GetHotelGuestOtpCodeQueryHandler>();
             services.AddScoped<IReadQueryHandler<GetHotelGuestFaceCaptureQuery, HotelGuestFaceCaptureResponse>, GetHotelGuestFaceCaptureQueryHandler>();
 
             services.AddScoped<IReadQueryHandler<GetPendingFaceMatchesQuery, HotelPendingFaceMatchDetailedResponse>, GetPendingFaceMatchesQueryHandler>();

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public interface IPasswordHasher
+    public interface IHasher
     {
-        string HashPassword(string password);
-        bool VerifyPassword(string password, string storedHash);
+        string Hash(string input);
+        bool Verify(string input, string storedHash);
     }
 
 }

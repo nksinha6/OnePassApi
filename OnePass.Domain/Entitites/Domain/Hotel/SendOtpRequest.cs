@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public interface ISmsService
+    public class SendOtpRequest
     {
-        Task<bool> SendOnboardingLinkSmsAsync(string to);
-
-        Task<bool> SendOtpSmsAsync(string to, string otp);
+        public string PhoneCountryCode { get; set; } = null!;
+        public string PhoneNumber { get; set; } = null!;
     }
 }

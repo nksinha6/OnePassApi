@@ -32,7 +32,7 @@ namespace OnePass.Domain.Services
             _logger = logger;
         }
 
-        public async Task<bool> SendSmsAsync(string to)
+        public async Task<bool> SendOnboardingLinkSmsAsync(string to)
         {
             
             // ✅ Normalize phone
@@ -85,6 +85,55 @@ namespace OnePass.Domain.Services
             }
         }
 
+        public async Task<bool> SendOtpSmsAsync(string to, string otp)
+        {
+            var recipient = System.Text.RegularExpressions.Regex
+                .Replace(to ?? string.Empty, "\\D", "");
 
+            // ✅ Convert route
+            int routeInt = int.Parse(_opts.Route);
+            var variables = new Dictionary<string, string>();
+            variables["var1"] = otp;
+
+            // ✅ FINAL DLT TEMPLATE PAYLOAD (EXACT MATCH)
+            var payload = new
+            {
+                route = routeInt,
+                sender = _opts.SenderId,
+                unicode = 0,
+                mobiles = recipient,
+                short_url = 0,
+                templateId = _opts.TemplateId,
+                variables = variables
+            };
+
+            var json = System.Text.Json.JsonSerializer.Serialize(payload);
+
+            using var httpReq = new HttpRequestMessage(HttpMethod.Post, _opts.ApiUrl);
+            httpReq.Headers.Add("authkey", _opts.AuthKey);
+            httpReq.Headers.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            httpReq.Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            try
+            {
+                var resp = await _http.SendAsync(httpReq);
+                var body = await resp.Content.ReadAsStringAsync();
+
+                if (!resp.IsSuccessStatusCode)
+                {
+                    _logger.LogWarning("MSG91 ERROR: {Status} - {Body}", resp.StatusCode, body);
+                    return false;
+                }
+
+                _logger.LogInformation("✅ MSG91 SUCCESS for {Recipient}: {Body}", recipient, body);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "❌ MSG91 EXCEPTION for {Recipient}", recipient);
+                return false;
+            }
+        }
     }
 }

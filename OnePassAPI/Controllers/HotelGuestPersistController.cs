@@ -10,10 +10,12 @@ namespace OnePass.API.Controllers
 {
     [ApiController]
     [Route("api/guest/persist")]
-    public class HotelGuestPersistController(IHotelGuestPersistService hotelGuestPersistService, ILogger<HotelGuestPersistController> logger) : PersistBaseController
+    public class HotelGuestPersistController(IHotelGuestPersistService hotelGuestPersistService, 
+IOtpService otpService,
+ILogger<HotelGuestPersistController> logger) : PersistBaseController
     {
         private readonly IHotelGuestPersistService _hotelGuestPersistService = hotelGuestPersistService;
-
+        private readonly IOtpService _otpService = otpService;
         private readonly ILogger<HotelGuestPersistController> _logger = logger;
 
         [HttpPost("persist_guest")]
@@ -91,5 +93,28 @@ namespace OnePass.API.Controllers
 
                     return await _hotelGuestPersistService.UpdateAadharData(request);
                 });
+
+        [HttpPost("sendOtp")]
+        // [Authorize]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> SendOtp([FromBody] SendOtpRequest request) =>
+            ExecutePersistAsync(
+                request,
+                nameof(HotelGuestReadController.GetGuestById),
+                "guest_by_id",
+                async () =>
+                {
+                     await _otpService.SendOtpAsync(request.PhoneCountryCode, request.PhoneNumber);
+
+                    return new
+                    {
+                        Success = true,
+                    };
+                });
+
+
+
     }
 }

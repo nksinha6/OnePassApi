@@ -36,14 +36,14 @@ namespace OnePass.API.Controllers
         public async Task<IActionResult> Login(
     [FromBody] HotelLoginRequest request,
     [FromServices] IJwtService jwtService,
-    [FromServices] IPasswordHasher passwordHasher,
+    [FromServices] IHasher passwordHasher,
     [FromServices] IRefreshTokenService refreshTokenService) // service to generate/store refresh token
         {
             var passwordRecord = await _hotelUserService.GetPassword(request.UserId, request.TenantId);
             if (passwordRecord == null)
                 return BadRequest("User does not exist.");
 
-            if (!passwordHasher.VerifyPassword(request.Password, passwordRecord.PasswordHash))
+            if (!passwordHasher.Verify(request.Password, passwordRecord.PasswordHash))
                 return Unauthorized("Invalid credentials.");
 
             var user = await _hotelUserService.GetUser(request.UserId, request.TenantId);

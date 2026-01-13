@@ -8,11 +8,11 @@ namespace OnePass.Domain.Services
 {
     public class HotelUserService : ReadServiceBase, IHotelUserService
     {
-        private readonly IPasswordHasher _passwordHasher;
+        private readonly IHasher _passwordHasher;
         private readonly IPersistRepository<HotelUserPassword> _hotelUserPasswordService;
 
         public HotelUserService(
-        IPasswordHasher passwordHasher,
+        IHasher passwordHasher,
         IPersistRepository<HotelUserPassword> hotelUserPasswordRepository,
         IReadRepositoryFactory repositoryFactory
     ) : base(repositoryFactory)
@@ -23,7 +23,7 @@ namespace OnePass.Domain.Services
 
         public async Task SetPassword(string userId, string password, int tenantId)
         {
-            var hashedPassword = _passwordHasher.HashPassword(password);
+            var hashedPassword = _passwordHasher.Hash(password);
             await _hotelUserPasswordService.AddAsync(new HotelUserPassword { UserId = userId, PasswordHash = hashedPassword, TenantId = tenantId });
         }
 

@@ -8,12 +8,12 @@ using System.Security.Cryptography;
 
 namespace OnePass.Infrastructure
 {
-    public class Sha256PasswordHasher : IPasswordHasher
+    public class Sha256Hasher : IHasher
     {
-        public string HashPassword(string password)
+        public string Hash(string input)
         {
             using var sha256 = SHA256.Create();
-            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
             StringBuilder builder = new StringBuilder();
 
             foreach (byte b in bytes)
@@ -22,9 +22,9 @@ namespace OnePass.Infrastructure
             return builder.ToString();
         }
 
-        public bool VerifyPassword(string password, string storedHash)
+        public bool Verify(string input, string storedHash)
         {
-            string computedHash = HashPassword(password);
+            string computedHash = Hash(input);
             return string.Equals(computedHash, storedHash, StringComparison.OrdinalIgnoreCase);
         }
     }
