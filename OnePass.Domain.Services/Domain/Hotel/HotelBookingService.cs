@@ -37,7 +37,7 @@
             return await _hotelPendingFaceMatchRepository.AddIfNotExistAsync(hotelPendingFaceMatch);
         }
 
-        public Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(long id)
-         =>            _hotelPendingFaceMatchRepository.UpdatePartialAsync(new HotelPendingFaceMatch() { Id = id, Status = "verified" }, x => x.Status);
+        public Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(long id, byte[] bytes, string contentType, long length)
+         =>            _hotelPendingFaceMatchRepository.UpdatePartialAsync(new HotelPendingFaceMatch() { Id = id, Status = "verified", Image = bytes, ContentType = contentType, FileSize = length }, x => x.Status, x => x.Image, x => x.ContentType, x => x.FileSize);
     }
 }

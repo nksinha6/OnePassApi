@@ -77,12 +77,21 @@ ILogger<HotelGuestReadController> logger,
 
             if(selfie == null)
                 return NotFound();
+            byte[] uploadedSelfieBytes;
+            using (var ms = new MemoryStream())
+            {
+                await request.Selfie.CopyToAsync(ms);
+                uploadedSelfieBytes = ms.ToArray();
+            }
+
             ImageInput selfieImage = new ImageInput(
-            Stream: new MemoryStream(selfie.Image, writable: false),
-            FileName: "selfie.jpg",
-            ContentType: selfie.ContentType,
-            Length: selfie.Image.LongLength
-        );
+    Stream: new MemoryStream(uploadedSelfieBytes, writable: false),
+    FileName: Path.GetFileName(request.Selfie.FileName),
+    ContentType: string.IsNullOrWhiteSpace(request.Selfie.ContentType)
+        ? "application/octet-stream"
+        : request.Selfie.ContentType,
+    Length: uploadedSelfieBytes.LongLength
+);
             var inputImage = new ImageInput(
             Stream: request.Selfie.OpenReadStream(),
             FileName: Path.GetFileName(request.Selfie.FileName),
@@ -96,7 +105,11 @@ ILogger<HotelGuestReadController> logger,
             var verificationResult = await _faceVerificationService.MatchFacesAsync(Guid.NewGuid().ToString(), selfieImage, inputImage);
 
             if(verificationResult == null) return NotFound();
-            await _hotelBookingService.VerifyBookingPendingFaceVerification(request.Id);
+         
+            if(verificationResult.FaceMatchResult.ToLower() == "yes")
+            await _hotelBookingService.VerifyBookingPendingFaceVerification(request.Id, uploadedSelfieBytes,
+    selfieImage.ContentType,
+    uploadedSelfieBytes.LongLength);
             
             return Ok(new 
             {
