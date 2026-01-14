@@ -52,7 +52,7 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                     return await _hotelGuestPersistService.PersistFaceCapture(guestFaceCapture);
                 });
 
-        [HttpPost("selfie")]
+        [HttpPost("data")]
         [Consumes("multipart/form-data")]
         public Task<IActionResult> PersistGuestSelfie([FromForm] HotelGuestSelfieDto request) =>
             ExecutePersistAsync(
@@ -77,7 +77,7 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
 );                });
 
 
-        [HttpPost("aadhaar/verify")]
+        [HttpPost("aadhaar/update")]
         // [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]

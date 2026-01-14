@@ -129,6 +129,12 @@ builder.Services.AddScoped<ISmsService>(sp => sp.GetRequiredService<Msg91SmsServ
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+    });
+
 MapsterConfig.RegisterMappings();
 var app = builder.Build();
 
