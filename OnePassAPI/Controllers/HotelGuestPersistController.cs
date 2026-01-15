@@ -52,7 +52,7 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                     return await _hotelGuestPersistService.PersistFaceCapture(guestFaceCapture);
                 });
 
-        [HttpPost("data")]
+        [HttpPost("selfie")]
         [Consumes("multipart/form-data")]
         public Task<IActionResult> PersistGuestSelfie([FromForm] HotelGuestSelfieDto request) =>
             ExecutePersistAsync(
