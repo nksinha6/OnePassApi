@@ -13,17 +13,21 @@ namespace OnePass.Infrastructure.Persistence
         private static readonly Func<
         OnePassDbContext,
         int,
-        int,                IAsyncEnumerable<HotelPendingFaceMatchDetailedResponse>
+        int, 
+        DateTime,
+        IAsyncEnumerable<HotelPendingFaceMatchDetailedResponse>
     > GetPendingFaceMatchesEntitiesCompiledQuery =
 EF.CompileAsyncQuery(
-    (OnePassDbContext ctx, int tenantId, int propertyId) =>
+    (OnePassDbContext ctx, int tenantId, int propertyId,
+         DateTime cutoffUtc) =>
 
         ctx.HotelPendingFaceMatches
            .AsNoTracking()
            .Where(p =>
                p.TenantId == tenantId &&
                p.PropertyId == propertyId &&
-               p.Status == "pending")
+               p.Status == "pending" &&
+                   p.CreatedAt >= cutoffUtc)
            .OrderBy(p => p.CreatedAt)
            .Select(p => new HotelPendingFaceMatchDetailedResponse
            {
@@ -67,8 +71,10 @@ EF.CompileAsyncQuery(
 
         public async Task<IEnumerable<HotelPendingFaceMatchDetailedResponse>> HandleQueryAsync(GetPendingFaceMatchesQuery query)
         {
+            var cutoffUtc = DateTime.UtcNow.AddHours(-12);
+
             return await ExecuteQuerySafelyAsync(async ctx =>
-            await GetPendingFaceMatchesEntitiesCompiledQuery(ctx, query.TenantId, query.PropertyId).ToListAsync());
+            await GetPendingFaceMatchesEntitiesCompiledQuery(ctx, query.TenantId, query.PropertyId, cutoffUtc).ToListAsync());
 
         }
     }
