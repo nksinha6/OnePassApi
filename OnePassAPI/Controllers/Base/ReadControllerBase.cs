@@ -45,7 +45,7 @@ namespace OnePass.API
                     return NotFound(notFoundMessage);
                 }
 
-                _cache.Set(cacheKey, result, TimeSpan.FromMinutes(5));
+                _cache.Set(cacheKey, result, TimeSpan.FromSeconds(2));
 
                 return Ok(result);
             }
