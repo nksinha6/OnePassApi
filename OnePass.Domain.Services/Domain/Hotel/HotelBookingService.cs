@@ -33,15 +33,17 @@ WindowEnd = DateTime.UtcNow }, x => x.WindowEnd);
 
         public async Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(string bookingId, long id, byte[] bytes, string contentType, long length, string? latitude, string? longitude, string phoneCountryCode, string phoneNumber)
         {
-            await _guestBookingSelfieRepository.AddOrUpdateAllAsync(new List<HotelGuestBookingSelfie>() { new HotelGuestBookingSelfie()
+            await _guestBookingSelfieRepository.AddOrUpdateAsync( new HotelGuestBookingSelfie()
             {
                 BookingId = bookingId,
                 Image = bytes,
                 ContentType = contentType,
                 FileSize = length,
                 PhoneCountryCode = phoneCountryCode,
-                PhoneNumber = phoneNumber
-            } });
+                PhoneNumber = phoneNumber,
+                Latitude = latitude,
+                Longitude = longitude
+            } );
                            return await _hotelPendingFaceMatchRepository.UpdatePartialAsync(new HotelPendingFaceMatch() { Id = id, Status = "verified"}, x => x.Status);
         }
     }

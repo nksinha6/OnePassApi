@@ -12,7 +12,7 @@ namespace OnePass.Domain
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
-
+        Task<T> AddOrUpdateAsync(T entity);
         Task<IEnumerable<T>> AddAllAsync(IEnumerable<T> entities);
         Task UpdateAllAsync(IEnumerable<T> entities);
         Task DeleteAllAsync(IEnumerable<T> entities);

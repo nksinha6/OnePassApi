@@ -50,6 +50,13 @@ namespace OnePass.Infrastructure.Persistence
                 await _context.SaveChangesAsync();
             });
 
+        public async Task<T> AddOrUpdateAsync(T entity) =>
+    await ExecuteDbOperation(entity, async () =>
+    {
+        await AddOrUpdateEntityAsync(entity);
+        await _context.SaveChangesAsync();
+    }).ContinueWith(_ => entity);
+
         public async Task<IEnumerable<T>> AddAllAsync(IEnumerable<T> entities) =>
             await ExecuteDbOperation(entities, async () =>
             {
