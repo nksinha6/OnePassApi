@@ -71,7 +71,7 @@ EF.CompileAsyncQuery(
 
         public async Task<IEnumerable<HotelPendingFaceMatchDetailedResponse>> HandleQueryAsync(GetPendingFaceMatchesQuery query)
         {
-            var cutoffUtc = DateTime.UtcNow.AddHours(-12);
+            var cutoffUtc = DateTime.UtcNow.AddHours(-6);
 
             return await ExecuteQuerySafelyAsync(async ctx =>
             await GetPendingFaceMatchesEntitiesCompiledQuery(ctx, query.TenantId, query.PropertyId, cutoffUtc).ToListAsync());
