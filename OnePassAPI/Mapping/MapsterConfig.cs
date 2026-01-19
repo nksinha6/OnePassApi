@@ -81,5 +81,19 @@ namespace OnePass.API
            .Map(dest => dest.FileSize,
                 src => src.Selfie.Length);
 
+            TypeAdapterConfig<HotelBookingMetadataDto, HotelBookingMetadata>
+            .NewConfig()
+            // PKs set by backend
+            .Ignore(dest => dest.TenantId)
+            .Ignore(dest => dest.PropertyId)
+
+            // Verification window (set in mapping context)
+            .Ignore(dest => dest.WindowStart)
+            .Ignore(dest => dest.WindowEnd)
+
+            // Audit fields (DB / backend owned)
+            .Ignore(dest => dest.CreatedAt)
+            .Ignore(dest => dest.UpdatedAt);
+
         }    }
 }

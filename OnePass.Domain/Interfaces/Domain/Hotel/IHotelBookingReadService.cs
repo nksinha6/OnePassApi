@@ -13,6 +13,8 @@ int tenantId,
 int propertyId);
 Task<HotelPendingFaceMatchResponse> GetFaceMatchStatusAsync(GetFaceMatchByBookingAndPhoneQuery query);
 
+        Task<IEnumerable<HotelBookingMetadataResponse>> GeHotelMetadataAsync(
+GetHotelBookingMetadataQuery query);
 
     }
 }

@@ -1,25 +1,18 @@
 ﻿namespace OnePass.Domain.Services
 {
-    public class HotelBookingService(IPersistRepository<BookingVerificationWindow> checkinRepository, IPersistRepository<HotelPendingFaceMatch> hotelPendingFaceMatchRepository, IPersistRepository<HotelGuestBookingSelfie> guestBookingSelfieRepository) : IHotelBookingService
+    public class HotelBookingService(IPersistRepository<HotelBookingMetadata> bookingMetadataRepository, IPersistRepository<HotelPendingFaceMatch> hotelPendingFaceMatchRepository, IPersistRepository<HotelGuestBookingSelfie> guestBookingSelfieRepository) : IHotelBookingService
     {
-        IPersistRepository<BookingVerificationWindow> _checkinRepository = checkinRepository;
+        IPersistRepository<HotelBookingMetadata> _bookingMetadataRepository = bookingMetadataRepository;
         IPersistRepository<HotelGuestBookingSelfie> _guestBookingSelfieRepository = guestBookingSelfieRepository;
         IPersistRepository<HotelPendingFaceMatch> _hotelPendingFaceMatchRepository = hotelPendingFaceMatchRepository;
 
-        public async Task<BookingVerificationWindow> StartBookingVerification(int tenantId, string bookingId)
-        {
-            var checkinBooking = new BookingVerificationWindow()
-            {
-                TenantId = tenantId,
-                BookingId = bookingId,
-                WindowStart = DateTime.UtcNow
-            };
-
-            return await _checkinRepository.AddIfNotExistAsync(checkinBooking);
-        }
-
-        public Task<BookingVerificationWindow> EndBookingVerification(int tenantId, string bookingId)
-        =>            _checkinRepository.UpdatePartialAsync(new BookingVerificationWindow() { BookingId = bookingId, TenantId = tenantId, WindowEnd = DateTime.UtcNow }, x => x.WindowEnd);
+        public Task<HotelBookingMetadata> StartBookingVerification(HotelBookingMetadata request)
+        => _bookingMetadataRepository.AddIfNotExistAsync(request);
+        
+        public Task<HotelBookingMetadata> EndBookingVerification(int tenantId, int propertyId, string bookingId)
+        =>            _bookingMetadataRepository.UpdatePartialAsync(new HotelBookingMetadata() { BookingId = bookingId, TenantId = tenantId, 
+            PropertyId = propertyId,
+WindowEnd = DateTime.UtcNow }, x => x.WindowEnd);
 
       
         public async Task<HotelPendingFaceMatch> RecordBookingPendingFaceVerification(int tenantId, int propertyId, FaceMatchInitiateRequest faceMatchInitiateRequest)

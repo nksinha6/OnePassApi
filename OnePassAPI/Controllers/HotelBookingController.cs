@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnePass.API.Controllers;
 using OnePass.Domain;
+using OnePass.Dto;
 
 namespace OnePass.API
 {
@@ -17,14 +19,19 @@ namespace OnePass.API
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> CreateGuest([FromQuery] string bookingId) =>
+        public Task<IActionResult> CreateGuest([FromBody] HotelBookingMetadataDto request) =>
             ExecutePersistAsync(
-                bookingId,
+                request.BookingId,
                 nameof(HotelGuestReadController.GetGuestById),
                 "guest_by_id",
                 async () =>
                 {
-                    return await _hotelBookingService.StartBookingVerification(1, bookingId);
+                    var hotelBookingMetadata = request.Adapt<HotelBookingMetadata>();
+
+                    hotelBookingMetadata.TenantId = 1;
+                    hotelBookingMetadata.PropertyId = 1;
+hotelBookingMetadata.WindowStart = DateTimeOffset.UtcNow;
+                    return await _hotelBookingService.StartBookingVerification(hotelBookingMetadata);
                 });
 
         [HttpPost("end_verification")]
@@ -38,7 +45,7 @@ namespace OnePass.API
                 "guest_by_id",
                 async () =>
                 {
-                    return await _hotelBookingService.EndBookingVerification(1, bookingId);
+                    return await _hotelBookingService.EndBookingVerification(1, 1, bookingId);
                 });
 
         [HttpPost("face-match/initiate")]

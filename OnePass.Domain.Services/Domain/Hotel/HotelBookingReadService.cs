@@ -21,5 +21,12 @@ namespace OnePass.Domain.Services
         =>
              HandleSingleOrDefaultAsync<GetFaceMatchByBookingAndPhoneQuery, HotelPendingFaceMatchResponse>(query,
                 useStoredProcedure: false);
+
+
+public Task<IEnumerable<HotelBookingMetadataResponse>> GeHotelMetadataAsync(
+GetHotelBookingMetadataQuery query)
+        => HandleQueryAsync<GetHotelBookingMetadataQuery, HotelBookingMetadataResponse>(
+            query,
+                useStoredProcedure: false);
     }
 }

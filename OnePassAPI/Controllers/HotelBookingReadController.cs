@@ -116,5 +116,23 @@ ILogger<HotelGuestReadController> logger,
                 Result = verificationResult
             });
         }
+
+        [HttpGet("all_booking")]
+        // [Authorize]
+        public Task<ActionResult<IEnumerable<HotelBookingMetadataResponse>>> GetAllBooking() =>
+        ExecuteAsync(
+            Guid.NewGuid(),
+            () => $"all_booking",
+        async () =>
+        {
+            var bookings = await _hotelBookingReadService.GeHotelMetadataAsync(new GetHotelBookingMetadataQuery()
+            {
+                TenantId = 1,
+                PropertyId = 1
+            });
+            return bookings;
+        },
+            notFoundMessage: $"No user found for Id {1}-{1}."
+        );
     }
 }
