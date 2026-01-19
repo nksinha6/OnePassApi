@@ -17,11 +17,6 @@ namespace OnePass.Domain
         public int TenantId { get; set; }
         public int PropertyId { get; set; }
 
-        public byte[] Image { get; set; } = default!;
-
-        public string ContentType { get; set; } = default!;
-        public long FileSize { get; set; }
-
         public DateTimeOffset CreatedAt { get; set; }
 
         public string Status { get; set; } = "pending";

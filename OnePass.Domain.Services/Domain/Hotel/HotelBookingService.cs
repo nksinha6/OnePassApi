@@ -1,8 +1,9 @@
 ﻿namespace OnePass.Domain.Services
 {
-    public class HotelBookingService(IPersistRepository<BookingVerificationWindow> checkinRepository, IPersistRepository<HotelPendingFaceMatch> hotelPendingFaceMatchRepository) : IHotelBookingService
+    public class HotelBookingService(IPersistRepository<BookingVerificationWindow> checkinRepository, IPersistRepository<HotelPendingFaceMatch> hotelPendingFaceMatchRepository, IPersistRepository<HotelGuestBookingSelfie> guestBookingSelfieRepository) : IHotelBookingService
     {
         IPersistRepository<BookingVerificationWindow> _checkinRepository = checkinRepository;
+        IPersistRepository<HotelGuestBookingSelfie> _guestBookingSelfieRepository = guestBookingSelfieRepository;
         IPersistRepository<HotelPendingFaceMatch> _hotelPendingFaceMatchRepository = hotelPendingFaceMatchRepository;
 
         public async Task<BookingVerificationWindow> StartBookingVerification(int tenantId, string bookingId)
@@ -37,7 +38,18 @@
             return await _hotelPendingFaceMatchRepository.AddIfNotExistAsync(hotelPendingFaceMatch);
         }
 
-        public Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(long id, byte[] bytes, string contentType, long length)
-         =>            _hotelPendingFaceMatchRepository.UpdatePartialAsync(new HotelPendingFaceMatch() { Id = id, Status = "verified", Image = bytes, ContentType = contentType, FileSize = length }, x => x.Status, x => x.Image, x => x.ContentType, x => x.FileSize);
+        public async Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(string bookingId, long id, byte[] bytes, string contentType, long length, string? latitude, string? longitude, string phoneCountryCode, string phoneNumber)
+        {
+            await _guestBookingSelfieRepository.AddOrUpdateAllAsync(new List<HotelGuestBookingSelfie>() { new HotelGuestBookingSelfie()
+            {
+                BookingId = bookingId,
+                Image = bytes,
+                ContentType = contentType,
+                FileSize = length,
+                PhoneCountryCode = phoneCountryCode,
+                PhoneNumber = phoneNumber
+            } });
+                           return await _hotelPendingFaceMatchRepository.UpdatePartialAsync(new HotelPendingFaceMatch() { Id = id, Status = "verified"}, x => x.Status);
+        }
     }
 }

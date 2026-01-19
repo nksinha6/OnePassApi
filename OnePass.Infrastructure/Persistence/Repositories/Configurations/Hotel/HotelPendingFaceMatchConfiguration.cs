@@ -39,16 +39,6 @@ namespace OnePass.Infrastructure.Persistence
             builder.Property(x => x.PropertyId)
                    .IsRequired();
 
-            builder.Property(x => x.Image)
-             .HasColumnType("bytea")
-             .IsRequired();
-
-            builder.Property(x => x.ContentType)
-                .HasMaxLength(50)
-                .IsRequired();
-
-            builder.Property(x => x.FileSize)
-                .IsRequired();
             builder.Property(x => x.CreatedAt)
                    .HasDefaultValueSql("now()");
 

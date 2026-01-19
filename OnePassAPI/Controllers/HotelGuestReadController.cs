@@ -47,6 +47,24 @@ ILogger<HotelGuestReadController> logger,
             notFoundMessage: $"No user found for Id {phoneCountryCode}-{phoneno}."
         );
 
+        [HttpGet("selfie")]
+        // [Authorize]
+        public Task<ActionResult<HotelGuestSelfie>> GetSelfieById([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
+        ExecuteAsync(
+            Guid.NewGuid(),
+            () => $"guest_id_{phoneCountryCode}-{phoneno}",
+        async () =>
+        {
+            var guest = await _hotelGuestReadService.GetHotelGuestSelfieAsync(new GetHotelGuestSelfieQuery()
+            {
+                PhoneCountryCode = phoneCountryCode,
+                PhoneNumber = phoneno
+            });
+            return guest;
+        },
+            notFoundMessage: $"No user found for Id {phoneCountryCode}-{phoneno}."
+        );
+
         [HttpGet("verification/ensure")]
         // [Authorize]
         public Task<ActionResult<HotelGuestResponse>> EnsureVerification([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
