@@ -42,7 +42,7 @@ namespace OnePass.Domain.Services
             // ✅ Convert route
             int routeInt = int.Parse(_opts.Route);
             var variables = new Dictionary<string, string>();
-            variables["var1"] = "https://seashell-app-dmof6.ondigitalocean.app/";
+            variables["var1"] = "https://authiko.in/user/login";
 
             // ✅ FINAL DLT TEMPLATE PAYLOAD (EXACT MATCH)
             var payload = new
