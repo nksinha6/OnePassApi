@@ -103,7 +103,7 @@ namespace OnePass.Domain.Services
                 unicode = 0,
                 mobiles = recipient,
                 short_url = 0,
-                templateId = _opts.TemplateId,
+                templateId = "696614a70ef831208d254282",
                 variables = variables
             };
 
