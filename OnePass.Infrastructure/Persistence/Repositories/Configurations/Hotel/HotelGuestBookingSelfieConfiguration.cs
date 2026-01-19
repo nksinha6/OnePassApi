@@ -39,10 +39,10 @@ namespace OnePass.Infrastructure.Persistence
                 .HasMaxLength(20)
                 .IsRequired();
 
-            builder.Property(x => x.Latitude)
+            builder.Property(x => x.Latitude).HasColumnName("latitude")
            .HasMaxLength(20);
 
-            builder.Property(x => x.Longitude)
+            builder.Property(x => x.Longitude).HasColumnName("longitude")
                 .HasMaxLength(20);
 
             builder.Property(x => x.Image)
