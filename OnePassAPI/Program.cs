@@ -71,7 +71,8 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("http://localhost:5173", "https://seashell-app-dmof6.ondigitalocean.app",
-"https://lionfish-app-6ymn6.ondigitalocean.app")
+"https://lionfish-app-6ymn6.ondigitalocean.app",
+    "https://authiko.in")
                       .AllowAnyHeader()
                   .AllowAnyMethod()
                   .SetPreflightMaxAge(TimeSpan.FromHours(1));
