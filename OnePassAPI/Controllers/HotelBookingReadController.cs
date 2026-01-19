@@ -39,7 +39,7 @@ ILogger<HotelGuestReadController> logger,
 
             return result;
         },
-        notFoundMessage: $"No pending face match reservations found for tenantId 1 and propertyId 1."
+        notFoundMessage: $"No pending face match reservations found."
     );
 
         [HttpPost("face-match/status")]
