@@ -36,9 +36,14 @@ namespace OnePass.Infrastructure.Persistence
 
             builder.Property(g => g.Email)
                    .HasMaxLength(150);
+            builder.Property(x => x.Uid)
+              .HasMaxLength(50);
 
             builder.Property(g => g.Nationality)
                    .HasMaxLength(100);
+
+            builder.Property(x => x.SplitAddress)
+                  .HasColumnType("jsonb");
 
             builder.Property(g => g.VerificationStatus)
                    .HasDefaultValue(VerificationStatus.pending);
