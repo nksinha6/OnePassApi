@@ -95,5 +95,17 @@ namespace OnePass.API
             .Ignore(dest => dest.CreatedAt)
             .Ignore(dest => dest.UpdatedAt);
 
+            TypeAdapterConfig
+           .GlobalSettings
+           .NewConfig<List<HotelUserPropertyResponse>, HotelUserPropertiesResponse>()
+           .Map(dest => dest.UserId, src => src.First().UserId)
+           .Map(dest => dest.TenantId, src => src.First().TenantId)
+           .Map(dest => dest.Properties,
+               src => src.Select(x => new HotelUserPropertyItem
+               {
+                   PropertyId = x.PropertyId,
+                   PropertyName = x.PropertyName
+               }).ToList());
+
         }    }
 }

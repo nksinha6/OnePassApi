@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OnePass.Dto;
 
 namespace OnePass.Domain
 {
@@ -13,5 +14,8 @@ namespace OnePass.Domain
        public Task<HotelUserPassword> GetPassword(string userId, int tenantId);
 
         public Task<HotelUserResponse> GetUser(string userId, int tenantId);
+
+        public Task<HotelUserProperty> AddUserProperty(HotelUserProperty userProperty);
+        Task<HotelUserPropertiesResponse> GetHotelUserProperties(string userId);
     }
 }

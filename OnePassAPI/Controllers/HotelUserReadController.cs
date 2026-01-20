@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using OnePass.Domain;
+using OnePass.Dto;
 using OnePass.Dto.Response;
 
 namespace OnePass.API
@@ -15,6 +16,7 @@ namespace OnePass.API
     : ReadControllerBase(logger, cache)
     {
         IHotelUserService _hotelUserService = hotelUserService;
+       
         [HttpGet("user_by_id")]
         [Authorize]
         public Task<ActionResult<HotelUserResponse>> GetUnitsByCompanyId([FromQuery] string userId, [FromQuery] int tenantId) =>
@@ -27,6 +29,20 @@ namespace OnePass.API
                  return user;
              },
             notFoundMessage: $"No user found for Id {userId}."
+        );
+
+        [HttpGet("properties_for_user")]
+       // [Authorize]
+        public Task<ActionResult<HotelUserPropertiesResponse>> GetUserProperties([FromQuery] string userId) =>
+        ExecuteAsync(
+            Guid.NewGuid(),
+            () => $"user_id_{userId}",
+             async () =>
+             {
+                 var userProperties = await _hotelUserService.GetHotelUserProperties(userId);
+                 return userProperties;
+             },
+            notFoundMessage: $"No user properties found for Id {userId}."
         );
     }
 }

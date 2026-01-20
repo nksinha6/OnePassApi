@@ -19,7 +19,12 @@ namespace OnePass.Infrastructure.Persistence
         public DbSet<VisitPurpose> VisitPurposes => Set<VisitPurpose>();
 
         public DbSet<HotelTenant> HotelTenants => Set<HotelTenant>();
+
+        public DbSet<HotelProperty> HotelProperties => Set<HotelProperty>();
         public DbSet<HotelUser> HotelUsers => Set<HotelUser>();
+
+        public DbSet<HotelUserProperty> HotelUserProperties => Set<HotelUserProperty>();
+
         public DbSet<HotelPendingFaceMatch> HotelPendingFaceMatches => Set<HotelPendingFaceMatch>();
 
         public DbSet<HotelGuest> HotelGuests => Set<HotelGuest>();

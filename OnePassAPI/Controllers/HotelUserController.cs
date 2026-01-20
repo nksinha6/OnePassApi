@@ -75,5 +75,20 @@ namespace OnePass.API.Controllers
 
             return Ok(new { AccessToken = newAccessToken });
         }
+
+        [HttpPost("user_property")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> PersistUserProperty([FromBody] HotelUserProperty request)
+        {
+            if (request == null || string.IsNullOrWhiteSpace(request.UserId))
+                return BadRequest("UserId is required.");
+
+            await _hotelUserService.AddUserProperty(request);
+
+            return Ok("Hotel user property added successfully.");
+
+        }
     }
 }
