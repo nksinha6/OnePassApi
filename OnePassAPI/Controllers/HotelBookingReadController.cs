@@ -10,6 +10,7 @@ namespace OnePass.API
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class HotelBookingReadController(
         IHotelBookingReadService hotelBookingReadService,
         IHotelGuestReadService

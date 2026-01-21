@@ -9,6 +9,7 @@ namespace OnePass.API
 {
     [ApiController]
     [Route("api/booking")]
+    [Authorize]
     public class HotelBookingController(IHotelBookingService hotelBookingService, ILogger<HotelBookingController> logger) : PersistBaseController
     {
         IHotelBookingService _hotelBookingService = hotelBookingService;
