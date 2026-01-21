@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using OnePass.API.Controllers;
 using OnePass.Domain;
@@ -9,6 +10,7 @@ namespace OnePass.API
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class HotelBookingReadController(
         IHotelBookingReadService hotelBookingReadService,
         IHotelGuestReadService
