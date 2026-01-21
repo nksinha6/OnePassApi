@@ -114,7 +114,8 @@ ILogger<HotelGuestReadController> logger,
             if(verificationResult.FaceMatchResult.ToLower() == "yes")
             await _hotelBookingService.VerifyBookingPendingFaceVerification(request.BookingId, request.Id, uploadedSelfieBytes,
     selfieImage.ContentType,
-    uploadedSelfieBytes.LongLength, request.Latitude, request.Longitude, request.PhoneCountryCode, request.PhoneNumber);
+    uploadedSelfieBytes.LongLength, request.Latitude, request.Longitude, request.PhoneCountryCode, request.PhoneNumber,
+    _context.TenantId!.Value, _context.PropertyIds.First());
             
             return Ok(new 
             {

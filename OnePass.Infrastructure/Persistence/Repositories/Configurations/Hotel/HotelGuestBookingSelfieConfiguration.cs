@@ -64,6 +64,7 @@ namespace OnePass.Infrastructure.Persistence
 
             builder.Property(x => x.UpdatedAt)
                 .HasColumnName("updated_at");
+
         }
     }
 }

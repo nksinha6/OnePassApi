@@ -9,6 +9,10 @@ namespace OnePass.Domain
     public class HotelGuestBookingSelfie
     {
         public string BookingId { get; set; } = default!;
+
+        public int TenantId { get; set; }      // NEW
+        public int PropertyId { get; set; }
+
         public string PhoneCountryCode { get; set; } = default!;
         public string PhoneNumber { get; set; } = default!;
 
