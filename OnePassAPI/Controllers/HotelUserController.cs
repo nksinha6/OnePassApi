@@ -4,6 +4,7 @@ using OnePass.Dto;
 using Mapster;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Authorization;
+using Azure;
 
 namespace OnePass.API.Controllers
 {
@@ -47,9 +48,12 @@ namespace OnePass.API.Controllers
                 return Unauthorized("Invalid credentials.");
 
             var user = await _hotelUserService.GetUser(request.UserId, request.TenantId);
-
+            var userProperties =
+                await _hotelUserService.GetHotelUserProperties(request.UserId);
             // Generate access token
-            var accessToken = jwtService.GenerateToken(request.UserId, request.TenantId, user.Role);
+            var accessToken = jwtService.GenerateToken(request.UserId, request.TenantId, userProperties.Properties
+                          .Select(p => p.PropertyId)
+                          .ToList(), user.Role);
 
             // Generate refresh token
             var refreshToken = await refreshTokenService.CreateRefreshToken(request.UserId, request.TenantId);
@@ -71,7 +75,7 @@ namespace OnePass.API.Controllers
             if (!isValid)
                 return Unauthorized("Invalid refresh token.");
 
-            var newAccessToken = jwtService.GenerateToken(request.UserId, request.TenantId, "User");
+            var newAccessToken = jwtService.GenerateToken(request.UserId, request.TenantId, request.PropertyIds, request.Role);
 
             return Ok(new { AccessToken = newAccessToken });
         }

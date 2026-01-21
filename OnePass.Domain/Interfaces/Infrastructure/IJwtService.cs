@@ -8,6 +8,6 @@ namespace OnePass.Domain
 {
     public interface IJwtService
     {
-        string GenerateToken(string userId, int tenantId, string role);
+        string GenerateToken(string userId, int tenantId, List<int> propertyIds, string role);
     }
 }

@@ -20,7 +20,7 @@ namespace OnePass.Infrastructure.Security
             _configuration = configuration;
         }
 
-        public string GenerateToken(string userId, int tenantId, string role)
+        public string GenerateToken(string userId, int tenantId, List<int> propertyIds, string role)
         {
             var jwtSettings = _configuration.GetSection("Jwt");
 
@@ -36,6 +36,7 @@ namespace OnePass.Infrastructure.Security
             {
             new Claim(JwtRegisteredClaimNames.Sub, userId),
             new Claim("tenantId", tenantId.ToString()),
+            new Claim("propertyIds", string.Join(",", propertyIds)),
             new Claim(ClaimTypes.Role, role),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
