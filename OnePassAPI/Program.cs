@@ -161,6 +161,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<RequestContextMiddleware>();
 
 app.MapControllers();
 app.Run();

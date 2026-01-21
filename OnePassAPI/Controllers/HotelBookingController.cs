@@ -10,9 +10,11 @@ namespace OnePass.API
     [ApiController]
     [Route("api/booking")]
     [Authorize]
-    public class HotelBookingController(IHotelBookingService hotelBookingService, ILogger<HotelBookingController> logger) : PersistBaseController
+    public class HotelBookingController(IHotelBookingService hotelBookingService,
+IRequestContext context, ILogger<HotelBookingController> logger) : PersistBaseController
     {
         IHotelBookingService _hotelBookingService = hotelBookingService;
+        private readonly IRequestContext _context = context;
 
         private readonly ILogger<HotelBookingController> _logger = logger;
 
@@ -46,7 +48,7 @@ hotelBookingMetadata.WindowStart = DateTimeOffset.UtcNow;
                 "guest_by_id",
                 async () =>
                 {
-                    return await _hotelBookingService.EndBookingVerification(1, 1, bookingId);
+                    return await _hotelBookingService.EndBookingVerification(_context.TenantId, _context.PropertyIds.First(), bookingId);
                 });
 
         [HttpPost("face-match/initiate")]
@@ -59,7 +61,7 @@ hotelBookingMetadata.WindowStart = DateTimeOffset.UtcNow;
                  "guest_by_id",
                  async () =>
                  {
-                     return await _hotelBookingService.RecordBookingPendingFaceVerification(1, 1, request);
+                     return await _hotelBookingService.RecordBookingPendingFaceVerification(_context.TenantId, _context.PropertyIds.First(), request);
                  });
     }
 }

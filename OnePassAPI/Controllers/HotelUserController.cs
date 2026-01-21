@@ -12,10 +12,12 @@ namespace OnePass.API.Controllers
     [Route("api/[controller]")]
     public class HotelUserController(
     IHotelUserService hotelUserService,
+    IRequestContext context,
     ILogger<HotelUserController> logger): PersistBaseController
     {
         private readonly IHotelUserService 
             _hotelUserService = hotelUserService;
+        private readonly IRequestContext _context = context;
 
         [HttpPost("PersistPassword")]
         [ProducesResponseType(StatusCodes.Status201Created)]
