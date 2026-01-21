@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using System.Text.Json;
+using Mapster;
 using OnePass.Domain;
 using OnePass.Dto;
 using OnePass.Dto.Response;
@@ -106,6 +107,18 @@ namespace OnePass.API
                    PropertyId = x.PropertyId,
                    PropertyName = x.PropertyName
                }).ToList());
+
+            TypeAdapterConfig<HotelGuestFlatResponse, HotelGuestResponse>
+           .NewConfig()
+           .Map(dest => dest.SplitAddress,
+                src => string.IsNullOrWhiteSpace(src.SplitAddress)
+                    ? null
+                    : JsonSerializer.Deserialize<SplitAddressDto>(
+                          src.SplitAddress,
+                           new JsonSerializerOptions()
+                           {
+                               PropertyNameCaseInsensitive = true
+                           }));
 
         }    }
 }

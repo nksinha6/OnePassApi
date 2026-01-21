@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class HotelGuestResponse
+    public class HotelGuestFlatResponse
     {
         public Guid Id { get; set; }
 
@@ -20,7 +20,7 @@ namespace OnePass.Domain
         public string? Nationality { get; set; }
         public string? Gender { get; set; }
 
-        public SplitAddressDto? SplitAddress { get; set; }
+        public string? SplitAddress { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.pending;

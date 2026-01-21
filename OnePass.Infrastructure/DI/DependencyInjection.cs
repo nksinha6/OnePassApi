@@ -62,7 +62,7 @@ services.AddScoped<IReadQueryHandler<GetAllVisitPurposesQuery, VisitPurpose>, Ge
 
             services.AddScoped<IReadQueryHandler<GetHotelUserByIdQuery, HotelUserResponse>, GetHotelUserByIdQueryHandler>();
             services.AddScoped<IReadQueryHandler<GetUserPropertiesQuery, HotelUserPropertyResponse>, GetUserPropertiesQueryHandler>();
-            services.AddScoped<IReadQueryHandler<GetHotelGuestByPhoneQuery, HotelGuestResponse>, GetHotelGuestByPhoneQueryHandler>();
+            services.AddScoped<IReadQueryHandler<GetHotelGuestByPhoneQuery, HotelGuestFlatResponse>, GetHotelGuestByPhoneQueryHandler>();
             services.AddScoped<IReadQueryHandler<GetHotelBookingMetadataQuery, HotelBookingMetadataResponse>, GetHotelBookingMetadataQueryHandler>(); 
 
 services.AddScoped<IReadQueryHandler<GetHotelGuestOtpCodeQuery, HotelGuestsOtpCode>, GetHotelGuestOtpCodeQueryHandler>();
