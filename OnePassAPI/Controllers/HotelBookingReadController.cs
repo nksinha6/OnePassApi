@@ -17,7 +17,8 @@ namespace OnePass.API
             hotelGuestReadService,
         IFaceVerificationService
         faceVerificationService, 
-IHotelBookingService hotelBookingService,        
+IHotelBookingService hotelBookingService,
+IRequestContext context,
 ILogger<HotelGuestReadController> logger,
     IMemoryCache cache)
     : ReadControllerBase(logger, cache)
@@ -29,6 +30,8 @@ ILogger<HotelGuestReadController> logger,
         private readonly IFaceVerificationService _faceVerificationService = faceVerificationService;
         private readonly IHotelBookingService _hotelBookingService = hotelBookingService;
 
+        private readonly IRequestContext _context = context;
+
         [HttpGet("pending_face_matches")]
         // [Authorize]
         public Task<ActionResult<IEnumerable<HotelPendingFaceMatchDetailedResponse>>> GetPendingFaceMatches()
@@ -37,7 +40,7 @@ ILogger<HotelGuestReadController> logger,
         () => $"pending_face_matches",
         async () =>
         {
-            var result = await _hotelBookingReadService.GetPendingFaceMatchesAsync(1, 1);
+            var result = await _hotelBookingReadService.GetPendingFaceMatchesAsync(_context.TenantId!.Value, _context.PropertyIds[0]);
 
             return result;
         },
@@ -54,8 +57,8 @@ ILogger<HotelGuestReadController> logger,
         {
             var result = await _hotelBookingReadService.GetFaceMatchStatusAsync(new GetFaceMatchByBookingAndPhoneQuery()
             {
-                TenantId = 1,
-                PropertyId = 1,
+                TenantId = _context.TenantId!.Value,
+                PropertyId = _context.PropertyIds.First(),
                 BookingId = request.BookingId,
                 PhoneCountryCode = request.PhoneCountryCode,
                 PhoneNumber = request.PhoneNumber
@@ -129,8 +132,8 @@ ILogger<HotelGuestReadController> logger,
         {
             var bookings = await _hotelBookingReadService.GeHotelMetadataAsync(new GetHotelBookingMetadataQuery()
             {
-                TenantId = 1,
-                PropertyId = 1
+                TenantId = _context.TenantId!.Value,
+                PropertyId = _context.PropertyIds.First(),
             });
             return bookings;
         },

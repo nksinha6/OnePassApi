@@ -25,6 +25,11 @@ services.AddScoped<IHotelGuestPersistService, HotelGuestPersistService>();
             services.AddScoped<IHotelGuestAppService, HotelGuestAppService>();
 
             services.AddScoped<IOtpService, OtpService>();
+
+            services.AddScoped<RequestContext>();
+            services.AddScoped<IRequestContext>(sp =>
+                sp.GetRequiredService<RequestContext>());
+
             return services;
         }
     }

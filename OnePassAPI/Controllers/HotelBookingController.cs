@@ -48,7 +48,7 @@ hotelBookingMetadata.WindowStart = DateTimeOffset.UtcNow;
                 "guest_by_id",
                 async () =>
                 {
-                    return await _hotelBookingService.EndBookingVerification(_context.TenantId, _context.PropertyIds.First(), bookingId);
+                    return await _hotelBookingService.EndBookingVerification(_context.TenantId!.Value, _context.PropertyIds.First(), bookingId);
                 });
 
         [HttpPost("face-match/initiate")]
@@ -61,7 +61,7 @@ hotelBookingMetadata.WindowStart = DateTimeOffset.UtcNow;
                  "guest_by_id",
                  async () =>
                  {
-                     return await _hotelBookingService.RecordBookingPendingFaceVerification(_context.TenantId, _context.PropertyIds.First(), request);
+                     return await _hotelBookingService.RecordBookingPendingFaceVerification(_context.TenantId!.Value, _context.PropertyIds.First(), request);
                  });
     }
 }

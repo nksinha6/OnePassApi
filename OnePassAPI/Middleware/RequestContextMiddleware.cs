@@ -1,8 +1,10 @@
-﻿using System.Security.Claims;
-
-namespace OnePass.API
+﻿namespace OnePass.API
 {
-    public class RequestContextMiddleware
+    using System.Security.Claims;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.IdentityModel.JsonWebTokens;
+
+    public sealed class RequestContextMiddleware
     {
         private readonly RequestDelegate _next;
 
@@ -12,33 +14,47 @@ namespace OnePass.API
         }
 
         public async Task InvokeAsync(
-            HttpContext context,
+            HttpContext httpContext,
             RequestContext requestContext)
         {
-            var user = context.User;
+            // Force authentication ONLY if a token exists
+            var authResult = await httpContext.AuthenticateAsync();
 
-            if (user.Identity?.IsAuthenticated == true)
+            if (authResult.Succeeded && authResult.Principal != null)
             {
-                requestContext.UserId =
-                    user.FindFirst(JwtRegisteredClaimNames.Sub)?.Value
-                    ?? throw new UnauthorizedAccessException("UserId missing");
+                var user = authResult.Principal;
+                httpContext.User = user;
 
-                requestContext.TenantId =
-                    int.Parse(user.FindFirst("tenantId")?.Value
-                    ?? throw new UnauthorizedAccessException("TenantId missing"));
+                requestContext.UserId =
+                    user.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
+                var tenantIdClaim = user.FindFirst("tenantId")?.Value;
+                if (int.TryParse(tenantIdClaim, out var tenantId))
+                {
+                    requestContext.TenantId = tenantId;
+                }
 
                 requestContext.PropertyIds =
-                    (user.FindFirst("propertyIds")?.Value ?? "")
-                        .Split(',', StringSplitOptions.RemoveEmptyEntries)
-                        .Select(int.Parse)
-                        .ToList();
+                    ParsePropertyIds(user.FindFirst("propertyIds")?.Value);
 
                 requestContext.Role =
-                    user.FindFirst(ClaimTypes.Role)?.Value
-                    ?? throw new UnauthorizedAccessException("Role missing");
+                    user.FindFirst(ClaimTypes.Role)?.Value;
             }
 
-            await _next(context);
+            await _next(httpContext);
+        }
+
+        private static IReadOnlyList<int> ParsePropertyIds(string? raw)
+        {
+            if (string.IsNullOrWhiteSpace(raw))
+                return Array.Empty<int>();
+
+            return raw.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                      .Select(x => int.TryParse(x, out var id) ? id : (int?)null)
+                      .Where(x => x.HasValue)
+                      .Select(x => x!.Value)
+                      .ToList();
         }
     }
+
 }
