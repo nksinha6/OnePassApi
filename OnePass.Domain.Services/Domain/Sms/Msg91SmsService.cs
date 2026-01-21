@@ -32,9 +32,9 @@ namespace OnePass.Domain.Services
             _logger = logger;
         }
 
-        public async Task<bool> SendOnboardingLinkSmsAsync(string to)
+        public async Task<bool> SendOnboardingLinkSmsAsync(string phoneCountryCode, string phoneNumber)
         {
-            
+            string to = phoneCountryCode+ phoneNumber;
             // ✅ Normalize phone
             var recipient = System.Text.RegularExpressions.Regex
                 .Replace(to ?? string.Empty, "\\D", "");
@@ -42,7 +42,8 @@ namespace OnePass.Domain.Services
             // ✅ Convert route
             int routeInt = int.Parse(_opts.Route);
             var variables = new Dictionary<string, string>();
-            variables["var1"] = "https://authiko.in/user/login";
+                string userphonenumberformat = phoneCountryCode + "-" + phoneNumber;
+            variables["var1"] = $"https://authiko.in/user/login/{userphonenumberformat}";
 
             // ✅ FINAL DLT TEMPLATE PAYLOAD (EXACT MATCH)
             var payload = new

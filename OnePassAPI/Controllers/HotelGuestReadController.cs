@@ -88,7 +88,7 @@ ILogger<HotelGuestReadController> logger,
             if(guest.VerificationStatus != VerificationStatus.verified)
             {
                 //send sms
-                await _smsService.SendOnboardingLinkSmsAsync(phoneCountryCode + phoneno);
+                await _smsService.SendOnboardingLinkSmsAsync(phoneCountryCode,  phoneno);
             }
 
             return guest;
