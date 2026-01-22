@@ -9,6 +9,5 @@ namespace OnePass.Domain
     public class GetHotelUserPasswordQuery : IReadQuery
     {
         public string UserId { get; set; }
-        public int TenantId { get; set; }
     }
 }

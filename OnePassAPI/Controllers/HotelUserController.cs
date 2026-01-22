@@ -42,23 +42,23 @@ namespace OnePass.API.Controllers
     [FromServices] IHasher passwordHasher,
     [FromServices] IRefreshTokenService refreshTokenService) // service to generate/store refresh token
         {
-            var passwordRecord = await _hotelUserService.GetPassword(request.UserId, request.TenantId);
+            var passwordRecord = await _hotelUserService.GetPassword(request.UserId);
             if (passwordRecord == null)
                 return BadRequest("User does not exist.");
 
             if (!passwordHasher.Verify(request.Password, passwordRecord.PasswordHash))
                 return Unauthorized("Invalid credentials.");
 
-            var user = await _hotelUserService.GetUser(request.UserId, request.TenantId);
+            var user = await _hotelUserService.GetUser(request.UserId);
             var userProperties =
                 await _hotelUserService.GetHotelUserProperties(request.UserId);
             // Generate access token
-            var accessToken = jwtService.GenerateToken(request.UserId, request.TenantId, userProperties.Properties
+            var accessToken = jwtService.GenerateToken(request.UserId, userProperties.TenantId, userProperties.Properties
                           .Select(p => p.PropertyId)
                           .ToList(), user.Role);
 
             // Generate refresh token
-            var refreshToken = await refreshTokenService.CreateRefreshToken(request.UserId, request.TenantId);
+            var refreshToken = await refreshTokenService.CreateRefreshToken(request.UserId, userProperties.TenantId);
 
             return Ok(new
             {

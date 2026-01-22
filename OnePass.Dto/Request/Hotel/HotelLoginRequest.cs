@@ -9,7 +9,6 @@ namespace OnePass.Domain
     public class HotelLoginRequest
     {
         public string UserId { get; set; } = null!;
-        public int TenantId { get; set; }
         public string Password { get; set; } = null!;
     }
 }

@@ -25,7 +25,7 @@ namespace OnePass.API
             () => $"user_id_{userId}",
              async () =>
              {
-                 var user = await _hotelUserService.GetUser(userId, tenantId);
+                 var user = await _hotelUserService.GetUser(userId);
                  return user;
              },
             notFoundMessage: $"No user found for Id {userId}."

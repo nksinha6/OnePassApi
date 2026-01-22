@@ -9,10 +9,10 @@ namespace OnePass.Infrastructure.Persistence
     QueryHandlerBase<GetHotelUserPasswordQuery, HotelUserPassword>,
     IReadQueryHandler<GetHotelUserPasswordQuery, HotelUserPassword>
     {
-        private static readonly Func<OnePassDbContext, string, int, IAsyncEnumerable<HotelUserPassword>> GetPasswordQuery =
-            EF.CompileAsyncQuery((OnePassDbContext ctx, string userId, int tenantId) =>
+        private static readonly Func<OnePassDbContext, string, IAsyncEnumerable<HotelUserPassword>> GetPasswordQuery =
+            EF.CompileAsyncQuery((OnePassDbContext ctx, string userId) =>
                 from hup in ctx.HotelUserPasswords.AsNoTracking()
-                where hup.UserId == userId && hup.TenantId == tenantId
+                where hup.UserId == userId 
                 select new HotelUserPassword
                 {
                     UserId = hup.UserId,
@@ -32,7 +32,7 @@ namespace OnePass.Infrastructure.Persistence
         {
             return await ExecuteQuerySafelyAsync(async ctx =>
             {
-                return await GetPasswordQuery(ctx, query.UserId, query.TenantId).ToListAsync();
+                return await GetPasswordQuery(ctx, query.UserId).ToListAsync();
             });
         }
 

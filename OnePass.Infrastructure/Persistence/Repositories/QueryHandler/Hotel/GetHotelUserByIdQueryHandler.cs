@@ -9,11 +9,11 @@ namespace OnePass.Infrastructure.Persistence
     QueryHandlerBase<GetHotelUserByIdQuery, HotelUserResponse>,
     IReadQueryHandler<GetHotelUserByIdQuery, HotelUserResponse>
     {
-        private static readonly Func<OnePassDbContext, string, int, Task<HotelUserResponse>> GetHotelUserByIdCompiledQuery =
-            EF.CompileAsyncQuery((OnePassDbContext ctx, string userId, int tenantId) =>
+        private static readonly Func<OnePassDbContext, string, Task<HotelUserResponse>> GetHotelUserByIdCompiledQuery =
+            EF.CompileAsyncQuery((OnePassDbContext ctx, string userId) =>
                 (from u in ctx.HotelUsers.AsNoTracking()
                  join t in ctx.HotelTenants.AsNoTracking() on u.TenantId equals t.Id
-                 where u.Id == userId && u.TenantId == tenantId
+                 where u.Id == userId
                  select new HotelUserResponse
                  {
                      Id = u.Id,
@@ -40,7 +40,7 @@ namespace OnePass.Infrastructure.Persistence
         {
             return await ExecuteQuerySafelyAsync(async ctx =>
             {
-                var result = await GetHotelUserByIdCompiledQuery(ctx, query.Id, query.TenantId);
+                var result = await GetHotelUserByIdCompiledQuery(ctx, query.Id);
                 return result != null ? new List<HotelUserResponse> { result } : Enumerable.Empty<HotelUserResponse>();
             });
         }
