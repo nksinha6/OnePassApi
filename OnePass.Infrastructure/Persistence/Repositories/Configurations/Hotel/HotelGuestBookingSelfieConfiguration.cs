@@ -29,6 +29,14 @@ namespace OnePass.Infrastructure.Persistence
                 .HasMaxLength(50)
                 .IsRequired();
 
+            builder.Property(x => x.TenantId)
+         .HasColumnName("tenant_id")
+         .IsRequired();
+
+            builder.Property(x => x.PropertyId)
+                .HasColumnName("property_id")
+                .IsRequired();
+
             builder.Property(x => x.PhoneCountryCode)
                 .HasColumnName("phone_country_code")
                 .HasMaxLength(10)
