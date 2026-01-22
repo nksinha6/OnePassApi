@@ -31,8 +31,8 @@ IRequestContext context, ILogger<HotelBookingController> logger) : PersistBaseCo
                 {
                     var hotelBookingMetadata = request.Adapt<HotelBookingMetadata>();
 
-                    hotelBookingMetadata.TenantId = 1;
-                    hotelBookingMetadata.PropertyId = 1;
+                    hotelBookingMetadata.TenantId = _context.TenantId!.Value;
+                    hotelBookingMetadata.PropertyId = _context.PropertyIds.First();
 hotelBookingMetadata.WindowStart = DateTimeOffset.UtcNow;
                     return await _hotelBookingService.StartBookingVerification(hotelBookingMetadata);
                 });
