@@ -12,6 +12,6 @@ namespace OnePass.Domain
         public Task<HotelBookingMetadata> EndBookingVerification(int tenantId, int propertyId,  string bookingId);
         public Task<HotelPendingFaceMatch> RecordBookingPendingFaceVerification(int tenantId, int propertyId, FaceMatchInitiateRequest faceMatchInitiateRequest);
 
-        Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(string bookingId, long id, byte[] bytes, string contentType, long length, string? latitude, string? longitude, string phoneCountryCode, string phoneNumber, int propertyId, int tenantId);
+        Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(string bookingId, long id, byte[] bytes, string contentType, long length, string? latitude, string? longitude, string phoneCountryCode, string phoneNumber, int tenantId, int propertyId);
     }
 }

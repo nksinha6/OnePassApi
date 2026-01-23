@@ -45,7 +45,7 @@ namespace OnePass.Infrastructure.Security
                 issuer,
                 audience,
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(expiryMinutes),
+                expires: DateTime.UtcNow.AddDays(30),
                 signingCredentials: credentials
             );
 
