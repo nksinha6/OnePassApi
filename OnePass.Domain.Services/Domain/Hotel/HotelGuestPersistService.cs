@@ -11,6 +11,7 @@ namespace OnePass.Domain.Services
         IPersistRepository<HotelGuestSelfie> hotelGuestSelfieRepository,
         IPersistRepository<HotelBookingGuest> hotelBookingGuestRepository,
         IHotelGuestReadService hotelGuestReadService,
+        IStoredProcPersistRepository<DeleteGuestParam> deleteGuestRepository,
         IConfiguration configuration) : IHotelGuestPersistService
     {
         private readonly IPersistRepository<HotelGuest> _guestRepository = guestRepository;
@@ -22,6 +23,7 @@ namespace OnePass.Domain.Services
 
         private readonly IPersistRepository<HotelBookingGuest> _hotelBookingGuestRepository = hotelBookingGuestRepository;
 
+        private readonly IStoredProcPersistRepository<DeleteGuestParam> _deleteGuestRepository = deleteGuestRepository;
         // ✅ DRY helper method
         private static async Task<T> PersistSingleAsync<T>(IPersistRepository<T> repository, T entity) where T : class
         {
@@ -91,5 +93,8 @@ namespace OnePass.Domain.Services
 
         public Task<HotelBookingGuest> PersistBookingGuestAsync(HotelBookingGuest hotelBookingGuest) =>
             _hotelBookingGuestRepository.AddIfNotExistAsync(hotelBookingGuest);
+
+        public Task<bool> DeleteHotelGuest(DeleteGuestParam guest) =>
+            _deleteGuestRepository.ExecuteCommandAsync(guest);
     }
 }

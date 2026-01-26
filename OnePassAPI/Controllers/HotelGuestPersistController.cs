@@ -127,7 +127,29 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                     };
                 });
 
+        [HttpDelete("guest")]
+        // [Authorize]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> DeleteGuest([FromQuery] string phoneNumber) =>
+            ExecutePersistAsync(
+                phoneNumber,
+                nameof(HotelGuestReadController.GetGuestById),
+                "guest_by_id",
+                async () =>
+                {
+                     await _hotelGuestPersistService.DeleteHotelGuest(new DeleteGuestParam()
+                    {
+                        p_phone_number = phoneNumber
+                    });
 
+                    return new
+                    {
+                        status = $"successfull deleted data for guest {phoneNumber}"
+                    };
+
+                });
 
     }
 }

@@ -16,5 +16,7 @@ namespace OnePass.Domain
         Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture);
 
         Task<HotelBookingGuest> PersistBookingGuestAsync(HotelBookingGuest hotelBookingGuest);
+
+        public Task<bool> DeleteHotelGuest(DeleteGuestParam guest);
     }
 }
