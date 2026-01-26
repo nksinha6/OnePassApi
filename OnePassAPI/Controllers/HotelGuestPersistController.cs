@@ -92,7 +92,7 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                     return await _hotelGuestPersistService.UpdateAadharData(request);
                 });
 
-        [HttpPost("email/update")]
+        [HttpPut("email/update")]
         // [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
