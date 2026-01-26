@@ -28,24 +28,30 @@ namespace OnePass.Infrastructure.Persistence
             });
 
             builder.Property(x => x.TenantId)
-                .IsRequired();
-
-            builder.Property(x => x.PropertyId)
+                         .HasColumnName("tenant_id")
                 .IsRequired();
 
             builder.Property(x => x.BookingId)
+                .HasColumnName("booking_id")
                 .IsRequired()
                 .HasMaxLength(64);
 
+            builder.Property(x => x.PropertyId)
+                  .HasColumnName("property_id")
+                  .IsRequired();
+
             builder.Property(x => x.PhoneCountryCode)
-                .IsRequired()
-                .HasMaxLength(5);
+                .HasColumnName("phone_country_code")
+                .HasMaxLength(10)
+                .IsRequired();
 
             builder.Property(x => x.PhoneNumber)
-                .IsRequired()
-                .HasMaxLength(20);
+                .HasColumnName("phone_number")
+                .HasMaxLength(20)
+                .IsRequired();
 
             builder.Property(x => x.CreatedAt)
+                .HasColumnName("created_at")
                 .IsRequired()
                 .HasDefaultValueSql("now()");
         }
