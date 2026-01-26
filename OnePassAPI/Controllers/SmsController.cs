@@ -31,7 +31,7 @@ namespace OnePass.API.Controllers
 
             try
             {
-                var ok = await _smsService.SendOnboardingLinkSmsAsync(phoneCountryCode, phoneNumber);
+                var ok = await _smsService.SendOnboardingLinkSmsAsync(phoneCountryCode, phoneNumber, 1);
                 if (!ok) return StatusCode(502, new { error = "MSG91 returned an error" });
 
 

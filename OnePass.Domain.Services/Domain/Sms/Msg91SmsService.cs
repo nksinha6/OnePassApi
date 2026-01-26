@@ -32,7 +32,7 @@ namespace OnePass.Domain.Services
             _logger = logger;
         }
 
-        public async Task<bool> SendOnboardingLinkSmsAsync(string phoneCountryCode, string phoneNumber)
+        public async Task<bool> SendOnboardingLinkSmsAsync(string phoneCountryCode, string phoneNumber, int propertyId)
         {
             string to = phoneCountryCode+ phoneNumber;
             // ✅ Normalize phone

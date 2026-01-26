@@ -92,7 +92,7 @@ ILogger<HotelGuestReadController> logger,
             if(guest.VerificationStatus != VerificationStatus.verified)
             {
                 //send sms
-                await _smsService.SendOnboardingLinkSmsAsync(request.PhoneCountryCode, request.PhoneNumber);
+                await _smsService.SendOnboardingLinkSmsAsync(request.PhoneCountryCode, request.PhoneNumber, _requestContext.PropertyIds.First());
             }
 
             await _hotelGuestAppService.AddBookingGyest(new HotelBookingGuest()

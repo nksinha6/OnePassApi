@@ -8,7 +8,7 @@ namespace OnePass.Domain
 {
     public interface ISmsService
     {
-        Task<bool> SendOnboardingLinkSmsAsync(string phoneCountryCode, string phoneNumber);
+        Task<bool> SendOnboardingLinkSmsAsync(string phoneCountryCode, string phoneNumber, int propertyId);
 
         Task<bool> SendOtpSmsAsync(string to, string otp);
     }
