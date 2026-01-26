@@ -101,6 +101,7 @@ ILogger<HotelGuestReadController> logger,
                 PropertyId = _requestContext.PropertyIds.First(),
                 PhoneCountryCode = request.PhoneCountryCode,
                 PhoneNumber = request.PhoneNumber,
+                BookingId = request.BookingId,
                 CreatedAt = DateTime.UtcNow,
             });
 
