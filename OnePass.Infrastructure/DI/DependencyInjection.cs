@@ -74,6 +74,8 @@ services.AddScoped<IReadQueryHandler<GetHotelGuestOtpCodeQuery, HotelGuestsOtpCo
 
             services.AddScoped<IReadQueryHandler<GetFaceMatchByBookingAndPhoneQuery, HotelPendingFaceMatchResponse>, GetFaceMatchByBookingAndPhoneQueryHandler>();
 
+            services.AddScoped<IReadQueryHandler<GetHotelPropertyNameByIdQuery, HotelPropertyNameResponse>, GetHotelPropertyNameByIdQueryHandler>();
+
 
             // Add other infrastructure services here (e.g., DbContext, caching, etc.)
 
