@@ -89,9 +89,22 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                 "guest_by_id",
                 async () =>
                 {
-                    var guestFaceCapture = request.Adapt<HotelGuestFaceCapture>();
-
                     return await _hotelGuestPersistService.UpdateAadharData(request);
+                });
+
+        [HttpPost("email/update")]
+        // [Authorize]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> UpdateEmail([FromBody] UpdateEmailIdParam request) =>
+            ExecutePersistAsync(
+                request,
+                nameof(HotelGuestReadController.GetGuestById),
+                "guest_by_id",
+                async () =>
+                {
+                    return await _hotelGuestPersistService.UpdateEmailIdData(request);
                 });
 
         [HttpPost("sendOtp")]

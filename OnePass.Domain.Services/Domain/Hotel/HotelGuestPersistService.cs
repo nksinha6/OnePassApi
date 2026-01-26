@@ -32,27 +32,35 @@ namespace OnePass.Domain.Services
         public Task<HotelGuest> Persist(HotelGuest guest) =>
             PersistSingleAsync(_guestRepository, guest);
 
-        public async Task<HotelGuest> UpdateAadharData(UpdateAadharStatusParam param) {
+        public async Task<HotelGuest> UpdateEmailIdData(UpdateEmailIdParam param)
+        {
             var guest = await _hotelGuestReadService.GetHotelGuestAsync(new GetHotelGuestByPhoneQuery()
             {
                 PhoneCountryCode = param.PhoneCountryCode,
                 PhoneNumber = param.PhoneNumber
             });
-            if(guest.Id == Guid.Empty)
+            if (guest.Id == Guid.Empty)
             {
                 return await guestRepository.AddIfNotExistAsync(new HotelGuest()
                 {
                     PhoneCountryCode = param.PhoneCountryCode,
                     PhoneNumber = param.PhoneNumber,
-                    FullName = param.Name,      
-Gender = param.Gender,
-Nationality = param.Nationality,
-DateOfBirth =  param.DateOfBirth,
-VerificationStatus = VerificationStatus.verified,
-Uid = param.Uid,
-SplitAddress = System.Text.Json.JsonSerializer.Serialize(param.SplitAddress)
+                    Email = param.EmailAddress,
+                    VerificationStatus = VerificationStatus.pending
                 });
             }
+
+            return await _guestRepository.UpdatePartialAsync(new HotelGuest() { Id = guest.Id, 
+                Email = param.EmailAddress }, x => x.Email);
+        }
+
+        public async Task<HotelGuest> UpdateAadharData(UpdateAadharStatusParam param) {
+
+            var guest = await _hotelGuestReadService.GetHotelGuestAsync(new GetHotelGuestByPhoneQuery()
+            {
+                PhoneCountryCode = param.PhoneCountryCode,
+                PhoneNumber = param.PhoneNumber
+            });
 
             return await _guestRepository.UpdatePartialAsync(new HotelGuest() { Id = guest.Id, VerificationStatus = VerificationStatus.verified, FullName = param.Name, DateOfBirth = param.DateOfBirth, Gender = param.Gender, Nationality = param.Nationality, Uid =  param.Uid, SplitAddress = System.Text.Json.JsonSerializer.Serialize(param.SplitAddress) }, x => x.VerificationStatus, x => x.FullName, x => x.DateOfBirth, x => x.Gender, x => x.Nationality, x => x.Uid, x => x.SplitAddress);
         }

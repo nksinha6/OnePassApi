@@ -11,6 +11,8 @@ namespace OnePass.Domain
     Stream selfieStream);
 
         Task<HotelGuest> UpdateAadharData(UpdateAadharStatusParam param);
+
+        public Task<HotelGuest> UpdateEmailIdData(UpdateEmailIdParam param);
         Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture);
 
         Task<HotelBookingGuest> PersistBookingGuestAsync(HotelBookingGuest hotelBookingGuest);
