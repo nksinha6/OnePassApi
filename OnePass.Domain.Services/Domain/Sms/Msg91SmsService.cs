@@ -43,7 +43,7 @@ namespace OnePass.Domain.Services
             int routeInt = int.Parse(_opts.Route);
             var variables = new Dictionary<string, string>();
                 string userphonenumberformat = phoneCountryCode + "-" + phoneNumber;
-            variables["var1"] = $"https://authiko.in/user/login/{userphonenumberformat}";
+            variables["var1"] = $"https://authiko.in/user/login/{userphonenumberformat}/{propertyId}";
 
             // ✅ FINAL DLT TEMPLATE PAYLOAD (EXACT MATCH)
             var payload = new
