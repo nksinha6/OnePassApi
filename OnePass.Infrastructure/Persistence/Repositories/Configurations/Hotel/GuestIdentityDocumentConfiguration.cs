@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using OnePass.Domain;
+using OnePass.Dto;
 
 namespace OnePass.Infrastructure.Persistence
 {

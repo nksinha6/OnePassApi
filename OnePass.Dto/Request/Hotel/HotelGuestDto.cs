@@ -17,14 +17,14 @@ namespace OnePass.Dto
         public string? Email { get; set; }
         public string? Nationality { get; set; }
 
-        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Pending;
+        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.pending;
     }
 
     public enum VerificationStatus
     {
-        Pending,
-        Verified,
-        Rejected,
-        ManualReview
+        pending,
+        verified,
+        rejected,
+        manualReview
     }
 }

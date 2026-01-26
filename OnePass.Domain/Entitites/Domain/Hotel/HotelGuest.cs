@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OnePass.Dto;
 
 namespace OnePass.Domain
 {
@@ -34,14 +35,5 @@ namespace OnePass.Domain
         public DateTimeOffset CreatedAt { get; set; }
 
         public DateTimeOffset UpdatedAt { get; set; }
-    }
-
-
-    public enum VerificationStatus
-    {
-        pending,
-        verified,
-        rejected,
-        manualReview
     }
 }

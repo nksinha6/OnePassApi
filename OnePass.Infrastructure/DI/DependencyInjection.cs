@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using OnePass.Domain;
+using OnePass.Dto;
 using OnePass.Infrastructure.Persistence;
 using OnePass.Infrastructure.Security;
 

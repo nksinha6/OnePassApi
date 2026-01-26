@@ -9,5 +9,7 @@ namespace OnePass.Domain
     public interface IHotelGuestAppService
     {
         Task<HotelGuestResponse> GetForCreateIfNotExists(GetHotelGuestByPhoneQuery query);
+
+        Task<HotelBookingGuest> AddBookingGyest(HotelBookingGuest hotelBookingGuest);
     }
 }

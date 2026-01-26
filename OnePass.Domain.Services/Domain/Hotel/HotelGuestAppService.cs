@@ -11,6 +11,10 @@ namespace OnePass.Domain.Services
         IHotelGuestReadService _readService = readService;
         IHotelGuestPersistService _persistService =
             persistService;
+
+        public Task<HotelBookingGuest> AddBookingGyest(HotelBookingGuest hotelBookingGuest)
+        => _persistService.PersistBookingGuestAsync(hotelBookingGuest);
+
         public async Task<HotelGuestResponse> GetForCreateIfNotExists(GetHotelGuestByPhoneQuery query)
         {
             var userResponse = await _readService.GetHotelGuestAsync(query);

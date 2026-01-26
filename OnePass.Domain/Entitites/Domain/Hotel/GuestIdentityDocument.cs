@@ -1,4 +1,6 @@
-﻿namespace OnePass.Domain
+﻿using OnePass.Dto;
+
+namespace OnePass.Domain
 {
     public class GuestIdentityDocument
     {

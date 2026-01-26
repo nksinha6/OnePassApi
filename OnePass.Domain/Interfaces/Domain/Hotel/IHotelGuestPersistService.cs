@@ -12,5 +12,7 @@ namespace OnePass.Domain
 
         Task<HotelGuest> UpdateAadharData(UpdateAadharStatusParam param);
         Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture);
+
+        Task<HotelBookingGuest> PersistBookingGuestAsync(HotelBookingGuest hotelBookingGuest);
     }
 }

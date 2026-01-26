@@ -2,12 +2,14 @@
 using System.Linq.Expressions;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using OnePass.Dto;
 
 namespace OnePass.Domain.Services
 {
     public class HotelGuestPersistService(IPersistRepository<HotelGuest> guestRepository,
         IPersistRepository<HotelGuestFaceCapture> hotelGuestFaceCapturePersistRepository,
         IPersistRepository<HotelGuestSelfie> hotelGuestSelfieRepository,
+        IPersistRepository<HotelBookingGuest> hotelBookingGuestRepository,
         IHotelGuestReadService hotelGuestReadService,
         IConfiguration configuration) : IHotelGuestPersistService
     {
@@ -18,7 +20,7 @@ namespace OnePass.Domain.Services
 
         private readonly IPersistRepository<HotelGuestSelfie> _hotelGuestSelfieRepository = hotelGuestSelfieRepository;
 
-        private readonly string _connectionString = configuration.GetConnectionString("DefaultConnection");
+        private readonly IPersistRepository<HotelBookingGuest> _hotelBookingGuestRepository = hotelBookingGuestRepository;
 
         // ✅ DRY helper method
         private static async Task<T> PersistSingleAsync<T>(IPersistRepository<T> repository, T entity) where T : class
@@ -78,6 +80,8 @@ SplitAddress = System.Text.Json.JsonSerializer.Serialize(param.SplitAddress)
                 _hotelGuestSelfieRepository,
                 selfie);
         }
-            
+
+        public Task<HotelBookingGuest> PersistBookingGuestAsync(HotelBookingGuest hotelBookingGuest) =>
+            _hotelBookingGuestRepository.AddIfNotExistAsync(hotelBookingGuest);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using OnePass.Domain;
+using OnePass.Dto;
 
 namespace OnePass.Infrastructure.Persistence
 {

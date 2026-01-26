@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using NUglify.JavaScript.Syntax;
 using OnePass.Domain;
 using OnePass.Domain.Services;
+using OnePass.Dto;
 
 namespace OnePass.API.Controllers
 {
@@ -14,6 +15,7 @@ namespace OnePass.API.Controllers
     IHotelGuestAppService hotelGuestAppService,
     ISmsService smsService,
     IOtpService otpService,
+    IRequestContext requestContext,
 ILogger<HotelGuestReadController> logger,
     IMemoryCache cache)
     : ReadControllerBase(logger, cache)
@@ -22,6 +24,8 @@ ILogger<HotelGuestReadController> logger,
         private readonly IHotelGuestAppService _hotelGuestAppService = hotelGuestAppService;
         private readonly ISmsService _smsService = smsService;
         private readonly IOtpService _otpService = otpService;
+
+        private readonly IRequestContext _requestContext = requestContext;
 
         [HttpGet("guest_by_id")]
        // [Authorize]
@@ -65,35 +69,44 @@ ILogger<HotelGuestReadController> logger,
             notFoundMessage: $"No user found for Id {phoneCountryCode}-{phoneno}."
         );
 
-        [HttpGet("verification/ensure")]
-        // [Authorize]
-        public Task<ActionResult<HotelGuestResponse>> EnsureVerification([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
+        [HttpPost("verification/ensure")]
+        [Authorize]
+        public Task<ActionResult<HotelGuestResponse>> EnsureVerification([FromBody] HotelEnsureGuestRequestDto request) =>
         ExecuteAsync(
             Guid.NewGuid(),
-            () => $"guest_id_{phoneCountryCode}-{phoneno}",
+            () => $"guest_id_{request.PhoneCountryCode}-{request.PhoneNumber}",
         async () =>
         {
-            if (!string.IsNullOrEmpty(phoneCountryCode))
+            if (!string.IsNullOrEmpty(request.PhoneCountryCode))
             {
                 // Replace space with plus if it was decoded
-                phoneCountryCode = phoneCountryCode.Replace(" ", "+");
+                request.PhoneCountryCode = request.PhoneCountryCode.Replace(" ", "+");
             }
 
             var guest = await _hotelGuestAppService.GetForCreateIfNotExists(new GetHotelGuestByPhoneQuery()
             {
-                PhoneCountryCode = phoneCountryCode,
-                PhoneNumber = phoneno
+                PhoneCountryCode = request.PhoneCountryCode,
+                PhoneNumber = request.PhoneNumber
             });
 
             if(guest.VerificationStatus != VerificationStatus.verified)
             {
                 //send sms
-                await _smsService.SendOnboardingLinkSmsAsync(phoneCountryCode,  phoneno);
+                await _smsService.SendOnboardingLinkSmsAsync(request.PhoneCountryCode, request.PhoneNumber);
             }
+
+            await _hotelGuestAppService.AddBookingGyest(new HotelBookingGuest()
+            {
+                TenantId = _requestContext.TenantId!.Value,
+                PropertyId = _requestContext.PropertyIds.First(),
+                PhoneCountryCode = request.PhoneCountryCode,
+                PhoneNumber = request.PhoneNumber,
+                CreatedAt = DateTime.UtcNow,
+            });
 
             return guest;
         },
-            notFoundMessage: $"No user found for Id {phoneCountryCode}-{phoneno}."
+            notFoundMessage: $"No user found for Id {request.PhoneCountryCode}-{request.PhoneNumber}."
         );
 
         [HttpPost("verify_otp")]
