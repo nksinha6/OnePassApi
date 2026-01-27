@@ -20,15 +20,13 @@ namespace OnePass.Domain
             _httpClient.BaseAddress = new Uri("https://api.cashfree.com/verification/digilocker/");
             var req = new VerifyAccountRequest
             {
-                VerificationId = Guid.NewGuid().ToString(),
+                VerificationId = verificationId,
                 MobileNumber = mobile
             };
 
             var resp = await _httpClient.PostAsJsonAsync("verify-account", req);
             resp.EnsureSuccessStatusCode();
-            var res = await resp.Content.ReadFromJsonAsync<VerifyAccountResponse>();
-
-            return res;
+            return await resp.Content.ReadFromJsonAsync<VerifyAccountResponse>();
         }
 
         public async Task<CreateUrlResponse> CreateUrlAsync(string verificationId, List<string> documents, string redirectUrl, string userFlow)
