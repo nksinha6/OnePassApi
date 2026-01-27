@@ -32,7 +32,7 @@ namespace OnePass.Domain
         public List<string> DocumentRequested { get; set; }
 
         [JsonPropertyName("redirect_url")]
-        public string RedirectUrl { get; set; }
+        public string? RedirectUrl { get; set; }
 
         [JsonPropertyName("user_flow")]
         public string UserFlow { get; set; }
