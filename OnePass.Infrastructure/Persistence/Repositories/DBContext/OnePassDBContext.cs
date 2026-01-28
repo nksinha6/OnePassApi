@@ -42,6 +42,8 @@ namespace OnePass.Infrastructure.Persistence
         public DbSet<HotelGuestsOtpCode> HotelGuestsOtpCodes => Set<HotelGuestsOtpCode>();
 
         public DbSet<HotelBookingGuest> HotelBookingGuests => Set<HotelBookingGuest>();
+
+        public DbSet<HotelPendingQrCodeMatch> HotelPendingQrCodeMatches => Set<HotelPendingQrCodeMatch>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
             /// Register PostgreSQL enum type first

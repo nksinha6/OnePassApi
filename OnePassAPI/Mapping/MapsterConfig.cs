@@ -129,5 +129,22 @@ namespace OnePass.API
             .Ignore(dest => dest.TenantId)
             .Ignore(dest => dest.PropertyId)
             .Ignore(dest => dest.Status);
+
+            TypeAdapterConfig<
+           HotelPendingQrCodeMatchDetailedResponse,
+           PendingQrCodeMatchItemResponse
+       >.NewConfig();
+
+            // Collection → wrapper mapping
+            TypeAdapterConfig<
+                IEnumerable<HotelPendingQrCodeMatchDetailedResponse>,
+                PendingQrCodeMatchesResponse
+            >
+            .NewConfig()
+            .Map(dest => dest.TenantId, src => src.First().TenantId)
+            .Map(dest => dest.PropertyId, src => src.First().PropertyId)
+            .Map(dest => dest.Items,
+                 src => src.Adapt<List<PendingQrCodeMatchItemResponse>>());
+
         }    }
 }

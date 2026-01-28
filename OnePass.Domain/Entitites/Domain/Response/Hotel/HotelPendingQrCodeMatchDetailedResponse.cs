@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class HotelPendingQrCodeMatch
+    public class HotelPendingQrCodeMatchDetailedResponse
     {
         public int Id { get; set; }
 
@@ -18,16 +18,11 @@ namespace OnePass.Domain
         public string PhoneCountryCode { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
 
-        public PendingQrStatus Status { get; set; } = PendingQrStatus.pending;
+        public string? FullName { get; set; }
+
+        public PendingQrStatus Status { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }
-    }
-
-    public enum PendingQrStatus
-    {
-        pending,
-        verified,
-        error
     }
 
 }

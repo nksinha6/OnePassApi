@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mapster;
+using OnePass.Dto;
 
 namespace OnePass.Domain.Services
 {
@@ -28,5 +30,14 @@ GetHotelBookingMetadataQuery query)
         => HandleQueryAsync<GetHotelBookingMetadataQuery, HotelBookingMetadataResponse>(
             query,
                 useStoredProcedure: false);
+
+        public async Task<PendingQrCodeMatchesResponse> GetPendingQrCodeMatchesResponseAsync(GetPendingQrCodeMatchesQuery query)
+        {
+            var responses = await HandleQueryAsync<GetPendingQrCodeMatchesQuery, HotelPendingQrCodeMatchDetailedResponse>(
+            query,
+                useStoredProcedure: false);
+
+            return responses.Adapt<PendingQrCodeMatchesResponse>();
+        }
     }
 }

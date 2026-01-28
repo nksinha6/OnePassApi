@@ -47,6 +47,27 @@ ILogger<HotelGuestReadController> logger,
         notFoundMessage: $"No pending face match reservations found."
     );
 
+
+        [HttpGet("pending_qrcode_matches")]
+        public Task<ActionResult<PendingQrCodeMatchesResponse>> GetPendingQRCodeMatches()
+    => ExecuteAsync(
+        Guid.NewGuid(),
+        () => $"pending_qrcode_matches",
+        async () =>
+        {
+            var result = await _hotelBookingReadService.GetPendingQrCodeMatchesResponseAsync(new GetPendingQrCodeMatchesQuery()
+            {
+                TenantId = _context.TenantId!.Value,
+                PropertyId = _context.PropertyIds.First()
+            });
+
+            return result;
+        },
+        notFoundMessage: $"No pending qr code found."
+    );
+
+
+
         [HttpPost("face-match/status")]
         public Task<ActionResult<HotelPendingFaceMatchResponse>> GetFaceMatchStatus(
     [FromBody] FaceMatchStatusRequest request)
