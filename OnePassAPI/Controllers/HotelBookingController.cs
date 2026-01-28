@@ -9,7 +9,7 @@ namespace OnePass.API
 {
     [ApiController]
     [Route("api/booking")]
-    [Authorize]
+   // [Authorize]
     public class HotelBookingController(IHotelBookingService hotelBookingService,
 IRequestContext context, ILogger<HotelBookingController> logger) : PersistBaseController
     {
@@ -62,6 +62,22 @@ hotelBookingMetadata.WindowStart = DateTimeOffset.UtcNow;
                  async () =>
                  {
                      return await _hotelBookingService.RecordBookingPendingFaceVerification(_context.TenantId!.Value, _context.PropertyIds.First(), request);
+                 });
+
+        [HttpPost("qr-code/initiate")]
+        public Task<IActionResult> InitiateQRMatch(
+        [FromBody] PendingQRCodeMatchRequest request)
+        =>
+            ExecutePersistAsync(
+                 request.BookingId,
+                 nameof(HotelGuestReadController.GetGuestById),
+                 "guest_by_id",
+                 async () =>
+                 {
+                     var pendingQRCode = request.Adapt<HotelPendingQrCodeMatch>();
+                     pendingQRCode.TenantId = 2; // _context.TenantId!.Value;
+                     pendingQRCode.PropertyId = 3;// _context.PropertyIds.First();
+                     return await _hotelBookingService.RecordHotelPendingQrCodeMatch(pendingQRCode);
                  });
     }
 }

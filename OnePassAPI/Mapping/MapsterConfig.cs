@@ -119,6 +119,15 @@ namespace OnePass.API
                            {
                                PropertyNameCaseInsensitive = true
                            }));
-
+            TypeAdapterConfig<PendingQRCodeMatchRequest, HotelPendingQrCodeMatch> 
+           .NewConfig()
+            .Map(dest => dest.BookingId, src => src.BookingId)
+            .Map(dest => dest.PhoneCountryCode, src => src.PhoneCountryCode)
+            .Map(dest => dest.PhoneNumber, src => src.PhoneNumber)
+            .Map(dest => dest.CreatedAt, _ => DateTimeOffset.UtcNow)
+            .Ignore(dest => dest.Id)
+            .Ignore(dest => dest.TenantId)
+            .Ignore(dest => dest.PropertyId)
+            .Ignore(dest => dest.Status);
         }    }
 }

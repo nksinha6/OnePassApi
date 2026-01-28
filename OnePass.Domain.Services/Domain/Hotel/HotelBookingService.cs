@@ -1,11 +1,13 @@
 ﻿namespace OnePass.Domain.Services
 {
-    public class HotelBookingService(IPersistRepository<HotelBookingMetadata> bookingMetadataRepository, IPersistRepository<HotelPendingFaceMatch> hotelPendingFaceMatchRepository, IPersistRepository<HotelGuestBookingSelfie> guestBookingSelfieRepository) : IHotelBookingService
+    public class HotelBookingService(IPersistRepository<HotelBookingMetadata> bookingMetadataRepository, IPersistRepository<HotelPendingFaceMatch> hotelPendingFaceMatchRepository, IPersistRepository<HotelGuestBookingSelfie> guestBookingSelfieRepository,
+        IPersistRepository<HotelPendingQrCodeMatch> pendingQRMatchRepository) : IHotelBookingService
     {
-        IPersistRepository<HotelBookingMetadata> _bookingMetadataRepository = bookingMetadataRepository;
-        IPersistRepository<HotelGuestBookingSelfie> _guestBookingSelfieRepository = guestBookingSelfieRepository;
-        IPersistRepository<HotelPendingFaceMatch> _hotelPendingFaceMatchRepository = hotelPendingFaceMatchRepository;
+        private readonly IPersistRepository<HotelBookingMetadata> _bookingMetadataRepository = bookingMetadataRepository;
+        private readonly IPersistRepository<HotelGuestBookingSelfie> _guestBookingSelfieRepository = guestBookingSelfieRepository;
+        private readonly IPersistRepository<HotelPendingFaceMatch> _hotelPendingFaceMatchRepository = hotelPendingFaceMatchRepository;
 
+        private readonly IPersistRepository<HotelPendingQrCodeMatch> _pendingQRMatchRepository = pendingQRMatchRepository;
         public Task<HotelBookingMetadata> StartBookingVerification(HotelBookingMetadata request)
         => _bookingMetadataRepository.AddIfNotExistAsync(request);
         
@@ -48,5 +50,8 @@ WindowEnd = DateTime.UtcNow }, x => x.WindowEnd);
             } );
                            return await _hotelPendingFaceMatchRepository.UpdatePartialAsync(new HotelPendingFaceMatch() { Id = id, Status = "verified"}, x => x.Status);
         }
+
+        public Task<HotelPendingQrCodeMatch> RecordHotelPendingQrCodeMatch(HotelPendingQrCodeMatch request)
+        => _pendingQRMatchRepository.AddOrUpdateAsync( request );
     }
 }
