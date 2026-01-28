@@ -1,4 +1,6 @@
 ﻿
+using OnePass.Dto;
+
 namespace OnePass.Domain
 {
     public interface IHotelGuestReadService
@@ -7,5 +9,6 @@ namespace OnePass.Domain
 
         Task<HotelGuestSelfie> GetHotelGuestSelfieAsync(GetHotelGuestSelfieQuery query);
 
+        Task<PendingQrCodeMatchesByPhoneResponse> GetPendingQrCodeMatchesByPhoneResponseAsync(GetPendingQrCodeMatchesByPhoneQuery query);
     }
 }

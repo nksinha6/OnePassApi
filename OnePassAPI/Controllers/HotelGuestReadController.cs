@@ -128,5 +128,19 @@ ILogger<HotelGuestReadController> logger,
         },
             notFoundMessage: $"No otp found for Id {request.PhoneCountryCode}-{request.PhoneCountryCode}."
         );
+
+        [HttpPost("pending_qrcode_phone_number")]
+        public Task<ActionResult<PendingQrCodeMatchesByPhoneResponse>> PendingQRCodeByPhoenNumber([FromBody] GetPendingQrCodeMatchesByPhoneQuery request) =>
+          ExecuteAsync(
+            Guid.NewGuid(),
+            () => $"pending_qr_code{request.PhoneCountryCode}-{request.PhoneNumber}",
+        async () =>
+        {
+            return await _hotelGuestReadService.GetPendingQrCodeMatchesByPhoneResponseAsync( request );
+
+
+        },
+            notFoundMessage: $"No pending qr code found for {request.PhoneCountryCode}-{request.PhoneCountryCode}."
+        );
     }
 }

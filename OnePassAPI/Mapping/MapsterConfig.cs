@@ -130,21 +130,36 @@ namespace OnePass.API
             .Ignore(dest => dest.PropertyId)
             .Ignore(dest => dest.Status);
 
-            TypeAdapterConfig<
-           HotelPendingQrCodeMatchDetailedResponse,
-           PendingQrCodeMatchItemResponse
-       >.NewConfig();
+            // Single item mapping
+            TypeAdapterConfig<HotelPendingQrCodeMatchDetailedResponse, PendingQrCodeMatchItemResponse>
+                .NewConfig();
 
             // Collection → wrapper mapping
-            TypeAdapterConfig<
-                IEnumerable<HotelPendingQrCodeMatchDetailedResponse>,
-                PendingQrCodeMatchesResponse
-            >
-            .NewConfig()
-            .Map(dest => dest.TenantId, src => src.First().TenantId)
-            .Map(dest => dest.PropertyId, src => src.First().PropertyId)
-            .Map(dest => dest.Items,
-                 src => src.Adapt<List<PendingQrCodeMatchItemResponse>>());
+            TypeAdapterConfig<IEnumerable<HotelPendingQrCodeMatchDetailedResponse>, PendingQrCodeMatchesResponse>
+                .NewConfig()
+                .Map(dest => dest.TenantId,
+                     src => src.Select(x => x.TenantId).FirstOrDefault())   // safe for empty
+                .Map(dest => dest.PropertyId,
+                     src => src.Select(x => x.PropertyId).FirstOrDefault()) // safe for empty
+                .Map(dest => dest.Items,
+                     src => src.Adapt<List<PendingQrCodeMatchItemResponse>>()); // safe for empty
 
-        }    }
+            TypeAdapterConfig<HotelPendingQrCodeMatchDetailedResponse, PendingQrCodeMatchesByPhoneItemResponse>
+     .NewConfig();
+
+            // Collection → wrapper mapping
+            TypeAdapterConfig<IEnumerable<HotelPendingQrCodeMatchDetailedResponse>, PendingQrCodeMatchesByPhoneResponse>
+                .NewConfig()
+                .Map(dest => dest.PhoneCountryCode,
+                     src => src.Select(x => x.PhoneCountryCode).FirstOrDefault())
+                .Map(dest => dest.PhoneNumber,
+                     src => src.Select(x => x.PhoneNumber).FirstOrDefault())
+                .Map(dest => dest.FullName,
+                     src => src.Select(x => x.FullName).FirstOrDefault())
+                .Map(dest => dest.Items,
+                     src => src.Adapt<List<PendingQrCodeMatchesByPhoneItemResponse>>());
+
+
+        }
+    }
 }

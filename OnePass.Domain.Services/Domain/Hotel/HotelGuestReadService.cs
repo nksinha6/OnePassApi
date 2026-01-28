@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Mapster;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using OnePass.Dto;
 
 namespace OnePass.Domain.Services
 {
@@ -30,6 +31,14 @@ namespace OnePass.Domain.Services
             HandleSingleOrDefaultAsync<GetHotelGuestSelfieQuery, HotelGuestSelfie>(
                 query,
                 useStoredProcedure: false);
-        
+
+        public async Task<PendingQrCodeMatchesByPhoneResponse> GetPendingQrCodeMatchesByPhoneResponseAsync(GetPendingQrCodeMatchesByPhoneQuery query)
+        {
+            var response = await HandleQueryAsync<GetPendingQrCodeMatchesByPhoneQuery, HotelPendingQrCodeMatchDetailedResponse>(
+                query,
+                useStoredProcedure: false);
+            return response.Adapt<PendingQrCodeMatchesByPhoneResponse>();
+        }
+
     }
 }
