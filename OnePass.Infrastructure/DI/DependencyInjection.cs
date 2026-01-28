@@ -27,6 +27,7 @@ namespace OnePass.Infrastructure
                 {
                     // register enums globally
                     npgsqlOptions.MapEnum<VerificationStatus>("verification_status_enum");
+                    npgsqlOptions.MapEnum<Domain.PendingQrStatus>("pending_qr_status");
                 }));
 
             services.AddSingleton(_ =>

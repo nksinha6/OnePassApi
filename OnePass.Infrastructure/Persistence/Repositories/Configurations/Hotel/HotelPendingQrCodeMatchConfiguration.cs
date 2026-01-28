@@ -48,7 +48,6 @@ namespace OnePass.Infrastructure.Persistence
 
             builder.Property(x => x.Status)
                    .HasColumnName("status")
-                   .HasConversion<string>()
                    .HasDefaultValue(PendingQrStatus.pending)
                    .IsRequired();
 

@@ -53,5 +53,8 @@ WindowEnd = DateTime.UtcNow }, x => x.WindowEnd);
 
         public Task<HotelPendingQrCodeMatch> RecordHotelPendingQrCodeMatch(HotelPendingQrCodeMatch request)
         => _pendingQRMatchRepository.AddOrUpdateAsync( request );
+
+        public Task<HotelPendingQrCodeMatch> VerifyHotelPendingQrCodeMatch(int id)
+        => _pendingQRMatchRepository.UpdatePartialAsync(new HotelPendingQrCodeMatch() { Id = id, Status = PendingQrStatus.verified }, x => x.Status);
     }
 }

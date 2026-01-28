@@ -15,5 +15,7 @@ namespace OnePass.Domain
         Task<HotelPendingFaceMatch> VerifyBookingPendingFaceVerification(string bookingId, long id, byte[] bytes, string contentType, long length, string? latitude, string? longitude, string phoneCountryCode, string phoneNumber, int tenantId, int propertyId);
 
         public Task<HotelPendingQrCodeMatch> RecordHotelPendingQrCodeMatch(HotelPendingQrCodeMatch request);
+
+        public Task<HotelPendingQrCodeMatch> VerifyHotelPendingQrCodeMatch(int id);
     }
 }

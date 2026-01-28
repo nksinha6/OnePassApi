@@ -14,7 +14,7 @@ namespace OnePass.API
             string readActionName,
             string readControllerName,
             Func<Task<TEntity>> persistFunc)
-            where TDto : class
+         //   where TDto : class {commenting to allow int as input request type}
             where TEntity : class
         {
             if (request == null)

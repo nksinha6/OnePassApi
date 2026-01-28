@@ -79,5 +79,18 @@ hotelBookingMetadata.WindowStart = DateTimeOffset.UtcNow;
                      pendingQRCode.PropertyId = 3;// _context.PropertyIds.First();
                      return await _hotelBookingService.RecordHotelPendingQrCodeMatch(pendingQRCode);
                  });
+
+        [HttpPut("qr-code/verify")]
+        public Task<IActionResult> VerifyQRMatch(
+        [FromQuery] int id)
+        =>
+            ExecutePersistAsync(
+                 id,
+                 nameof(HotelGuestReadController.GetGuestById),
+                 "qrcode_by_phone",
+                 async () =>
+                 {
+                    return await _hotelBookingService.VerifyHotelPendingQrCodeMatch(id);
+                 });
     }
 }
