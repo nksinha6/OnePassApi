@@ -61,19 +61,19 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                 "guest_by_id",
                 async () =>
                 {
-                    if (request.Selfie == null || request.Selfie.Length == 0)
+                    if (request.Image == null || request.Image.Length == 0)
                         throw new ValidationException("Selfie is required");
 
                     var entity = request.Adapt<HotelGuestAadhaarImage>();
 
                     await using var ms = new MemoryStream();
-                    await request.Selfie.CopyToAsync(ms);
+                    await request.Image.CopyToAsync(ms);
 
                     entity.Image = ms.ToArray();
                     entity.CreatedAt = DateTimeOffset.UtcNow;
                     return await _hotelGuestPersistService.PersistAadharImageAsync(
                 entity,
-                request.Selfie.OpenReadStream()
+                request.Image.OpenReadStream()
 );                });
 
 

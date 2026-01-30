@@ -76,11 +76,11 @@ namespace OnePass.API
            .Ignore(dest => dest.CreatedAt)
            .Ignore(dest => dest.UpdatedAt)
            .Map(dest => dest.ContentType,
-                src => string.IsNullOrWhiteSpace(src.Selfie.ContentType)
+                src => string.IsNullOrWhiteSpace(src.Image.ContentType)
                     ? "application/octet-stream"
-                    : src.Selfie.ContentType)
+                    : src.Image.ContentType)
            .Map(dest => dest.FileSize,
-                src => src.Selfie.Length);
+                src => src.Image.Length);
 
             TypeAdapterConfig<HotelBookingMetadataDto, HotelBookingMetadata>
             .NewConfig()
