@@ -54,7 +54,7 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
 
         [HttpPost("selfie")]
         [Consumes("multipart/form-data")]
-        public Task<IActionResult> PersistGuestSelfie([FromForm] HotelGuestSelfieDto request) =>
+        public Task<IActionResult> PersistGuestSelfie([FromForm] HotelGuestAadhaarImageDto request) =>
             ExecutePersistAsync(
                 request,
                 nameof(HotelGuestReadController.GetGuestById),
@@ -64,7 +64,7 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                     if (request.Selfie == null || request.Selfie.Length == 0)
                         throw new ValidationException("Selfie is required");
 
-                    var entity = request.Adapt<HotelGuestSelfie>();
+                    var entity = request.Adapt<HotelGuestAadhaarImage>();
 
                     await using var ms = new MemoryStream();
                     await request.Selfie.CopyToAsync(ms);

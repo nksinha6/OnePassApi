@@ -95,7 +95,7 @@ ILogger<HotelGuestReadController> logger,
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> MatchBookingGuestSelfie([FromForm] HotelBookingGuestSelfieMatchRequestDto request)
         {
-            var selfie = await _hotelGuestReadService.GetHotelGuestSelfieAsync(new GetHotelGuestSelfieQuery()
+            var selfie = await _hotelGuestReadService.GetHotelGuestAadharImageAsync(new GetHotelGuestAadharImageQuery()
             {
                PhoneCountryCode = request.PhoneCountryCode,
                PhoneNumber = request.PhoneNumber

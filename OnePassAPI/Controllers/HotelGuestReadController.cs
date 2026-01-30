@@ -51,15 +51,15 @@ ILogger<HotelGuestReadController> logger,
             notFoundMessage: $"No user found for Id {phoneCountryCode}-{phoneno}."
         );
 
-        [HttpGet("selfie")]
+        [HttpGet("aadhar/image")]
         // [Authorize]
-        public Task<ActionResult<HotelGuestSelfie>> GetSelfieById([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
+        public Task<ActionResult<HotelGuestAadhaarImage>> GetAadharById([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
         ExecuteAsync(
             Guid.NewGuid(),
             () => $"guest_id_{phoneCountryCode}-{phoneno}",
         async () =>
         {
-            var guest = await _hotelGuestReadService.GetHotelGuestSelfieAsync(new GetHotelGuestSelfieQuery()
+            var guest = await _hotelGuestReadService.GetHotelGuestAadharImageAsync(new GetHotelGuestAadharImageQuery()
             {
                 PhoneCountryCode = phoneCountryCode,
                 PhoneNumber = phoneno

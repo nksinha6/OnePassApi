@@ -10,11 +10,11 @@ namespace OnePass.Infrastructure.Persistence
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using OnePass.Domain;
 
-    public class HotelGuestSelfieConfiguration : IEntityTypeConfiguration<HotelGuestSelfie>
+    public class HotelGuestAadhaarImageConfiguration : IEntityTypeConfiguration<HotelGuestAadhaarImage>
     {
-        public void Configure(EntityTypeBuilder<HotelGuestSelfie> builder)
+        public void Configure(EntityTypeBuilder<HotelGuestAadhaarImage> builder)
         {
-            builder.ToTable("hotel_guest_selfies");
+            builder.ToTable("hotel_guest_aadhar_images");
 
             builder.HasKey(x => new
             {

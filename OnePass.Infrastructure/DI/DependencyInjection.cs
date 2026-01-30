@@ -71,7 +71,7 @@ services.AddScoped<IReadQueryHandler<GetHotelGuestOtpCodeQuery, HotelGuestsOtpCo
             services.AddScoped<IReadQueryHandler<GetHotelGuestFaceCaptureQuery, HotelGuestFaceCaptureResponse>, GetHotelGuestFaceCaptureQueryHandler>();
 
             services.AddScoped<IReadQueryHandler<GetPendingFaceMatchesQuery, HotelPendingFaceMatchDetailedResponse>, GetPendingFaceMatchesQueryHandler>();
-            services.AddScoped<IReadQueryHandler<GetHotelGuestSelfieQuery, HotelGuestSelfie>, GetHotelGuestSelfieQueryHandler>();
+            services.AddScoped<IReadQueryHandler<GetHotelGuestAadharImageQuery, HotelGuestAadhaarImage>, GetHotelGuestAadhaarImageQueryHandler>();
 
             services.AddScoped<IReadQueryHandler<GetFaceMatchByBookingAndPhoneQuery, HotelPendingFaceMatchResponse>, GetFaceMatchByBookingAndPhoneQueryHandler>();
 

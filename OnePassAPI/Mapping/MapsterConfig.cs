@@ -70,7 +70,7 @@ namespace OnePass.API
            .Map(dest => dest.LiveCaptureDatetime, src => src.LiveCaptureDatetime == default
                ? DateTime.UtcNow
                : src.LiveCaptureDatetime);
-            TypeAdapterConfig<HotelGuestSelfieDto, HotelGuestSelfie>
+            TypeAdapterConfig<HotelGuestAadhaarImageDto, HotelGuestAadhaarImage>
            .NewConfig()
            .Ignore(dest => dest.Image)        // handled separately
            .Ignore(dest => dest.CreatedAt)

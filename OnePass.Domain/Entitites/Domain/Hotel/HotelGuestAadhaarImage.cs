@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class HotelGuestSelfie
+    public class HotelGuestAadhaarImage
     {
         public string PhoneCountryCode { get; set; } = default!;
         public string PhoneNumber { get; set; } = default!;

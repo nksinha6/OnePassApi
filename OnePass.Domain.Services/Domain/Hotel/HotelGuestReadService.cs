@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
-using Mapster;
+﻿using Mapster;
 using Microsoft.Extensions.Configuration;
-using Npgsql;
 using OnePass.Dto;
 
 namespace OnePass.Domain.Services
@@ -26,9 +18,9 @@ namespace OnePass.Domain.Services
             return response.Adapt<HotelGuestResponse>();
         }
 
-        public Task<HotelGuestSelfie> GetHotelGuestSelfieAsync(GetHotelGuestSelfieQuery query)
+        public Task<HotelGuestAadhaarImage> GetHotelGuestAadharImageAsync(GetHotelGuestAadharImageQuery query)
         =>
-            HandleSingleOrDefaultAsync<GetHotelGuestSelfieQuery, HotelGuestSelfie>(
+            HandleSingleOrDefaultAsync<GetHotelGuestAadharImageQuery, HotelGuestAadhaarImage>(
                 query,
                 useStoredProcedure: false);
 

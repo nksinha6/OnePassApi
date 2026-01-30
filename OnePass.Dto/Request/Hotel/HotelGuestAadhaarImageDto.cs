@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace OnePass.Dto
 {
-    public class HotelGuestSelfieDto
+    public class HotelGuestAadhaarImageDto
     {
         public string PhoneCountryCode { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;

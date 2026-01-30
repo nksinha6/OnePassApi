@@ -8,7 +8,7 @@ namespace OnePass.Domain.Services
 {
     public class HotelGuestPersistService(IPersistRepository<HotelGuest> guestRepository,
         IPersistRepository<HotelGuestFaceCapture> hotelGuestFaceCapturePersistRepository,
-        IPersistRepository<HotelGuestSelfie> hotelGuestSelfieRepository,
+        IPersistRepository<HotelGuestAadhaarImage> hotelGuestAadharImageRepository,
         IPersistRepository<HotelBookingGuest> hotelBookingGuestRepository,
         IHotelGuestReadService hotelGuestReadService,
         IStoredProcPersistRepository<DeleteGuestParam> deleteGuestRepository,
@@ -19,7 +19,7 @@ namespace OnePass.Domain.Services
         private readonly IHotelGuestReadService _hotelGuestReadService = hotelGuestReadService;
         private readonly IPersistRepository<HotelGuestFaceCapture> _hotelGuestFaceCapturePersistRepository = hotelGuestFaceCapturePersistRepository;
 
-        private readonly IPersistRepository<HotelGuestSelfie> _hotelGuestSelfieRepository = hotelGuestSelfieRepository;
+        private readonly IPersistRepository<HotelGuestAadhaarImage> _hotelGuestAadharImageRepository = hotelGuestAadharImageRepository;
 
         private readonly IPersistRepository<HotelBookingGuest> _hotelBookingGuestRepository = hotelBookingGuestRepository;
 
@@ -70,8 +70,8 @@ namespace OnePass.Domain.Services
         public Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture) =>
             PersistSingleAsync(_hotelGuestFaceCapturePersistRepository, hotelGuestFaceCapture);
 
-        public async Task<HotelGuestSelfie> PersistSelfieAsync(
-    HotelGuestSelfie selfie,
+        public async Task<HotelGuestAadhaarImage> PersistSelfieAsync(
+    HotelGuestAadhaarImage selfie,
     Stream selfieStream)
         {
             if (selfieStream == null)
@@ -87,7 +87,7 @@ namespace OnePass.Domain.Services
 
             // Persist using repository / EF
             return await PersistSingleAsync(
-                _hotelGuestSelfieRepository,
+                _hotelGuestAadharImageRepository,
                 selfie);
         }
 

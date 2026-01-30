@@ -10,22 +10,22 @@ using OpenTelemetry.Trace;
 
 namespace OnePass.Infrastructure.Persistence
 {
-    public class GetHotelGuestSelfieQueryHandler :
-    QueryHandlerBase<GetHotelGuestSelfieQuery, HotelGuestSelfie>,
-    IReadQueryHandler<GetHotelGuestSelfieQuery, HotelGuestSelfie>
+    public class GetHotelGuestAadhaarImageQueryHandler :
+    QueryHandlerBase<GetHotelGuestAadharImageQuery, HotelGuestAadhaarImage>,
+    IReadQueryHandler<GetHotelGuestAadharImageQuery, HotelGuestAadhaarImage>
     {
         private static readonly Func<
             OnePassDbContext,
             string,
             string,
-            IAsyncEnumerable<HotelGuestSelfie>
-        > GetSelfieQuery =
+            IAsyncEnumerable<HotelGuestAadhaarImage>
+        > GetAadharImageQuery =
             EF.CompileAsyncQuery(
                 (OnePassDbContext ctx, string phoneCountryCode, string phoneNumber) =>
-                    from hgs in ctx.HotelGuestSelfies.AsNoTracking()
+                    from hgs in ctx.HotelGuestAadhaarImages.AsNoTracking()
                     where hgs.PhoneCountryCode == phoneCountryCode
                           && hgs.PhoneNumber == phoneNumber
-                    select new HotelGuestSelfie
+                    select new HotelGuestAadhaarImage
                     {
                         PhoneCountryCode = hgs.PhoneCountryCode,
                         PhoneNumber = hgs.PhoneNumber,
@@ -36,20 +36,20 @@ namespace OnePass.Infrastructure.Persistence
                         UpdatedAt = hgs.UpdatedAt
                     });
 
-        public GetHotelGuestSelfieQueryHandler(
+        public GetHotelGuestAadhaarImageQueryHandler(
             OnePassDbContext context,
             Tracer tracer,
-            ILogger<GetHotelGuestSelfieQueryHandler> logger)
+            ILogger<GetHotelGuestAadhaarImageQueryHandler> logger)
             : base(context, tracer, logger)
         {
         }
 
-        public async Task<IEnumerable<HotelGuestSelfie>> HandleQueryAsync(
-            GetHotelGuestSelfieQuery query)
+        public async Task<IEnumerable<HotelGuestAadhaarImage>> HandleQueryAsync(
+            GetHotelGuestAadharImageQuery query)
         {
             return await ExecuteQuerySafelyAsync(async ctx =>
             {
-                return await GetSelfieQuery(
+                return await GetAadharImageQuery(
                         ctx,
                         query.PhoneCountryCode,
                         query.PhoneNumber)
@@ -57,7 +57,7 @@ namespace OnePass.Infrastructure.Persistence
             });
         }
 
-        public Task<IEnumerable<HotelGuestSelfie>> HandleAllAsync()
+        public Task<IEnumerable<HotelGuestAadhaarImage>> HandleAllAsync()
         {
             throw new NotSupportedException(
                 "Fetching all hotel guest selfies is not supported.");
