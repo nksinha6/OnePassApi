@@ -70,7 +70,7 @@ namespace OnePass.Domain.Services
         public Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture) =>
             PersistSingleAsync(_hotelGuestFaceCapturePersistRepository, hotelGuestFaceCapture);
 
-        public async Task<HotelGuestAadhaarImage> PersistSelfieAsync(
+        public async Task<HotelGuestAadhaarImage> PersistAadharImageAsync(
     HotelGuestAadhaarImage selfie,
     Stream selfieStream)
         {

@@ -52,9 +52,9 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                     return await _hotelGuestPersistService.PersistFaceCapture(guestFaceCapture);
                 });
 
-        [HttpPost("selfie")]
+        [HttpPost("aadhar/image")]
         [Consumes("multipart/form-data")]
-        public Task<IActionResult> PersistGuestSelfie([FromForm] HotelGuestAadhaarImageDto request) =>
+        public Task<IActionResult> PersistGuestAadharImage([FromForm] HotelGuestAadhaarImageDto request) =>
             ExecutePersistAsync(
                 request,
                 nameof(HotelGuestReadController.GetGuestById),
@@ -71,7 +71,7 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
 
                     entity.Image = ms.ToArray();
                     entity.CreatedAt = DateTimeOffset.UtcNow;
-                    return await _hotelGuestPersistService.PersistSelfieAsync(
+                    return await _hotelGuestPersistService.PersistAadharImageAsync(
                 entity,
                 request.Selfie.OpenReadStream()
 );                });
