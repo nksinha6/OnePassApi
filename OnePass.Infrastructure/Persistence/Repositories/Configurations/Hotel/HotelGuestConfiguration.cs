@@ -43,6 +43,14 @@ namespace OnePass.Infrastructure.Persistence
             builder.Property(g => g.Nationality)
                    .HasMaxLength(100);
 
+            builder.Property(x => x.ReferenceId)
+           .HasColumnType("text")
+           .IsRequired(false);
+
+            builder.Property(x => x.VerificationId)
+                .HasColumnType("text")
+                .IsRequired(false);
+
             builder.Property(x => x.SplitAddress)
                   .HasColumnType("jsonb");
 

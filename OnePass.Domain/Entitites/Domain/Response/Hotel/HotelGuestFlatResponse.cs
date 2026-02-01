@@ -23,6 +23,9 @@ namespace OnePass.Domain
 
         public string? SplitAddress { get; set; }
 
+        public string? ReferenceId { get; set; }
+        public string? VerificationId { get; set; }
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.pending;
         public DateOnly? DateOfBirth { get; set; }

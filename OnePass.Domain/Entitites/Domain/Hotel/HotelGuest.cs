@@ -30,6 +30,9 @@ namespace OnePass.Domain
         // JSON stored as jsonb
         public string? SplitAddress { get; set; }
 
+        public string? ReferenceId { get; set; }
+        public string? VerificationId { get; set; }
+
         public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.pending;
 
         public DateTimeOffset CreatedAt { get; set; }

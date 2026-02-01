@@ -20,7 +20,8 @@ namespace OnePass.Domain
         public string? Email { get; set; }
         public string? Nationality { get; set; }
         public string? Gender { get; set; }
-
+        public string? ReferenceId { get; set; }
+        public string? VerificationId { get; set; }
         public SplitAddressDto? SplitAddress { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]

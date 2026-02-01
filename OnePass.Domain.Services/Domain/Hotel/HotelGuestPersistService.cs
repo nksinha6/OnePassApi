@@ -64,7 +64,9 @@ namespace OnePass.Domain.Services
                 PhoneNumber = param.PhoneNumber
             });
 
-            return await _guestRepository.UpdatePartialAsync(new HotelGuest() { Id = guest.Id, VerificationStatus = VerificationStatus.verified, FullName = param.Name, DateOfBirth = param.DateOfBirth, Gender = param.Gender, Nationality = param.Nationality, Uid =  param.Uid, SplitAddress = System.Text.Json.JsonSerializer.Serialize(param.SplitAddress) }, x => x.VerificationStatus, x => x.FullName, x => x.DateOfBirth, x => x.Gender, x => x.Nationality, x => x.Uid, x => x.SplitAddress);
+            return await _guestRepository.UpdatePartialAsync(new HotelGuest() { Id = guest.Id, VerificationStatus = VerificationStatus.verified, FullName = param.Name, DateOfBirth = param.DateOfBirth, Gender = param.Gender, Nationality = param.Nationality, Uid =  param.Uid, VerificationId = param.VerificationId, ReferenceId = param.ReferenceId,
+                
+                SplitAddress = System.Text.Json.JsonSerializer.Serialize(param.SplitAddress) }, x => x.VerificationStatus, x => x.FullName, x => x.DateOfBirth, x => x.Gender, x => x.Nationality, x => x.Uid, x => x.VerificationId, x => x.ReferenceId, x => x.SplitAddress);
         }
 
         public Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture) =>

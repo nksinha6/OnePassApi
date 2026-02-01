@@ -16,7 +16,8 @@ namespace OnePass.Domain
         public string Gender { get; set; } = null!;
         public DateOnly DateOfBirth { get; set; }
         public string Nationality { get; set; } = null!;
-
+        public string ReferenceId { get; set; } = null!;
+        public string VerificationId { get; set; } = null!;
         public SplitAddressDto? SplitAddress { get; set; }
 
     }

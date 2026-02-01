@@ -32,6 +32,8 @@ namespace OnePass.Infrastructure.Persistence
                      VerificationStatus = g.VerificationStatus,
                      DateOfBirth = g.DateOfBirth,
                      Uid = g.Uid,
+                     VerificationId = g.VerificationId,
+                     ReferenceId = g.ReferenceId,
                      SplitAddress = g.SplitAddress,
                  })
                 .FirstOrDefault());
