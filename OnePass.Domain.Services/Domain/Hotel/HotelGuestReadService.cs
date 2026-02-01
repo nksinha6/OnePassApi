@@ -32,5 +32,10 @@ namespace OnePass.Domain.Services
             return response.Adapt<PendingQrCodeMatchesByPhoneResponse>();
         }
 
+        public Task<IEnumerable<BookingGuestDetail>> GetBookingGuestDetailAsync(BookingGuestQueryParameters query)
+=> HandleQueryAsync<BookingGuestQueryParameters, BookingGuestDetail>(
+    query,
+    useStoredProcedure: true);
+
     }
 }

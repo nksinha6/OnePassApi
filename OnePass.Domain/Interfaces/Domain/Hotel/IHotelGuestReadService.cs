@@ -10,5 +10,7 @@ namespace OnePass.Domain
         Task<HotelGuestAadhaarImage> GetHotelGuestAadharImageAsync(GetHotelGuestAadharImageQuery query);
 
         Task<PendingQrCodeMatchesByPhoneResponse> GetPendingQrCodeMatchesByPhoneResponseAsync(GetPendingQrCodeMatchesByPhoneQuery query);
+
+        Task<IEnumerable<BookingGuestDetail>> GetBookingGuestDetailAsync(BookingGuestQueryParameters query);
     }
 }

@@ -28,7 +28,7 @@ ILogger<HotelGuestReadController> logger,
         private readonly IRequestContext _requestContext = requestContext;
 
         [HttpGet("guest_by_id")]
-       // [Authorize]
+        // [Authorize]
         public Task<ActionResult<HotelGuestResponse>> GetGuestById([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
         ExecuteAsync(
             Guid.NewGuid(),
@@ -42,12 +42,12 @@ ILogger<HotelGuestReadController> logger,
             }
 
             var guest = await _hotelGuestAppService.GetForCreateIfNotExists(new GetHotelGuestByPhoneQuery()
-                 {
-                     PhoneCountryCode = phoneCountryCode,
-                     PhoneNumber = phoneno
-                 });
-                 return guest;
-             },
+            {
+                PhoneCountryCode = phoneCountryCode,
+                PhoneNumber = phoneno
+            });
+            return guest;
+        },
             notFoundMessage: $"No user found for Id {phoneCountryCode}-{phoneno}."
         );
 
@@ -89,8 +89,8 @@ ILogger<HotelGuestReadController> logger,
                 PhoneNumber = request.PhoneNumber
             });
 
-             await _smsService.SendOnboardingLinkSmsAsync(request.PhoneCountryCode, request.PhoneNumber, _requestContext.PropertyIds.First());
- 
+            await _smsService.SendOnboardingLinkSmsAsync(request.PhoneCountryCode, request.PhoneNumber, _requestContext.PropertyIds.First());
+
             await _hotelGuestAppService.AddBookingGyest(new HotelBookingGuest()
             {
                 TenantId = _requestContext.TenantId!.Value,
@@ -108,7 +108,7 @@ ILogger<HotelGuestReadController> logger,
 
         [HttpPost("verify_otp")]
         // [Authorize]
-        public Task<ActionResult<HotelGuestVerifyOtpResponse>> VerifyOtp([FromBody] HotelGuestVerifyOtpRequest request) => 
+        public Task<ActionResult<HotelGuestVerifyOtpResponse>> VerifyOtp([FromBody] HotelGuestVerifyOtpRequest request) =>
           ExecuteAsync(
             Guid.NewGuid(),
             () => $"guest_id_{request.PhoneCountryCode}-{request.PhoneNumber}",
@@ -120,7 +120,7 @@ ILogger<HotelGuestReadController> logger,
                   request.Otp
               );
 
-            
+
         },
             notFoundMessage: $"No otp found for Id {request.PhoneCountryCode}-{request.PhoneCountryCode}."
         );
@@ -132,11 +132,29 @@ ILogger<HotelGuestReadController> logger,
             () => $"pending_qr_code{request.PhoneCountryCode}-{request.PhoneNumber}",
         async () =>
         {
-            return await _hotelGuestReadService.GetPendingQrCodeMatchesByPhoneResponseAsync( request );
+            return await _hotelGuestReadService.GetPendingQrCodeMatchesByPhoneResponseAsync(request);
 
 
         },
             notFoundMessage: $"No pending qr code found for {request.PhoneCountryCode}-{request.PhoneCountryCode}."
+        );
+
+
+        [HttpGet("booking_guest_details")]
+        [Authorize]
+        public Task<ActionResult<IEnumerable<BookingGuestDetail>>> GetBookingGuestDetails() =>
+        ExecuteAsync(
+            Guid.NewGuid(),
+            () => $"guest_booking_details",
+        async () =>
+        {
+            return await _hotelGuestReadService.GetBookingGuestDetailAsync(new BookingGuestQueryParameters()
+            {
+                TenantId = _requestContext.TenantId!.Value,
+                PropertyId = _requestContext.PropertyIds.First()
+            });
+        },
+            notFoundMessage: $"No guest booking details found for tenant Id {_requestContext.TenantId!.Value} and property id {_requestContext.PropertyIds.First()}."
         );
     }
 }

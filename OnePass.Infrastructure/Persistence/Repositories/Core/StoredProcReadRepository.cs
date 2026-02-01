@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -31,7 +32,8 @@ namespace OnePass.Infrastructure.Persistence
             {
                 { typeof(GetInviteByHostPhoneQuery), "get_host_invite_details" },
                 { typeof(GetInvitesByGuestPhoneQuery), "get_guest_invite_details" },
-                { typeof(VisitPurposeOverridesQuery), "get_visit_purposes_with_overrides" }
+                { typeof(VisitPurposeOverridesQuery), "get_visit_purposes_with_overrides" },
+                { typeof(BookingGuestQueryParameters), "get_recent_booking_guests_by_tenant_property" }
             };
         }
 
@@ -86,7 +88,20 @@ namespace OnePass.Infrastructure.Persistence
                     {
                         var value = reader[kvp.Key];
                         if (value is not DBNull)
-                            kvp.Value.SetValue(entity, value);
+                        {
+                            var propType = Nullable.GetUnderlyingType(kvp.Value.PropertyType) ?? kvp.Value.PropertyType;
+
+                            if (propType.IsEnum)
+                            {
+                                // Convert string from PG enum to C# enum
+                                var enumValue = Enum.Parse(propType, value.ToString()!, ignoreCase: true);
+                                kvp.Value.SetValue(entity, enumValue);
+                            }
+                            else
+                            {
+                                kvp.Value.SetValue(entity, value);
+                            }
+                        }
                     }
                 }
                 results.Add(entity);
@@ -118,8 +133,17 @@ namespace OnePass.Infrastructure.Persistence
         private Dictionary<string, PropertyInfo> GetPropertyMap(Type type)
         {
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                       .ToDictionary(p => p.Name, p => p, StringComparer.OrdinalIgnoreCase);
+                       .ToDictionary(
+                            p => {
+                                // Check for ColumnAttribute
+                                var colAttr = p.GetCustomAttribute<ColumnAttribute>();
+                                return colAttr != null ? colAttr.Name : p.Name;
+                            },
+                            p => p,
+                            StringComparer.OrdinalIgnoreCase
+                       );
         }
+
 
         public Task<IEnumerable<TResult>> ExecuteAllAsync()
         {
