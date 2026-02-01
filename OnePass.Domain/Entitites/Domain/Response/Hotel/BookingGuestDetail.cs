@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace OnePass.Domain
@@ -43,6 +44,7 @@ namespace OnePass.Domain
         public string? SplitAddress { get; set; }
 
         [Column("verification_status")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public VerificationStatusEnum? VerificationStatus { get; set; }
 
         [Column("booking_id")]
