@@ -141,7 +141,7 @@ ILogger<HotelGuestReadController> logger,
 
 
         [HttpGet("booking_guest_details")]
-        //[Authorize]
+        [Authorize]
         public Task<ActionResult<IEnumerable<BookingGuestDetail>>> GetBookingGuestDetails() =>
         ExecuteAsync(
             Guid.NewGuid(),
@@ -150,8 +150,8 @@ ILogger<HotelGuestReadController> logger,
         {
             return await _hotelGuestReadService.GetBookingGuestDetailAsync(new BookingGuestQueryParameters()
             {
-                TenantId = 2,//_requestContext.TenantId!.Value,
-                PropertyId = 2//_requestContext.PropertyIds.First()
+                TenantId = _requestContext.TenantId!.Value,
+                PropertyId = _requestContext.PropertyIds.First()
             });
         },
             notFoundMessage: $"No guest booking details found for tenant Id 2 and property id 2."
