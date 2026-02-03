@@ -31,6 +31,9 @@ namespace OnePass.Domain
         [Column("email")]
         public string? Email { get; set; }
 
+        [Column("ota")]
+        public string? OTA { get; set; }
+
         [Column("nationality")]
         public string? Nationality { get; set; }
 
