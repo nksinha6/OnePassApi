@@ -127,7 +127,7 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                     };
                 });
 
-        [HttpDelete("guest")]
+        [HttpGet("delete/guest")]
         // [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
