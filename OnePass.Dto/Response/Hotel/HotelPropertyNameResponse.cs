@@ -10,5 +10,22 @@ namespace OnePass.Dto
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        
+        public PropertyType PropertyType { get; set; }
+        public PropertyTier Tier { get; set; }
+    }
+
+    public enum PropertyType
+    {
+        Hospitality,
+        Corporate
+    }
+
+    public enum PropertyTier
+    {
+        Starter,
+        SMB,
+        Enterprise
     }
 }

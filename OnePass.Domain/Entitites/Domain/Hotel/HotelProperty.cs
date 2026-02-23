@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OnePass.Dto;
 
 namespace OnePass.Domain
 {
@@ -20,6 +21,9 @@ namespace OnePass.Domain
         public Guid? LawEnforcementId { get; set; }
         public string? ContactEmail { get; set; }
         public string? ContactPhone { get; set; }
+
+        public PropertyType PropertyType { get; set; }
+        public PropertyTier Tier { get; set; }
 
         // Use DateTimeOffset instead of DateTime
         public DateTimeOffset CreatedAt { get; set; }

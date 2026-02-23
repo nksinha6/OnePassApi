@@ -23,7 +23,9 @@ namespace OnePass.Infrastructure.Persistence
                      select new HotelPropertyNameResponse
                      {
                          Id = p.Id,
-                         Name = p.Name
+                         Name = p.Name,
+                         PropertyType = p.PropertyType,
+                         Tier = p.Tier
                      })
                     .FirstOrDefault());
 

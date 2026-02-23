@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using OnePass.Domain;
+using OnePass.Dto;
 
 namespace OnePass.Infrastructure.Persistence
 {
@@ -50,13 +51,23 @@ namespace OnePass.Infrastructure.Persistence
 
             builder.Property(x => x.ContactPhone)
                    .HasMaxLength(20);
+            builder.Property(x => x.PropertyType)
+              .HasConversion<string>()
+              .HasMaxLength(50)
+              .IsRequired();
 
+            builder.Property(x => x.Tier)
+                   .HasConversion<string>()
+                   .HasMaxLength(50)
+                   .IsRequired()
+                   .HasDefaultValue(PropertyTier.Starter);
             // DateTimeOffset mapping to timestamptz in PostgreSQL
             builder.Property(x => x.CreatedAt)
                    .HasDefaultValueSql("now() AT TIME ZONE 'UTC'");
 
             builder.Property(x => x.UpdatedAt)
                    .HasDefaultValueSql("now() AT TIME ZONE 'UTC'");
+
 
             // Foreign keys without navigation properties
             builder.HasOne<HotelTenant>()
