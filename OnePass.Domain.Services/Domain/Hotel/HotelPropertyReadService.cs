@@ -21,5 +21,13 @@ namespace OnePass.Domain
                    PropertyId = propertyId
                },
                useStoredProcedure: false);
+
+        public Task<HotelTenantResponse> GetTenantAsync(int tenantId)
+        => HandleSingleOrDefaultAsync<GetHotelTenantByIdQuery, HotelTenantResponse>(
+               new GetHotelTenantByIdQuery()
+               {
+                   TenantId = tenantId
+               },
+               useStoredProcedure: false);
     }
 }

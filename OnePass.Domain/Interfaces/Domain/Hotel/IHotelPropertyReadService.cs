@@ -10,6 +10,6 @@ namespace OnePass.Domain
     public interface IHotelPropertyReadService
     {
         Task<HotelPropertyNameResponse> GetPropertyNameAsync(int propertyId);
-
+        Task<HotelTenantResponse> GetTenantAsync(int tenantId);
     }
 }

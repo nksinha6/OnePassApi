@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OnePass.Domain
 {
-    public class HotelTenant
+    public class HotelTenantResponse
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
 
         public byte[]? Logo { get; set; }
 
-        [MaxLength(50)]
         public string? LogoContentType { get; set; }
     }
 }

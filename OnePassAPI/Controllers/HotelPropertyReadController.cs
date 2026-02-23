@@ -28,5 +28,18 @@ IHotelPropertyReadService hotelPropertyReadService,        ILogger<HotelProperty
         },
         notFoundMessage: $"No properties found."
         );
+
+        [HttpGet("tenant_by_id")]
+        public Task<ActionResult<HotelTenantResponse>> GetTenantById([FromQuery] int tenantId)
+    => ExecuteAsync(
+        Guid.NewGuid(),
+        () => $"tenant_by_id",
+        async () =>
+        {
+            var result = await _hotelPropertyReadService.GetTenantAsync(tenantId);
+            return result;
+        },
+        notFoundMessage: $"No tenant found."
+        );
     }
 }

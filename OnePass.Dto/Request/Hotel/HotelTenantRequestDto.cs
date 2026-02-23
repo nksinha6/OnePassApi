@@ -4,17 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace OnePass.Domain
+namespace OnePass.Dto.Request.Hotel
 {
-    public class HotelTenant
+    public class HotelTenantRequestDto
     {
-        public int Id { get; set; }
         public string Name { get; set; } = null!;
 
-        public byte[]? Logo { get; set; }
-
-        [MaxLength(50)]
-        public string? LogoContentType { get; set; }
+        public IFormFile? Logo { get; set; }
     }
 }

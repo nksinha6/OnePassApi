@@ -11,4 +11,9 @@ namespace OnePass.Domain
         public int PropertyId { get; set; }
     }
 
+    public class GetHotelTenantByIdQuery : IReadQuery
+    {
+        public int TenantId { get; set; }
+    }
+
 }

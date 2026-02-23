@@ -23,6 +23,11 @@ namespace OnePass.Infrastructure.Persistence
             builder.Property(x => x.Name)
                    .IsRequired()
                    .HasMaxLength(255);
+
+            builder.Property(x => x.Logo);
+
+            builder.Property(x => x.LogoContentType)
+                .HasMaxLength(50);
         }
     }
 }

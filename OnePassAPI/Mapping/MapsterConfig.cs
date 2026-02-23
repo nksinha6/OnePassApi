@@ -2,6 +2,7 @@
 using Mapster;
 using OnePass.Domain;
 using OnePass.Dto;
+using OnePass.Dto.Request.Hotel;
 using OnePass.Dto.Response;
 
 namespace OnePass.API
@@ -159,7 +160,22 @@ namespace OnePass.API
                 .Map(dest => dest.Items,
                      src => src.Adapt<List<PendingQrCodeMatchesByPhoneItemResponse>>());
 
+            TypeAdapterConfig<HotelTenantRequestDto, HotelTenant>.NewConfig()
+                .Map(dest => dest.Name, src => src.Name)
+            .Map(dest => dest.Logo, src => ConvertToByteArray(src.Logo))
+            .Map(dest => dest.LogoContentType, src => src.Logo != null ? src.Logo.ContentType : null)
+            .Ignore(dest => dest.Id);
 
+        }
+
+        private static byte[]? ConvertToByteArray(IFormFile? file)
+        {
+            if (file == null || file.Length == 0)
+                return null;
+
+            using var ms = new MemoryStream();
+            file.CopyTo(ms);
+            return ms.ToArray();
         }
     }
 }
