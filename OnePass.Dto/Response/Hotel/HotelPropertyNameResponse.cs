@@ -10,7 +10,7 @@ namespace OnePass.Dto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
+        public int TenantId { get; set; }
         
         public PropertyType PropertyType { get; set; }
         public PropertyTier Tier { get; set; }

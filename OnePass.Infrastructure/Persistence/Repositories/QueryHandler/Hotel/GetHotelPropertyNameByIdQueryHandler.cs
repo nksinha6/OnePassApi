@@ -24,6 +24,7 @@ namespace OnePass.Infrastructure.Persistence
                      {
                          Id = p.Id,
                          Name = p.Name,
+                         TenantId = p.TenantId,
                          PropertyType = p.PropertyType,
                          Tier = p.Tier
                      })
