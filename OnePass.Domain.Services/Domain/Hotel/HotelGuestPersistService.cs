@@ -10,6 +10,7 @@ namespace OnePass.Domain.Services
         IPersistRepository<HotelGuestFaceCapture> hotelGuestFaceCapturePersistRepository,
         IPersistRepository<HotelGuestAadhaarImage> hotelGuestAadharImageRepository,
         IPersistRepository<HotelBookingGuest> hotelBookingGuestRepository,
+        IPersistRepository<PhoneVerificationId> phoneVerificationIdsRepository,
         IHotelGuestReadService hotelGuestReadService,
         IStoredProcPersistRepository<DeleteGuestParam> deleteGuestRepository,
         IConfiguration configuration) : IHotelGuestPersistService
@@ -22,6 +23,8 @@ namespace OnePass.Domain.Services
         private readonly IPersistRepository<HotelGuestAadhaarImage> _hotelGuestAadharImageRepository = hotelGuestAadharImageRepository;
 
         private readonly IPersistRepository<HotelBookingGuest> _hotelBookingGuestRepository = hotelBookingGuestRepository;
+
+        private readonly IPersistRepository<PhoneVerificationId> _phoneVerificationIdsRepository = phoneVerificationIdsRepository;
 
         private readonly IStoredProcPersistRepository<DeleteGuestParam> _deleteGuestRepository = deleteGuestRepository;
         // ✅ DRY helper method
@@ -71,6 +74,9 @@ namespace OnePass.Domain.Services
 
         public Task<HotelGuestFaceCapture> PersistFaceCapture(HotelGuestFaceCapture hotelGuestFaceCapture) =>
             PersistSingleAsync(_hotelGuestFaceCapturePersistRepository, hotelGuestFaceCapture);
+        public Task<PhoneVerificationId> PersistPhoneVerificationIds (PhoneVerificationId phoneVerificationId)
+            =>
+            PersistSingleAsync(_phoneVerificationIdsRepository, phoneVerificationId);
 
         public async Task<HotelGuestAadhaarImage> PersistAadharImageAsync(
     HotelGuestAadhaarImage selfie,

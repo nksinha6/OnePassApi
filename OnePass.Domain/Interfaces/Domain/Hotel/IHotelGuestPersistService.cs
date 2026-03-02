@@ -18,5 +18,7 @@ namespace OnePass.Domain
         Task<HotelBookingGuest> PersistBookingGuestAsync(HotelBookingGuest hotelBookingGuest);
 
         public Task<bool> DeleteHotelGuest(DeleteGuestParam guest);
+
+        Task<PhoneVerificationId> PersistPhoneVerificationIds(PhoneVerificationId phoneVerificationId);
     }
 }

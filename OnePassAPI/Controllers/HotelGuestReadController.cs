@@ -156,5 +156,20 @@ ILogger<HotelGuestReadController> logger,
         },
             notFoundMessage: $"No guest booking details found for tenant Id 2 and property id 2."
         );
+
+        [HttpPost("digilocker_verification_ids")]
+        public Task<ActionResult<PhoneVerificationId>> GetPhoneVerificationId([FromBody] GetPhoneVerificationIdByPhoneQuery request) =>
+          ExecuteAsync(
+            Guid.NewGuid(),
+            () => $"phone_verification_ids{request.PhoneCountryCode}-{request.PhoneNumber}",
+        async () =>
+        {
+            return await _hotelGuestReadService.GetPhoneVerificationIdAsync(request);
+
+
+        },
+            notFoundMessage: $"No phone verification ids found for {request.PhoneCountryCode}-{request.PhoneCountryCode}."
+        );
+
     }
 }

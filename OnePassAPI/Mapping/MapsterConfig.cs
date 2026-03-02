@@ -166,6 +166,11 @@ namespace OnePass.API
             .Map(dest => dest.LogoContentType, src => src.Logo != null ? src.Logo.ContentType : null)
             .Ignore(dest => dest.Id);
 
+
+            TypeAdapterConfig<PhoneVerificationIdDto, PhoneVerificationId>
+    .NewConfig()
+    .Map(dest => dest.CreatedAt, src => DateTime.UtcNow)
+    .Ignore(dest => dest.Id);
         }
 
         private static byte[]? ConvertToByteArray(IFormFile? file)

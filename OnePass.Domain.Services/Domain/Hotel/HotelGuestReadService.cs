@@ -37,5 +37,10 @@ namespace OnePass.Domain.Services
     query,
     useStoredProcedure: true);
 
+        public Task<PhoneVerificationId> GetPhoneVerificationIdAsync(GetPhoneVerificationIdByPhoneQuery query)
+=> HandleSingleOrDefaultAsync<GetPhoneVerificationIdByPhoneQuery, PhoneVerificationId>(
+    query,
+    useStoredProcedure: false);
+
     }
 }

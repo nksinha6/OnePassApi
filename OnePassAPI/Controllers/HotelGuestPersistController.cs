@@ -151,5 +151,21 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
 
                 });
 
+        [HttpPost("digilocker_ids")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> CreateDigilockerIds([FromBody] PhoneVerificationIdDto request) =>
+            ExecutePersistAsync(
+                request,
+                nameof(HotelGuestReadController.GetPhoneVerificationId),
+                "digilocker_ids",
+                async () =>
+                {
+                    var phoneVerificationIds = request.Adapt<PhoneVerificationId>();
+
+                    return await _hotelGuestPersistService.PersistPhoneVerificationIds(phoneVerificationIds);
+                });
     }
 }

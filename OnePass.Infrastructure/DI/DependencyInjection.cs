@@ -85,6 +85,8 @@ services.AddScoped<IReadQueryHandler<GetHotelGuestOtpCodeQuery, HotelGuestsOtpCo
             services.AddScoped<IReadQueryHandler<GetPendingQrCodeMatchesByPhoneQuery, HotelPendingQrCodeMatchDetailedResponse>, GetPendingQrCodeMatchesByPhoneQueryHandler>();
 
             services.AddScoped<IReadQueryHandler<GetHotelTenantByIdQuery, HotelTenantResponse>, GetHotelTenantByIdQueryHandler>();
+
+            services.AddScoped<IReadQueryHandler<GetPhoneVerificationIdByPhoneQuery, PhoneVerificationId>, GetPhoneVerificationIdByPhoneQueryHandler>();
             // Add other infrastructure services here (e.g., DbContext, caching, etc.)
 
             return services;

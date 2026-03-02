@@ -12,5 +12,7 @@ namespace OnePass.Domain
         Task<PendingQrCodeMatchesByPhoneResponse> GetPendingQrCodeMatchesByPhoneResponseAsync(GetPendingQrCodeMatchesByPhoneQuery query);
 
         Task<IEnumerable<BookingGuestDetail>> GetBookingGuestDetailAsync(BookingGuestQueryParameters query);
+
+        Task<PhoneVerificationId> GetPhoneVerificationIdAsync(GetPhoneVerificationIdByPhoneQuery query);
     }
 }
