@@ -104,5 +104,25 @@ namespace OnePass.Domain.Services
 
         public Task<bool> DeleteHotelGuest(DeleteGuestParam guest) =>
             _deleteGuestRepository.ExecuteCommandAsync(guest);
+
+        public async Task<HotelGuest> RegisterGuestAsync(GetHotelGuestByPhoneQuery request)
+        {
+            var guest = await _hotelGuestReadService.GetHotelGuestAsync(request);
+            if (guest.Id == Guid.Empty)
+            {
+                return await guestRepository.AddIfNotExistAsync(new HotelGuest()
+                {
+                    PhoneCountryCode = request.PhoneCountryCode,
+                    PhoneNumber = request.PhoneNumber,
+                    VerificationStatus = VerificationStatus.registered
+                });
+            }
+
+            return await _guestRepository.UpdatePartialAsync(new HotelGuest()
+            {
+                Id = guest.Id,
+                VerificationStatus = VerificationStatus.registered
+            }, x => x.VerificationStatus);
+        }
     }
 }

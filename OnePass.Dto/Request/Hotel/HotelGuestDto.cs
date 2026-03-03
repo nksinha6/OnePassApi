@@ -25,6 +25,7 @@ namespace OnePass.Dto
         pending,
         verified,
         rejected,
+        registered,
         manualReview
     }
 }

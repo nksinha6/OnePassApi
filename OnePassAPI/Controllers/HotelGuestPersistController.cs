@@ -107,6 +107,22 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                     return await _hotelGuestPersistService.UpdateEmailIdData(request);
                 });
 
+        [HttpPut("register")]
+        // [Authorize]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> UpdateRegisterStatus([FromBody] GetHotelGuestByPhoneQuery request) =>
+            ExecutePersistAsync(
+                request,
+                nameof(HotelGuestReadController.GetGuestById),
+                "guest_by_id",
+                async () =>
+                {
+                    return await _hotelGuestPersistService.RegisterGuestAsync(request);
+                });
+
+
         [HttpPost("sendOtp")]
         // [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
