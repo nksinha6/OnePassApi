@@ -22,5 +22,7 @@ namespace OnePass.Domain
         Task<PhoneVerificationId> PersistPhoneVerificationIds(PhoneVerificationId phoneVerificationId);
 
         Task<HotelGuest> RegisterGuestAsync(GetHotelGuestByPhoneQuery request);
+
+        Task<HotelGuest> UpdateGuestProfileAsync(UpdateGuestProfile request);
     }
 }

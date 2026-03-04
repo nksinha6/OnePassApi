@@ -43,6 +43,9 @@ namespace OnePass.Infrastructure.Persistence
             builder.Property(g => g.Nationality)
                    .HasMaxLength(100);
 
+            builder.Property(g => g.Organization)
+                   .HasMaxLength(100);
+
             builder.Property(x => x.ReferenceId)
            .HasColumnType("text")
            .IsRequired(false);

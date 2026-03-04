@@ -1,5 +1,6 @@
 ﻿
 using System.Linq.Expressions;
+using System.Xml.Linq;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using OnePass.Dto;
@@ -124,5 +125,14 @@ namespace OnePass.Domain.Services
                 VerificationStatus = VerificationStatus.registered
             }, x => x.VerificationStatus);
         }
+
+        public Task<HotelGuest> UpdateGuestProfileAsync(UpdateGuestProfile request)
+        =>  _guestRepository.UpdatePartialAsync(new HotelGuest()
+            {
+                Id = request.Id,
+                Organization = request.Organization,
+                FullName = request.Name
+            }, x => x.Organization,
+            x => x.FullName);
     }
 }

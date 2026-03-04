@@ -26,6 +26,7 @@ namespace OnePass.Domain
         public string? Email { get; set; }
 
         public string? Nationality { get; set; }
+        public string? Organization { get; set; }
 
         // JSON stored as jsonb
         public string? SplitAddress { get; set; }

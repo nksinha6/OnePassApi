@@ -28,6 +28,7 @@ namespace OnePass.Infrastructure.Persistence
                      PhoneNumber = g.PhoneNumber,
                      Email = g.Email,
                      Nationality = g.Nationality,
+                     Organization = g.Organization,
                      Gender = g.Gender,
                      VerificationStatus = g.VerificationStatus,
                      DateOfBirth = g.DateOfBirth,
