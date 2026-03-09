@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using OnePass.Dto;
 
 namespace OnePass.Domain
 {
@@ -21,7 +22,7 @@ namespace OnePass.Domain
 
         Task<PhoneVerificationId> PersistPhoneVerificationIds(PhoneVerificationId phoneVerificationId);
 
-        Task<HotelGuest> RegisterGuestAsync(GetHotelGuestByPhoneQuery request);
+        Task<HotelGuest> UpdateGuestStatusAsync(UpdateGuestStatusParam request);
 
         Task<HotelGuest> UpdateGuestProfileAsync(UpdateGuestProfile request);
     }

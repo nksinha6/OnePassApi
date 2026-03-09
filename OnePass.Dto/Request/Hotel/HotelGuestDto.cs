@@ -26,6 +26,8 @@ namespace OnePass.Dto
         verified,
         rejected,
         registered,
+        identity_verified,
+        face_verified,
         manualReview
     }
 }
