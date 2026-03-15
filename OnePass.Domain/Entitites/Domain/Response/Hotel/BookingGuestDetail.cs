@@ -61,7 +61,11 @@ namespace OnePass.Domain
     {
         pending,
         verified,
-        rejected
+        rejected,
+        registered,
+        identity_verified,
+        face_verified,
+        manualReview
         // match Postgres enum values
     }
 
