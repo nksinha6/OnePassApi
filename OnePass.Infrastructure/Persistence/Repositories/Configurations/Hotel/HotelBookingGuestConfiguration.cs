@@ -33,8 +33,7 @@ namespace OnePass.Infrastructure.Persistence
 
             builder.Property(x => x.BookingId)
                 .HasColumnName("booking_id")
-                .IsRequired()
-                .HasMaxLength(64);
+                .IsRequired();
 
             builder.Property(x => x.PropertyId)
                   .HasColumnName("property_id")
