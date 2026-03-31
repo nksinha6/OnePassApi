@@ -172,7 +172,7 @@ ILogger<HotelGuestReadController> logger,
 
 
         },
-            notFoundMessage: $"No phone verification ids found for {phoneCountryCode}-{p honeCountryCode}."
+            notFoundMessage: $"No phone verification ids found for {phoneCountryCode}-{phoneCountryCode}."
         );
 
     }
