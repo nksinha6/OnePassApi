@@ -154,21 +154,25 @@ ILogger<HotelGuestReadController> logger,
                 PropertyId = _requestContext.PropertyIds.First()
             });
         },
-            notFoundMessage: $"No guest booking details found for tenant Id 2 and property id 2."
+            notFoundMessage: $"No guest booking details found for tenant Id {_requestContext.TenantId!.Value} and property id {_requestContext.PropertyIds.First()}."
         );
 
-        [HttpPost("digilocker_verification_ids")]
-        public Task<ActionResult<PhoneVerificationId>> GetPhoneVerificationId([FromBody] GetPhoneVerificationIdByPhoneQuery request) =>
+        [HttpGet("digilocker_verification_ids")]
+        public Task<ActionResult<PhoneVerificationId>> GetPhoneVerificationId([FromQuery] string phoneCountryCode, [FromQuery] string phoneNumber) =>
           ExecuteAsync(
             Guid.NewGuid(),
-            () => $"phone_verification_ids{request.PhoneCountryCode}-{request.PhoneNumber}",
+            () => $"phone_verification_ids{phoneCountryCode}-{phoneNumber}",
         async () =>
         {
-            return await _hotelGuestReadService.GetPhoneVerificationIdAsync(request);
+            return await _hotelGuestReadService.GetPhoneVerificationIdAsync(new GetPhoneVerificationIdByPhoneQuery()
+            {
+                PhoneCountryCode = phoneCountryCode,
+                PhoneNumber = phoneNumber
+            });
 
 
         },
-            notFoundMessage: $"No phone verification ids found for {request.PhoneCountryCode}-{request.PhoneCountryCode}."
+            notFoundMessage: $"No phone verification ids found for {phoneCountryCode}-{p honeCountryCode}."
         );
 
     }
