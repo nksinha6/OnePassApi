@@ -23,7 +23,6 @@ namespace OnePass.Dto
     public enum VerificationStatus
     {
         pending,
-        verified,
         rejected,
         registered,
         identity_verified,

@@ -52,7 +52,7 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                     return await _hotelGuestPersistService.PersistFaceCapture(guestFaceCapture);
                 });
 
-        [HttpPost("aadhar/image")]
+        [HttpPost("selfie")]
         [Consumes("multipart/form-data")]
         public Task<IActionResult> PersistGuestAadharImage([FromForm] HotelGuestAadhaarImageDto request) =>
             ExecutePersistAsync(
