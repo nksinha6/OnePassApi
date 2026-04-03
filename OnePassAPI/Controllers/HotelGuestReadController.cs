@@ -51,7 +51,7 @@ ILogger<HotelGuestReadController> logger,
             notFoundMessage: $"No user found for Id {phoneCountryCode}-{phoneno}."
         );
 
-        [HttpGet("aadhar/image")]
+        [HttpGet("selfie")]
         // [Authorize]
         public Task<ActionResult<HotelGuestAadhaarImage>> GetAadharById([FromQuery] string phoneCountryCode, [FromQuery] string phoneno) =>
         ExecuteAsync(
