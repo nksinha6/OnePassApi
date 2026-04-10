@@ -10,10 +10,13 @@ namespace OnePass.Domain.Services
     {
         private readonly IFaceVerificationService faceVerificationService;
 
-        public ContractorReadService(IReadRepositoryFactory repositoryFactory, IFaceVerificationService faceVerificationService)
+        private readonly IStoredProcPersistRepository<ContractorPhoneParam> _addContractorRepository;
+
+        public ContractorReadService(IReadRepositoryFactory repositoryFactory, IFaceVerificationService faceVerificationService, IStoredProcPersistRepository<ContractorPhoneParam> addContractorRepository)
             : base(repositoryFactory) 
         {
             this.faceVerificationService = faceVerificationService;
+            this._addContractorRepository = addContractorRepository;
         }
 
         public Task<IEnumerable<ContractorSelfieImageResponse>> GetAllContractorSelfieImagesAsync()
@@ -58,6 +61,10 @@ namespace OnePass.Domain.Services
 
             return new ImageInput(stream, fileName, entity.ContentType, entity.FileSize);
         }
+
+        public Task<bool> AddContractor(ContractorPhoneParam request)
+            => _addContractorRepository.ExecuteCommandAsync(request);
+
     }
 
 }

@@ -11,5 +11,7 @@ namespace OnePass.Domain
         Task<IEnumerable<ContractorSelfieImageResponse>> GetAllContractorSelfieImagesAsync();
 
         public Task<(string, string?, string?)> CompareSelfie(ImageInput input);
+
+        Task<bool> AddContractor(ContractorPhoneParam request);
     }
 }

@@ -4,12 +4,13 @@ using Microsoft.Extensions.Caching.Memory;
 using OnePass.Domain;
 using OnePass.Domain.Services;
 using OnePass.Dto;
+using static QRCoder.PayloadGenerator;
 
 namespace OnePass.API.Controllers
 {
     [ApiController]
     [Route("api/contractor")]
-    public class ContractorMatchController(IContractorReadService contractorReadService,
+    public class ContractorController(IContractorReadService contractorReadService,
 IRequestContext context,
 ILogger<HotelGuestReadController> logger,
     IMemoryCache cache)
@@ -33,6 +34,19 @@ ILogger<HotelGuestReadController> logger,
                     PhoneNumber = verificationResult.Item3
                 }
             });
+        }
+
+        [HttpPost("add")]
+        public async Task<IActionResult> AddContractor([FromBody] ContractorPhoneDto request)
+        {
+            bool status = await _contractorReadService.AddContractor(new ContractorPhoneParam()
+            {
+                p_phone_country_code = request.PhoneCountryCode,
+                p_phone_number = request.PhoneNumber,
+            });
+
+            return status ? Ok("Successfully added") : NotFound("Guest Not Found");
+
         }
 
         public static async Task<ImageInput> ToImageInputAsync(ContractorInputSelfieRequest request)

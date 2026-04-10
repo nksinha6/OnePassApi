@@ -30,8 +30,9 @@ namespace OnePass.Infrastructure.Persistence
 
             _commandMappings = new Dictionary<Type, string>
             {
-                { typeof(IUnitOfWork), "upsert_block_aggregator" },
-                { typeof(DeleteGuestParam), "delete_guest_data_by_phone" }
+                { typeof(DeleteGuestParam), "delete_guest_data_by_phone" },
+                { typeof(ContractorPhoneParam),
+                "insert_contractor_selfie_from_guest" }
             };
         }
 
