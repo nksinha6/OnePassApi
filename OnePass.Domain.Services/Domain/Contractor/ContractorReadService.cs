@@ -31,7 +31,7 @@ namespace OnePass.Domain.Services
             {
                 var storedImage = ToImageInput(image);
 
-                var res = await this.faceVerificationService.MatchFacesAsync("", storedImage, input);
+                var res = await this.faceVerificationService.MatchFacesAsync(Guid.NewGuid().ToString(), storedImage, input);
 
                 if(res.FaceMatchResult.ToUpper() == "YES")
                 {
