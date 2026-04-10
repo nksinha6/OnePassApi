@@ -47,6 +47,7 @@ namespace OnePass.Infrastructure.Persistence
 
         public DbSet<PhoneVerificationId> PhoneVerificationIds => Set<PhoneVerificationId>();
 
+        public DbSet<ContractorSelfieImage> ContractorSelfieImages => Set<ContractorSelfieImage>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
             /// Register PostgreSQL enum type first
