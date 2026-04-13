@@ -29,14 +29,29 @@ namespace OnePass.Domain.Services
         public async Task<(string, string?, string?)> CompareSelfie(ImageInput input)
         {
             var images = await GetAllContractorSelfieImagesAsync();
-            
+
+            // 🔥 Convert input stream to byte[] once (critical fix)
+            var inputBytes = ((MemoryStream)input.Stream).ToArray();
+
             foreach (var image in images)
             {
                 var storedImage = ToImageInput(image);
 
-                var res = await this.faceVerificationService.MatchFacesAsync(Guid.NewGuid().ToString(), storedImage, input);
+                // 🔥 Create fresh stream for every API call
+                var inputCopy = new ImageInput(
+                    Stream: new MemoryStream(inputBytes),
+                    FileName: input.FileName,
+                    ContentType: input.ContentType,
+                    Length: input.Length
+                );
 
-                if(res.FaceMatchResult.ToUpper() == "YES")
+                var res = await this.faceVerificationService.MatchFacesAsync(
+                    Guid.NewGuid().ToString(),
+                    storedImage,
+                    inputCopy
+                );
+
+                if (res.FaceMatchResult.ToUpper() == "YES")
                 {
                     return (res.FaceMatchResult, image.PhoneCountryCode, image.PhoneNumber);
                 }
