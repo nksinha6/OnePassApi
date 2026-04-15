@@ -158,6 +158,27 @@ ILogger<HotelGuestPersistController> logger) : PersistBaseController
                     };
                 });
 
+        [HttpPost("otp")]
+        // [Authorize]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> Otp([FromBody] SendOtpRequest request) =>
+            ExecutePersistAsync(
+                request,
+                nameof(HotelGuestReadController.VerifyOtp),
+                "verify_otp",
+                async () =>
+                {
+                    await _otpService.PersistOtpAsync(request.PhoneCountryCode, request.PhoneNumber,
+                        request.Otp);
+
+                    return new
+                    {
+                        Success = true,
+                    };
+                });
+
         [HttpGet("delete/guest")]
         // [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]

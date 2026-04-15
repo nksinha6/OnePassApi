@@ -10,5 +10,6 @@ namespace OnePass.Domain
     {
         public string PhoneCountryCode { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
+        public string? Otp { get; set; } 
     }
 }

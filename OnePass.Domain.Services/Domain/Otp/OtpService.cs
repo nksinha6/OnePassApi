@@ -71,6 +71,49 @@ ReadServiceBase, IOtpService
             await _smsService.SendOtpSmsAsync(fullPhoneNumber, otp);
         }
 
+        public async Task PersistOtpAsync(string phoneCountryCode, string phoneNumber, string otp)
+        {
+            Console.WriteLine("OTP:" + otp);
+            // Hash it before storing
+            var hashedOtp = _hasher.Hash(otp);
+
+            var cleanedCountryCode = phoneCountryCode.TrimStart('+');
+            // Create record
+            var record = new HotelGuestsOtpCode
+            {
+                PhoneCountryCode = cleanedCountryCode,
+                PhoneNumber = phoneNumber,
+                HashedOtp = hashedOtp,
+                CreatedAt = DateTime.UtcNow,
+                ExpiresAt = DateTime.UtcNow.AddMinutes(20),
+                Attempts = 0,
+                IsUsed = false
+            };
+
+            var existingRecord = await HandleSingleOrDefaultAsync<GetHotelGuestOtpCodeQuery, HotelGuestsOtpCode>(
+                new GetHotelGuestOtpCodeQuery()
+                {
+                    PhoneCountryCode = cleanedCountryCode,
+                    PhoneNumber = phoneNumber,
+                },
+                useStoredProcedure: false);
+            //if it throws
+
+            if (existingRecord.HashedOtp != null)
+            {
+                await _guestOtpRepository.DeleteAsync(new HotelGuestsOtpCode()
+                {
+                    PhoneCountryCode = phoneCountryCode,
+                    PhoneNumber = phoneNumber,
+                });
+            }
+
+            await _guestOtpRepository.AddAsync(record);
+
+            var fullPhoneNumber = cleanedCountryCode + phoneNumber;
+
+        }
+
         private static string GenerateOtp(int length)
         {
             using var rng = RandomNumberGenerator.Create();
