@@ -42,5 +42,10 @@ namespace OnePass.Domain.Services
     query,
     useStoredProcedure: false);
 
+        public Task<IEnumerable<GuestBookingDetail>> GetGuestBookingDetailsAsync(HotelGuestBookingQueryParam query)
+        => HandleQueryAsync<HotelGuestBookingQueryParam, GuestBookingDetail>(
+    query,
+    useStoredProcedure: true);
+
     }
 }

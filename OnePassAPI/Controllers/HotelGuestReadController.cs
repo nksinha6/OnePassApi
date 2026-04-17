@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using NUglify.JavaScript.Syntax;
 using OnePass.Domain;
 using OnePass.Domain.Services;
 using OnePass.Dto;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace OnePass.API.Controllers
 {
@@ -173,6 +175,25 @@ ILogger<HotelGuestReadController> logger,
 
         },
             notFoundMessage: $"No phone verification ids found for {phoneCountryCode}-{phoneCountryCode}."
+        );
+
+
+        [HttpGet("all_bookings")]
+        // [Authorize]
+        public Task<ActionResult<IEnumerable<GuestBookingDetail>>> GetAllBookings([FromQuery] string phoneCountryCode, [FromQuery] string phoneNumber) =>
+        ExecuteAsync(
+            Guid.NewGuid(),
+            () => $"all_booking",
+        async () =>
+        {
+            var bookings = await _hotelGuestReadService.GetGuestBookingDetailsAsync(new HotelGuestBookingQueryParam()
+            {
+                p_country_code = phoneCountryCode,
+                p_phone_number = phoneNumber,
+            });
+            return bookings;
+        },
+            notFoundMessage: $"No user found for Id {1}-{1}."
         );
 
     }
