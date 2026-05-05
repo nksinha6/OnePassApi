@@ -31,7 +31,7 @@ namespace OnePass.Domain.Services
         public async Task SetPassword(string userId, string password, int tenantId)
         {
             var hashedPassword = _passwordHasher.Hash(password);
-            await _hotelUserPasswordService.AddAsync(new HotelUserPassword { UserId = userId, PasswordHash = hashedPassword, TenantId = tenantId });
+            await _hotelUserPasswordService.AddOrUpdateAsync(new HotelUserPassword { UserId = userId, PasswordHash = hashedPassword, TenantId = tenantId });
         }
 
         public Task<HotelUserPassword> GetPassword(string userId) =>  HandleSingleOrDefaultAsync<GetHotelUserPasswordQuery, HotelUserPassword>(new GetHotelUserPasswordQuery() { UserId = userId },
