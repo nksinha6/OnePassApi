@@ -27,5 +27,7 @@ namespace OnePass.Domain
         public string nationality { get; set; }
         public string mrz { get; set; }
         public string face_image { get; set; }
+        public string address { get; set; }
+
     }
 }

@@ -60,7 +60,7 @@ namespace OnePass.Domain.Services
             dynamic obj = JsonConvert.DeserializeObject(json);
 
             var output = obj?.output;
-
+          
             return new PassportData
             {
                 full_name = output?.id_name,
@@ -69,7 +69,8 @@ namespace OnePass.Domain.Services
                 expiry_date = output?.id_doe,
                 nationality = output?.id_nationality,
                 mrz = null, // not provided directly
-                face_image = null // not provided in this API
+                face_image = null, // not provided in this API
+                address = output?.id_address
             };
         }
 
