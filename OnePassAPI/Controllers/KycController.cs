@@ -15,16 +15,22 @@ namespace OnePass.API
         private readonly IAzapiService _azapiService = azapiService;
 
         [HttpPost("passport")]
-        public async Task<IActionResult> UploadPassport(IFormFile file)
+        public async Task<IActionResult> UploadPassport(IFormFile front, IFormFile back)
         {
-            if (file == null || file.Length == 0)
+            if (front == null || front.Length == 0)
+                return BadRequest("Invalid file");
+            if (back == null || back.Length == 0)
                 return BadRequest("Invalid file");
 
             using var ms = new MemoryStream();
-            await file.CopyToAsync(ms);
+            await front.CopyToAsync(ms);
 
             var result = await _azapiService.ExtractPassportAsync(ms.ToArray());
+            using var ms2 = new MemoryStream();
+            await back.CopyToAsync(ms2);
 
+            var result2 = await _azapiService.ExtractPassportAsync(ms2.ToArray());
+            result.address = result2.address;
             return Ok(result);
         }
     }
