@@ -24,7 +24,7 @@ namespace OnePass.Domain
         public string birth_place { get; set; }
         public string passport_number { get; set; }
         public string dob { get; set; }
-
+        public string gender { get; set; }
         public string issue_date { get; set; }
         public string expiry_date { get; set; }
         public string nationality { get; set; }
