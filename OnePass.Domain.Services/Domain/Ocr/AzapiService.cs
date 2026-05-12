@@ -64,13 +64,18 @@ namespace OnePass.Domain.Services
             return new PassportData
             {
                 full_name = output?.id_name,
+                birth_place = output?.id_place_of_birth,
                 passport_number = output?.id_number,
                 dob = output?.id_dob,
+                issue_date = output?.id_doi,
                 expiry_date = output?.id_doe,
                 nationality = output?.id_nationality,
                 mrz = null, // not provided directly
                 face_image = null, // not provided in this API
-                address = output?.id_address
+                address = output?.id_address,
+                place_of_issue = output?.id_place_of_issue,
+                type = output?.id_type,
+                country_code = output?.id_country_code
             };
         }
 
