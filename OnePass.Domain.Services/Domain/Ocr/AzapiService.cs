@@ -75,7 +75,8 @@ namespace OnePass.Domain.Services
                 address = output?.id_address,
                 place_of_issue = output?.id_place_of_issue,
                 type = output?.id_type,
-                country_code = output?.id_country_code
+                country_code = output?.id_country_code,
+                passport_type = output?.id_passport_type
             };
         }
 

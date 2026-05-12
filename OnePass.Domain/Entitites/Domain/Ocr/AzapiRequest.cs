@@ -36,5 +36,6 @@ namespace OnePass.Domain
         public string country_code { get; set; }
         public string place_of_issue { get;set; }
 
+        public string passport_type { get; set; }
     }
 }
